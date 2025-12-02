@@ -15,13 +15,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.Pose2d;
+import org.firstinspires.ftc.teamcode.AtGoalToRed;
 
 
 
 
 
 @Config
-@Autonomous(name = "AtGoalToBlue", group = "Autonomous")
+@Autonomous(name = "AtGoalBlue", group = "Autonomous")
 public class AtGoalToBlue extends LinearOpMode {
 
 
@@ -30,9 +31,10 @@ public class AtGoalToBlue extends LinearOpMode {
     DcMotor rf = null;
     DcMotor rb = null;
 
-    DcMotor transfer =null;
+    DcMotor transfer = null;
 
     DcMotor launcher = null;
+    DcMotor intake = null;
 
     // lift class
     private boolean initialized = false;
@@ -40,7 +42,7 @@ public class AtGoalToBlue extends LinearOpMode {
     public class warmupLaunch implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(-0.7);
+            launcher.setPower(-0.8);
         }
     }
     public class stopLauncher implements InstantFunction{
@@ -53,33 +55,59 @@ public class AtGoalToBlue extends LinearOpMode {
     public class transferArtifact implements InstantFunction{
         @Override
         public void run(){
-            //   transfer.setPower(1);
-            //  sleep(200);
-            //    transfer.setPower(0);
+            transfer.setPower(-1);
+
+        }
+    }
+
+    public class reverseTransferArtifact implements InstantFunction{
+        @Override
+        public void run(){
+            transfer.setPower(0.5);
+            sleep(60);
+
+        }
+    }
+
+    public class intakeFeed implements InstantFunction{
+        @Override
+        public void run(){
+            intake.setPower(1);
+
+
+        }
+    }
+    public class stopintake implements InstantFunction{
+        @Override
+        public void run(){
+            intake.setPower(0);
+
         }
     }
 
     public class Shoot implements InstantFunction{
         @Override
         public void run(){
+
             transfer.setPower(-1);
-            sleep(50);
-            transfer.setPower(1);
             sleep(600);
             transfer.setPower(0);
         }
     }
+    public class slowNSteady implements InstantFunction{
+        @Override
+        public void run(){
+            intake.setPower(0.2);
 
-
-
-
-
+        }
+    }
 
 
 
     public void runOpMode() {
         transfer = hardwareMap.dcMotor.get("transfer");
         launcher = hardwareMap.dcMotor.get("launcher");
+        intake = hardwareMap.dcMotor.get("intake");
         Pose2d beginPose = new Pose2d(new Vector2d(-52,-60), Math.toRadians(45));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
@@ -92,21 +120,31 @@ public class AtGoalToBlue extends LinearOpMode {
         // actionBuilder builds from the drive steps passed to it
         //this path moves backwards and turns
         Action path = drive.actionBuilder(beginPose)
-                .stopAndAdd(new warmupLaunch())
-                .stopAndAdd(new transferArtifact())
+
+                .stopAndAdd(new slowNSteady())
                 .lineToX(-20)
+                .stopAndAdd(new warmupLaunch())
                 .turn(Math.toRadians(-180))
+
+                .stopAndAdd(new transferArtifact())
+                .waitSeconds(2.5)
                 .stopAndAdd(new Shoot())
+                .waitSeconds(1)
+                .lineToX(-32)
+                .stopAndAdd(new intakeFeed())
+                .stopAndAdd(new transferArtifact())
+
+                .waitSeconds(3)
+                .stopAndAdd(new stopintake())
                 .stopAndAdd(new stopLauncher())
+                .turn(Math.toRadians(120))
+                .lineToX(20)
+                //   .stopAndAdd(new Shoot())
+                //   .stopAndAdd(new transferArtifact())
+                //   .stopAndAdd(new stopintake())
                 .build();
 
-        Action path2 = drive.actionBuilder((beginPose))
-                .stopAndAdd(new warmupLaunch())
-                .waitSeconds(5)
-//                .stopAndAdd(TransferArtifact())
-                .waitSeconds(1)
-                .stopAndAdd(new stopLauncher())
-                .build();
+
 
 
         Actions.runBlocking(new SequentialAction(path));
@@ -121,10 +159,4 @@ public class AtGoalToBlue extends LinearOpMode {
     }
 
 }
-
-
-
-
-
-
 
