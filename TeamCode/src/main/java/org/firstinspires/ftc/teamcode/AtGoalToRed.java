@@ -138,7 +138,7 @@ public class AtGoalToRed extends LinearOpMode {
                 .stopAndAdd(new slowNSteady())
                 .strafeTo(new Vector2d(-15,18))
                 .stopAndAdd(new warmupLaunch75())
-                .turn(Math.toRadians(185))
+                .turn(Math.toRadians(195))
                 .stopAndAdd(new stopNSteady())
                 .stopAndAdd(new Shoot())
                 .waitSeconds(1)
@@ -156,15 +156,15 @@ public class AtGoalToRed extends LinearOpMode {
                 .lineToX(-30)
                 .lineToX(-20)
                 .turn(Math.toRadians(-50))
-                .strafeTo(new Vector2d(33,22))
-                .strafeTo(new Vector2d(33,47))
-                .strafeTo(new Vector2d(33,22))
+                .strafeTo(new Vector2d(-14,22))
+                .strafeTo(new Vector2d(-14,48))
+                .strafeTo(new Vector2d(-14,22))
                 .build();
 
 
 
 
-        Actions.runBlocking(new SequentialAction(path));
+        Actions.runBlocking(new SequentialAction(path2));
 
 
 

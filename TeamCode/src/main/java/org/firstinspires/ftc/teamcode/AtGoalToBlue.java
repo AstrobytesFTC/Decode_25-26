@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.AtGoalToRed;
 
 
 @Config
-@Autonomous(name = "AtGoalBlue", group = "Autonomous")
+@Autonomous(name = "AtGoalBlueUpdated", group = "Autonomous")
 public class AtGoalToBlue extends LinearOpMode {
 
 
@@ -42,7 +42,7 @@ public class AtGoalToBlue extends LinearOpMode {
     public class warmupLaunch implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(-0.8);
+            launcher.setPower(-0.75);
         }
     }
     public class stopLauncher implements InstantFunction{
@@ -97,7 +97,15 @@ public class AtGoalToBlue extends LinearOpMode {
     public class slowNSteady implements InstantFunction{
         @Override
         public void run(){
-            intake.setPower(0.2);
+            intake.setPower(0.4);
+
+        }
+    }
+
+    public class stopNSteady implements InstantFunction{
+        @Override
+        public void run(){
+            intake.setPower(0.4);
 
         }
     }
@@ -124,12 +132,14 @@ public class AtGoalToBlue extends LinearOpMode {
                 .stopAndAdd(new slowNSteady())
                 .lineToX(-20)
                 .stopAndAdd(new warmupLaunch())
-                .turn(Math.toRadians(-180))
+                .turn(Math.toRadians(-190))
 
                 .stopAndAdd(new transferArtifact())
-                .waitSeconds(2.5)
-                .stopAndAdd(new Shoot())
                 .waitSeconds(1)
+                .stopAndAdd(new stopNSteady())
+                .stopAndAdd(new Shoot())
+                .waitSeconds(0.5)
+                .stopAndAdd(new slowNSteady())
                 .lineToX(-32)
                 .stopAndAdd(new intakeFeed())
                 .stopAndAdd(new transferArtifact())
@@ -137,17 +147,34 @@ public class AtGoalToBlue extends LinearOpMode {
                 .waitSeconds(3)
                 .stopAndAdd(new stopintake())
                 .stopAndAdd(new stopLauncher())
-                .turn(Math.toRadians(120))
+                .turn(Math.toRadians(130))
                 .lineToX(20)
                 //   .stopAndAdd(new Shoot())
                 //   .stopAndAdd(new transferArtifact())
                 //   .stopAndAdd(new stopintake())
                 .build();
+        Action path2 = drive.actionBuilder(beginPose)
+                .lineToX(-20)
+                .turn(Math.toRadians(-190))
+                .waitSeconds(1)
+                .waitSeconds(0.5)
+                .lineToX(-37)
+                .waitSeconds(3)
+                .turn(Math.toRadians(40))
+                .strafeTo(new Vector2d(-5,-24))
+                .strafeTo(new Vector2d(-5,-40))
+                .turn(Math.toRadians(-40))
+                .strafeTo(new Vector2d(-34,-34))
+                .strafeTo(new Vector2d(20,-16))
+                .build();
 
 
 
 
-        Actions.runBlocking(new SequentialAction(path));
+
+            Actions.runBlocking(new SequentialAction(path));
+
+
 
 
 
