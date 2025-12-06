@@ -15,15 +15,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.Pose2d;
-import org.firstinspires.ftc.teamcode.AtGoalToRed;
-
-
-
 
 
 @Config
 @Autonomous(name = "AtGoalBlueUpdated", group = "Autonomous")
-public class AtGoalToBlue extends LinearOpMode {
+public class AtGoalAtBlueUpdatedIntake extends LinearOpMode {
 
 
     DcMotor lf = null;
@@ -39,10 +35,16 @@ public class AtGoalToBlue extends LinearOpMode {
     // lift class
     private boolean initialized = false;
 
-    public class warmupLaunch implements InstantFunction{
+    public class warmupLaunch75 implements InstantFunction{
         @Override
         public void run(){
             launcher.setPower(-0.75);
+        }
+    }
+    public class warmupLaunch70 implements InstantFunction{
+        @Override
+        public void run(){
+            launcher.setPower(-0.70);
         }
     }
     public class stopLauncher implements InstantFunction{
@@ -131,7 +133,7 @@ public class AtGoalToBlue extends LinearOpMode {
 
                 .stopAndAdd(new slowNSteady())
                 .lineToX(-20)
-                .stopAndAdd(new warmupLaunch())
+                .stopAndAdd(new warmupLaunch75())
                 .turn(Math.toRadians(-190))
 
                 .stopAndAdd(new transferArtifact())
@@ -154,25 +156,32 @@ public class AtGoalToBlue extends LinearOpMode {
                 //   .stopAndAdd(new stopintake())
                 .build();
         Action path2 = drive.actionBuilder(beginPose)
+//                Heading, -52, 60, 45
+                .stopAndAdd(new slowNSteady())
                 .lineToX(-20)
-                .turn(Math.toRadians(-190))
+                .stopAndAdd(new warmupLaunch75())
+                .turn(Math.toRadians(-185))
+                .stopAndAdd(new stopNSteady())
+                .stopAndAdd(new Shoot())
                 .waitSeconds(1)
-                .waitSeconds(0.5)
-                .lineToX(-37)
+                .stopAndAdd(new warmupLaunch70())
+                .waitSeconds(1)
+                .lineToX(-32)
+                .stopAndAdd(new transferArtifact())
+                .stopAndAdd(new intakeFeed())
                 .waitSeconds(3)
+                .stopAndAdd(new stopintake())
+                .stopAndAdd(new stopLauncher())
                 .turn(Math.toRadians(40))
-                .strafeTo(new Vector2d(-5,-24))
-                .strafeTo(new Vector2d(-5,-40))
+                .strafeTo(new Vector2d(-4,-24))
+                .stopAndAdd(new intakeFeed())
+                .strafeTo(new Vector2d(-4,-54))
+                .strafeTo(new Vector2d(-16,-16))
+                .stopAndAdd(new stopintake())
                 .turn(Math.toRadians(-40))
                 .strafeTo(new Vector2d(-34,-34))
-                .strafeTo(new Vector2d(20,-16))
                 .build();
-
-
-
-
-
-            Actions.runBlocking(new SequentialAction(path));
+            Actions.runBlocking(new SequentialAction(path2));
 
 
 

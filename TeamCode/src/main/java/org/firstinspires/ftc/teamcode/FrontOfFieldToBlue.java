@@ -15,10 +15,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.Pose2d;
-import org.firstinspires.ftc.teamcode.AtGoalToRed;
-
-
-
 
 
 @Config
@@ -43,6 +39,13 @@ public class FrontOfFieldToBlue extends LinearOpMode {
         @Override
         public void run(){
             launcher.setPower(-0.8);
+        }
+    }
+
+    public class reverselaunch implements InstantFunction{
+        @Override
+        public void run(){
+            launcher.setPower(0.4);
         }
     }
     public class stopLauncher implements InstantFunction{
@@ -123,15 +126,38 @@ public class FrontOfFieldToBlue extends LinearOpMode {
                 .stopAndAdd(new slowNSteady())
                 .lineToX(-25)
                 .stopAndAdd(new warmupLaunch())
-                .turn(Math.toRadians(-130))
+                .turn(Math.toRadians(-125))
                 .stopAndAdd(new Shoot())
                 .waitSeconds(1)
                 .lineToX(-34)
                 .stopAndAdd(new intakeFeed())
                 .stopAndAdd(new transferArtifact())
                 .waitSeconds(3)
+                .turn(Math.toRadians(45))
+                .stopAndAdd(new stopLauncher())
+                .stopAndAdd(new reverselaunch())
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(-12,-22))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(-12,-36))
+                .strafeTo(new Vector2d(-12,-22))
+                .stopAndAdd(new stopintake())
+                .strafeTo(new Vector2d(-52,-12))
+                .turn(Math.toRadians(-30))
+                .build();
+        Action path2 = drive.actionBuilder(beginPose)
+                .lineToX(-25)
+                .turn(Math.toRadians(-130))
+                .waitSeconds(1)
+                .lineToX(-34)
+                .waitSeconds(3)
+                .turn(Math.toRadians(45))
+                .strafeTo(new Vector2d(-12,-22))
+                .strafeTo(new Vector2d(-12,-32))
+                .strafeTo(new Vector2d(-12,-22))
+                .strafeTo(new Vector2d(-25,-12))
                 .turn(Math.toRadians(-50))
-                .lineToX(25)
+                .lineToX(-34)
                 .build();
 
 

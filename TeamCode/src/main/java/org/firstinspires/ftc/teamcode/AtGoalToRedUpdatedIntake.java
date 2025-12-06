@@ -23,7 +23,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 
 @Config
 @Autonomous(name = "AtGoalToRed", group = "Autonomous")
-public class AtGoalToRed extends LinearOpMode {
+public class AtGoalToRedUpdatedIntake extends LinearOpMode {
 
 
     DcMotor lf = null;
@@ -46,10 +46,16 @@ public class AtGoalToRed extends LinearOpMode {
         }
     }
 
-    public class warmupLaunch65 implements InstantFunction{
+    public class warmupLaunch70 implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(-0.6);
+            launcher.setPower(-0.7);
+        }
+    }
+    public class reverseshoot implements InstantFunction{
+        @Override
+        public void run(){
+            launcher.setPower(0.4);
         }
     }
     public class stopLauncher implements InstantFunction{
@@ -108,10 +114,10 @@ public class AtGoalToRed extends LinearOpMode {
 
         }
     }
-    public class stopNSteady implements InstantFunction{
+    public class transferStop implements InstantFunction{
         @Override
         public void run(){
-            intake.setPower(0.4);
+            transfer.setPower(0.0);
 
         }
     }
@@ -139,7 +145,7 @@ public class AtGoalToRed extends LinearOpMode {
                 .strafeTo(new Vector2d(-15,18))
                 .stopAndAdd(new warmupLaunch75())
                 .turn(Math.toRadians(195))
-                .stopAndAdd(new stopNSteady())
+                //.stopAndAdd(new stopNSteady())
                 .stopAndAdd(new Shoot())
                 .waitSeconds(1)
                 .stopAndAdd(new warmupLaunch75())
@@ -152,13 +158,25 @@ public class AtGoalToRed extends LinearOpMode {
                 .build();
         Action path2 = drive.actionBuilder(beginPose)
                 .strafeTo(new Vector2d(-15,18))
+                .stopAndAdd(new warmupLaunch75())
                 .turn(Math.toRadians(195))
+                .stopAndAdd(new Shoot())
+                .waitSeconds(1)
+                .stopAndAdd(new warmupLaunch70())
                 .lineToX(-30)
+                .stopAndAdd(new transferArtifact())
+                .stopAndAdd(new intakeFeed())
+                .waitSeconds(2)
+                .stopAndAdd(new stopLauncher())
                 .lineToX(-20)
-                .turn(Math.toRadians(-50))
-                .strafeTo(new Vector2d(-14,22))
-                .strafeTo(new Vector2d(-14,48))
-                .strafeTo(new Vector2d(-14,22))
+                .stopAndAdd(new reverseshoot())
+                .turn(Math.toRadians(-35))
+                .strafeTo(new Vector2d(-11,22))
+                .strafeTo(new Vector2d(-11,48))
+                .waitSeconds(1)
+                .stopAndAdd(new transferStop())
+                .stopAndAdd(new stopintake())
+                .strafeTo(new Vector2d(-48,22))
                 .build();
 
 

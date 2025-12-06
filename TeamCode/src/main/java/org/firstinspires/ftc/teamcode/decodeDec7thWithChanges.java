@@ -94,10 +94,10 @@ public class decodeDec7thWithChanges extends LinearOpMode {
             rotX = rotX * 1.1;  // Counteract imperfect strafing
 
             double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-            double frontLeftPower = ((rotY + rotX + rx) / denominator*moveSpeed);
-            double backLeftPower = ((rotY - rotX + rx) / denominator*moveSpeed);
-            double frontRightPower = ((rotY - rotX - rx) / denominator*moveSpeed);
-            double backRightPower = ((rotY + rotX - rx) / denominator*moveSpeed);
+            double frontLeftPower = ((rotY + rotX + rx) / denominator);
+            double backLeftPower = ((rotY - rotX + rx) / denominator);
+            double frontRightPower = ((rotY - rotX - rx) / denominator);
+            double backRightPower = ((rotY + rotX - rx) / denominator);
 
             /*
             NOTE:
@@ -121,7 +121,7 @@ public class decodeDec7thWithChanges extends LinearOpMode {
 
             if(gamepad2.bWasPressed()){
                 transfer.setPower(-1);
-                sleep(50);
+                sleep(25);
 
                 transfer.setPower(1);
                 sleep(75);
@@ -149,11 +149,6 @@ public class decodeDec7thWithChanges extends LinearOpMode {
 
             }
 
-            if(gamepad1.left_bumper){
-                moveSpeed = 0.7;
-            } else if(gamepad1.right_bumper){
-                moveSpeed = 0.4;
-            }
 
             if(gamepad2.a){
                 transfer.setPower(1);
