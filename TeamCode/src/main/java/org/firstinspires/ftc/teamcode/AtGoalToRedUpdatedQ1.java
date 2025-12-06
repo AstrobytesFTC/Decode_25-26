@@ -13,12 +13,12 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.Pose2d;
 
 
-public class AtGoalAtRedUpdated {
+
 // RR-specific imports
 
     @Config
     @Autonomous(name = "AtGoalToRedUpdated", group = "Autonomous")
-    public class AtGoalToRedUpdated extends LinearOpMode {
+    public class AtGoalToRedUpdatedQ1 extends LinearOpMode {
 
         DcMotor lf = null;
         DcMotor lb = null;
@@ -188,4 +188,4 @@ public class AtGoalAtRedUpdated {
         }
 
     }
-}
+

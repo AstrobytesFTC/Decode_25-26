@@ -18,8 +18,8 @@ import com.acmerobotics.roadrunner.Pose2d;
 
 
 @Config
-@Autonomous(name = "AtGoalBlueUpdated", group = "Autonomous")
-public class AtGoalAtBlueUpdated extends LinearOpMode {
+@Autonomous(name = "FrontOfFieldToBlue", group = "Autonomous")
+public class FrontOfFieldToBlueQ1 extends LinearOpMode {
 
 
     DcMotor lf = null;
@@ -27,7 +27,7 @@ public class AtGoalAtBlueUpdated extends LinearOpMode {
     DcMotor rf = null;
     DcMotor rb = null;
 
-    DcMotor transfer = null;
+    DcMotor transfer =null;
 
     DcMotor launcher = null;
     DcMotor intake = null;
@@ -35,16 +35,17 @@ public class AtGoalAtBlueUpdated extends LinearOpMode {
     // lift class
     private boolean initialized = false;
 
-    public class warmupLaunch75 implements InstantFunction{
+    public class warmupLaunch implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(-0.75);
+            launcher.setPower(-0.8);
         }
     }
-    public class warmupLaunch70 implements InstantFunction{
+
+    public class reverselaunch implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(-0.70);
+            launcher.setPower(0.5);
         }
     }
     public class stopLauncher implements InstantFunction{
@@ -99,15 +100,7 @@ public class AtGoalAtBlueUpdated extends LinearOpMode {
     public class slowNSteady implements InstantFunction{
         @Override
         public void run(){
-            intake.setPower(0.4);
-
-        }
-    }
-
-    public class stopNSteady implements InstantFunction{
-        @Override
-        public void run(){
-            intake.setPower(0.4);
+            intake.setPower(0.2);
 
         }
     }
@@ -118,7 +111,7 @@ public class AtGoalAtBlueUpdated extends LinearOpMode {
         transfer = hardwareMap.dcMotor.get("transfer");
         launcher = hardwareMap.dcMotor.get("launcher");
         intake = hardwareMap.dcMotor.get("intake");
-        Pose2d beginPose = new Pose2d(new Vector2d(-52,-60), Math.toRadians(45));
+        Pose2d beginPose = new Pose2d(new Vector2d(56,12), Math.toRadians(0));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -130,60 +123,62 @@ public class AtGoalAtBlueUpdated extends LinearOpMode {
         // actionBuilder builds from the drive steps passed to it
         //this path moves backwards and turns
         Action path = drive.actionBuilder(beginPose)
-
                 .stopAndAdd(new slowNSteady())
-                .lineToX(-20)
-                .stopAndAdd(new warmupLaunch75())
-                .turn(Math.toRadians(-190))
-
-                .stopAndAdd(new transferArtifact())
-                .waitSeconds(1)
-                .stopAndAdd(new stopNSteady())
+                .lineToX(-25)
+                .stopAndAdd(new warmupLaunch())
+                .turn(Math.toRadians(-125))
                 .stopAndAdd(new Shoot())
-                .waitSeconds(0.5)
-                .stopAndAdd(new slowNSteady())
-                .lineToX(-32)
+                .waitSeconds(1)
+                .lineToX(-34)
                 .stopAndAdd(new intakeFeed())
                 .stopAndAdd(new transferArtifact())
-
                 .waitSeconds(3)
-                .stopAndAdd(new stopintake())
+                .turn(Math.toRadians(45))
                 .stopAndAdd(new stopLauncher())
-                .turn(Math.toRadians(130))
-                .lineToX(20)
-                //   .stopAndAdd(new Shoot())
-                //   .stopAndAdd(new transferArtifact())
-                //   .stopAndAdd(new stopintake())
+                .stopAndAdd(new reverselaunch())
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(-12,-22))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(-12,-33))
+                .strafeTo(new Vector2d(-12,-22))
+                .stopAndAdd(new stopintake())
+                .strafeTo(new Vector2d(-52,-12))
+                .turn(Math.toRadians(-30))
                 .build();
         Action path2 = drive.actionBuilder(beginPose)
-//                Heading, -52, 60, 45
-                .stopAndAdd(new slowNSteady())
-                .lineToX(-20)
-                .stopAndAdd(new warmupLaunch75())
-                .turn(Math.toRadians(-185))
-                .stopAndAdd(new stopNSteady())
-                .stopAndAdd(new Shoot())
+                .lineToX(-25)
+                .turn(Math.toRadians(-130))
                 .waitSeconds(1)
-                .stopAndAdd(new warmupLaunch70())
-                .waitSeconds(1)
-                .lineToX(-32)
-                .stopAndAdd(new transferArtifact())
-                .stopAndAdd(new intakeFeed())
+                .lineToX(-34)
                 .waitSeconds(3)
-                .stopAndAdd(new stopintake())
-                .stopAndAdd(new stopLauncher())
-                .turn(Math.toRadians(40))
-                .strafeTo(new Vector2d(-4,-24))
-                .stopAndAdd(new intakeFeed())
-                .strafeTo(new Vector2d(-4,-54))
-                .strafeTo(new Vector2d(-16,-16))
-                .stopAndAdd(new stopintake())
-                .turn(Math.toRadians(-40))
-                .strafeTo(new Vector2d(-34,-34))
+                .turn(Math.toRadians(45))
+                .strafeTo(new Vector2d(-12,-22))
+                .strafeTo(new Vector2d(-12,-32))
+                .strafeTo(new Vector2d(-12,-22))
+                .strafeTo(new Vector2d(-25,-12))
+                .turn(Math.toRadians(-50))
+                .lineToX(-34)
                 .build();
-        Actions.runBlocking(new SequentialAction(path2));
+
+        Action path3 = drive.actionBuilder(beginPose)
+                .lineToX(-25)
+                .turn(Math.toRadians(-130))
+                .waitSeconds(1)
+                .lineToX(-34)
+                .waitSeconds(3)
+                .turn(Math.toRadians(45))
+                .strafeTo(new Vector2d(-14,-22))
+                .strafeTo(new Vector2d(-14,-40))
+                .strafeTo(new Vector2d(-14,-22))
+                .strafeTo(new Vector2d(-52,-12))
+                .turn(Math.toRadians(-30))
+
+                .build();
 
 
+
+
+        Actions.runBlocking(new SequentialAction(path));
 
 
 

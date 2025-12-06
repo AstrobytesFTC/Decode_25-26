@@ -18,8 +18,8 @@ import com.acmerobotics.roadrunner.Pose2d;
 
 
 @Config
-@Autonomous(name = "FrontOfFieldToBlue", group = "Autonomous")
-public class FrontOfFieldToBlue extends LinearOpMode {
+@Autonomous(name = "FrontOfFieldToRedQ1", group = "Autonomous")
+public class FrontOfFieldToRedUpdatedIntakeQ1 extends LinearOpMode {
 
 
     DcMotor lf = null;
@@ -35,17 +35,17 @@ public class FrontOfFieldToBlue extends LinearOpMode {
     // lift class
     private boolean initialized = false;
 
-    public class warmupLaunch implements InstantFunction{
+    public class warmupLaunch75 implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(-0.8);
+            launcher.setPower(-0.75);
         }
     }
 
-    public class reverselaunch implements InstantFunction{
+    public class warmupLaunch70 implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(0.4);
+            launcher.setPower(-0.7);
         }
     }
     public class stopLauncher implements InstantFunction{
@@ -63,11 +63,10 @@ public class FrontOfFieldToBlue extends LinearOpMode {
         }
     }
 
-    public class reverseTransferArtifact implements InstantFunction{
+    public class reverseLaunch implements InstantFunction{
         @Override
         public void run(){
-            transfer.setPower(0.5);
-            sleep(60);
+            launcher.setPower(0.5);
 
         }
     }
@@ -123,55 +122,30 @@ public class FrontOfFieldToBlue extends LinearOpMode {
         // actionBuilder builds from the drive steps passed to it
         //this path moves backwards and turns
         Action path = drive.actionBuilder(beginPose)
-                .stopAndAdd(new slowNSteady())
-                .lineToX(-25)
-                .stopAndAdd(new warmupLaunch())
-                .turn(Math.toRadians(-125))
-                .stopAndAdd(new Shoot())
+                .lineToX(-18)
+                .stopAndAdd(new warmupLaunch75())
+                .turn(Math.toRadians(130))
                 .waitSeconds(1)
-                .lineToX(-34)
+                .stopAndAdd(new Shoot())
+                .waitSeconds(0.5)
+                .lineToX(-32)
+                .stopAndAdd(new warmupLaunch70())
+                .waitSeconds(1)
                 .stopAndAdd(new intakeFeed())
                 .stopAndAdd(new transferArtifact())
-                .waitSeconds(3)
-                .turn(Math.toRadians(45))
+                .waitSeconds(2)
                 .stopAndAdd(new stopLauncher())
-                .stopAndAdd(new reverselaunch())
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-12,-22))
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-12,-36))
-                .strafeTo(new Vector2d(-12,-22))
+                .stopAndAdd(new reverseLaunch())
+                .turn(Math.toRadians(-45))
+                .strafeTo(new Vector2d(-12,24))
+                .strafeTo(new Vector2d(-12,45))
+                .strafeTo(new Vector2d(-12,38))
                 .stopAndAdd(new stopintake())
-                .strafeTo(new Vector2d(-52,-12))
-                .turn(Math.toRadians(-30))
-                .build();
-        Action path2 = drive.actionBuilder(beginPose)
-                .lineToX(-25)
-                .turn(Math.toRadians(-130))
-                .waitSeconds(1)
-                .lineToX(-34)
-                .waitSeconds(3)
+                .strafeTo(new Vector2d(-34,29))
                 .turn(Math.toRadians(45))
-                .strafeTo(new Vector2d(-12,-22))
-                .strafeTo(new Vector2d(-12,-32))
-                .strafeTo(new Vector2d(-12,-22))
-                .strafeTo(new Vector2d(-25,-12))
-                .turn(Math.toRadians(-50))
-                .lineToX(-34)
-                .build();
-
-        Action path3 = drive.actionBuilder(beginPose)
-                .lineToX(-25)
-                .turn(Math.toRadians(-130))
-                .waitSeconds(1)
-                .lineToX(-34)
-                .waitSeconds(3)
-                .turn(Math.toRadians(45))
-                .strafeTo(new Vector2d(-14,-22))
-                .strafeTo(new Vector2d(-14,-40))
-                .strafeTo(new Vector2d(-14,-22))
-                .strafeTo(new Vector2d(-52,-12))
-                .turn(Math.toRadians(-30))
+//                .strafeTo(new Vector2d(-22,15))
+//                .strafeTo(new Vector2d(-34,29))
+                .strafeTo(new Vector2d(-52,20))
 
                 .build();
 

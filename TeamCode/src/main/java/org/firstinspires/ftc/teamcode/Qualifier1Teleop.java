@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 @TeleOp
-public class decodeDec7thWithChanges extends LinearOpMode {
+public class Qualifier1Teleop extends LinearOpMode {
 
     DcMotor frontLeftMotor = null;
     DcMotor backLeftMotor = null;
@@ -94,10 +94,10 @@ public class decodeDec7thWithChanges extends LinearOpMode {
             rotX = rotX * 1.1;  // Counteract imperfect strafing
 
             double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-            double frontLeftPower = ((rotY + rotX + rx) / denominator);
-            double backLeftPower = ((rotY - rotX + rx) / denominator);
-            double frontRightPower = ((rotY - rotX - rx) / denominator);
-            double backRightPower = ((rotY + rotX - rx) / denominator);
+            double frontLeftPower = ((rotY + rotX + rx) / denominator*moveSpeed);
+            double backLeftPower = ((rotY - rotX + rx) / denominator*moveSpeed);
+            double frontRightPower = ((rotY - rotX - rx) / denominator*moveSpeed);
+            double backRightPower = ((rotY + rotX - rx) / denominator*moveSpeed);
 
             /*
             NOTE:
@@ -127,6 +127,12 @@ public class decodeDec7thWithChanges extends LinearOpMode {
                 sleep(75);
 
                 transfer.setPower(0);
+            }
+
+            if(gamepad1.right_bumper){
+                moveSpeed = 0.85;
+            } else if(gamepad1.left_bumper){
+                moveSpeed = 0.9;
             }
 
             //Setting Code
