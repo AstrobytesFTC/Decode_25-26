@@ -134,10 +134,25 @@ public class FrontOfFieldToBlue extends LinearOpMode {
                 .lineToX(25)
                 .build();
 
+        Action path2 = drive.actionBuilder(beginPose)
+                .lineToX(-25)
+                .turn(Math.toRadians(-130))
+                .waitSeconds(1)
+                .lineToX(-34)
+                .waitSeconds(3)
+                .turn(Math.toRadians(45))
+                .strafeTo(new Vector2d(-14,-22))
+                .strafeTo(new Vector2d(-14,-40))
+                .strafeTo(new Vector2d(-14,-22))
+                .strafeTo(new Vector2d(-52,-12))
+                .turn(Math.toRadians(-30))
+
+                .build();
 
 
 
-        Actions.runBlocking(new SequentialAction(path));
+
+        Actions.runBlocking(new SequentialAction(path2));
 
 
 

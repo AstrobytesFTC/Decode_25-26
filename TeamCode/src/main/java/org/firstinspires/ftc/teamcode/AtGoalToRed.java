@@ -46,10 +46,16 @@ public class AtGoalToRed extends LinearOpMode {
         }
     }
 
-    public class warmupLaunch65 implements InstantFunction{
+    public class warmupLaunch70 implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(-0.6);
+            launcher.setPower(-0.7);
+        }
+    }
+    public class inverselaunch implements InstantFunction{
+        @Override
+        public void run(){
+            launcher.setPower(0.4);
         }
     }
     public class stopLauncher implements InstantFunction{
@@ -142,9 +148,10 @@ public class AtGoalToRed extends LinearOpMode {
                 .stopAndAdd(new stopNSteady())
                 .stopAndAdd(new Shoot())
                 .waitSeconds(1)
-                .stopAndAdd(new warmupLaunch75())
+                .stopAndAdd(new warmupLaunch70())
                 .lineToX(-30)
                 .stopAndAdd(new intakeFeed())
+                .stopAndAdd(new inverselaunch())
                 .stopAndAdd(new transferArtifact())
                 .waitSeconds(4)
                 .lineToX(-20)
@@ -152,13 +159,24 @@ public class AtGoalToRed extends LinearOpMode {
                 .build();
         Action path2 = drive.actionBuilder(beginPose)
                 .strafeTo(new Vector2d(-15,18))
-                .turn(Math.toRadians(195))
+                .stopAndAdd(new warmupLaunch75())
+                .turn(Math.toRadians(190))
+                .stopAndAdd(new Shoot())
+                .stopAndAdd(new warmupLaunch70())
+                .waitSeconds(1.5)
                 .lineToX(-30)
+                .stopAndAdd(new intakeFeed())
+                .stopAndAdd(new transferArtifact())
+                .waitSeconds(4)
+                .stopAndAdd(new stopLauncher())
                 .lineToX(-20)
                 .turn(Math.toRadians(-50))
-                .strafeTo(new Vector2d(-14,22))
-                .strafeTo(new Vector2d(-14,48))
-                .strafeTo(new Vector2d(-14,22))
+                .stopAndAdd(new intakeFeed())
+                .strafeTo(new Vector2d(-11,22))
+                .strafeTo(new Vector2d(-11,48))
+                .waitSeconds(1)
+                .stopAndAdd(new stopintake())
+                .strafeTo(new Vector2d(-11,22))
                 .build();
 
 

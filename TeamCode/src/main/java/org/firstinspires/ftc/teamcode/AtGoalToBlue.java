@@ -168,11 +168,26 @@ public class AtGoalToBlue extends LinearOpMode {
                 .strafeTo(new Vector2d(20,-16))
                 .build();
 
+        Action path3 = drive.actionBuilder(beginPose)
+                .lineToX(-20)
+                .turn(Math.toRadians(-190))
+                .waitSeconds(1)
+                .waitSeconds(0.5)
+                .lineToX(-32)
+                .waitSeconds(3)
+                .turn(Math.toRadians(40))
+                .strafeTo(new Vector2d(-12,-22))
+                .strafeTo(new Vector2d(-11,-52))
+                .strafeTo(new Vector2d(-28,-10))
+
+                .build();
 
 
 
 
-            Actions.runBlocking(new SequentialAction(path));
+
+
+        Actions.runBlocking(new SequentialAction(path3));
 
 
 
