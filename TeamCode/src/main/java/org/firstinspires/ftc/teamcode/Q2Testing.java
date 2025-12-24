@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 @TeleOp
-public class decodeQ2PlanningTeleOp extends LinearOpMode {
+public class Q2Testing extends LinearOpMode {
     DcMotor frontLeftMotor = null;
     DcMotor frontRightMotor = null;
     DcMotor backLeftMotor = null;
@@ -84,10 +84,10 @@ public class decodeQ2PlanningTeleOp extends LinearOpMode {
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
 
-            frontLeftMotor.setPower(frontLeftPower);
-            backLeftMotor.setPower(backLeftPower);
-            frontRightMotor.setPower(frontRightPower);
-            backRightMotor.setPower(backRightPower);
+            frontLeftMotor.setPower(frontLeftPower*0.7);
+            backLeftMotor.setPower(backLeftPower*0.7);
+            frontRightMotor.setPower(frontRightPower*0.7);
+            backRightMotor.setPower(backRightPower*0.7);
 
 
 
@@ -106,8 +106,24 @@ public class decodeQ2PlanningTeleOp extends LinearOpMode {
 
             intake.setPower(gamepad1.left_trigger);
 
-            shooterLeft.setPower(gamepad1.right_trigger);
-            shooterRight.setPower(gamepad1.right_trigger);
+            if(gamepad1.a){
+                transfer.setPower(1);
+            } else if(gamepad1.b){
+                transfer.setPower(-1);
+            }else {
+                transfer.setPower(0);
+            }
+
+            shooterLeft.setPower(gamepad1.right_trigger*0.5);
+            shooterRight.setPower(gamepad1.right_trigger*0.5);
+
+            //G2
+
+            shooterLeft.setPower(gamepad2.right_trigger*0.5);
+            shooterRight.setPower(gamepad2.right_trigger*0.5);
+
+            intake.setPower(gamepad2.right_trigger);
+            transfer.setPower(gamepad2.right_trigger);
         }
     }
 }

@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 @TeleOp
-public class NewBlankTeleOp extends LinearOpMode {
+public class Q2TeleOp extends LinearOpMode {
     DcMotor frontLeftMotor = null;
     DcMotor frontRightMotor = null;
     DcMotor backLeftMotor = null;
@@ -73,8 +73,6 @@ public class NewBlankTeleOp extends LinearOpMode {
             double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
             double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
 
-
-
             rotX = rotX * 1.1;  // Counteract imperfect strafing
 
             // Denominator is the largest motor power (absolute value) or 1
@@ -106,23 +104,10 @@ public class NewBlankTeleOp extends LinearOpMode {
 //                backRightMotor.setPower(1);
 //            }
 
-            if (gamepad1.a) {
-                intake.setPower(1);
-            } else if(gamepad1.b){
-                intake.setPower(-1);
-            }
-
             intake.setPower(gamepad1.left_trigger);
-            transfer.setPower(gamepad1.left_trigger);
-
-
-
 
             shooterLeft.setPower(gamepad1.right_trigger);
             shooterRight.setPower(gamepad1.right_trigger);
-
-            telemetry.addData("intake Power", intake.getPower());
-            telemetry.update();
         }
     }
 }
