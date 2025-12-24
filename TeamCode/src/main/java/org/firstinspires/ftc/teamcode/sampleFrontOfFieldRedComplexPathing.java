@@ -119,34 +119,21 @@ public class sampleFrontOfFieldRedComplexPathing extends LinearOpMode {
 
         // actionBuilder builds from the drive steps passed to it
         //this path moves backwards and turns
-        Action path = drive.actionBuilder(beginPose)
-                .lineToX(-18)
-                .stopAndAdd(new warmupLaunch75())
-                .turn(Math.toRadians(130))
-                .waitSeconds(1)
-                .stopAndAdd(new Shoot())
-                .waitSeconds(0.5)
-                .lineToX(-32)
-                .stopAndAdd(new warmupLaunch70())
-                .waitSeconds(1)
-                .stopAndAdd(new intakeFeed())
-                .stopAndAdd(new transferArtifact())
-                .waitSeconds(2)
-                .stopAndAdd(new stopLauncher())
-                .stopAndAdd(new reverseLaunch())
-                .turn(Math.toRadians(-45))
-                .strafeTo(new Vector2d(-12,24))
-                .strafeTo(new Vector2d(-12,45))
-                .strafeTo(new Vector2d(-12,38))
-                .stopAndAdd(new stopintake())
-                .strafeTo(new Vector2d(-34,29))
-                .turn(Math.toRadians(45))
-//                .strafeTo(new Vector2d(-22,15))
-//                .strafeTo(new Vector2d(-34,29))
-                .strafeTo(new Vector2d(-52,20))
-
+        Action complexfar = drive.actionBuilder(beginPose)
+                .strafeToLinearHeading(new Vector2d(40,12),Math.toRadians(170))
+                .strafeTo(new Vector2d(56,12))
+                .turn(Math.toRadians(-80))
+                .strafeTo(new Vector2d(35,12))
+                .strafeTo(new Vector2d(35,50))
+                .strafeToLinearHeading(new Vector2d(35,12),Math.toRadians(170))
+                .strafeTo(new Vector2d(56,12))
+                .strafeToLinearHeading(new Vector2d(12,12),Math.toRadians(90))
+                .strafeTo(new Vector2d(12,50))
+                .strafeToLinearHeading(new Vector2d(12,12), Math.toRadians(170))
+                .strafeTo(new Vector2d(56,12))
+                .strafeTo(new Vector2d(56,35))
                 .build();
-        Action path2 = drive.actionBuilder(beginPose)
+        Action complexclose = drive.actionBuilder(beginPose)
                 .strafeToLinearHeading(new Vector2d(-12,12),Math.toRadians(140))
                 .turn(Math.toRadians(-50))
                 .strafeTo(new Vector2d(-12,50))
@@ -169,7 +156,7 @@ public class sampleFrontOfFieldRedComplexPathing extends LinearOpMode {
 
 
 
-        Actions.runBlocking(new SequentialAction(path));
+        Actions.runBlocking(new SequentialAction(complexfar));
 
 
 
