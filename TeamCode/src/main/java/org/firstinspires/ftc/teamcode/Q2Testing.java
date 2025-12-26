@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
@@ -20,6 +22,7 @@ public class Q2Testing extends LinearOpMode {
     DcMotor shooterLeft = null;
     DcMotor transfer = null;
     DcMotor intake = null;
+    Servo blocker = null;
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
@@ -32,6 +35,7 @@ public class Q2Testing extends LinearOpMode {
         shooterLeft = hardwareMap.dcMotor.get("leftShooter");
         transfer = hardwareMap.dcMotor.get("intake");
         intake = hardwareMap.dcMotor.get("transfer");
+        blocker = hardwareMap.servo.get("blocker");
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -40,14 +44,14 @@ public class Q2Testing extends LinearOpMode {
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
         // Adjust the orientation parameters to match your robot
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
+                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
 
@@ -56,11 +60,13 @@ public class Q2Testing extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
+
+            double shootSpeed = 1;
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
 
-            // This button choice was made so that it is hard to hit on accident,
+            // This button choice was made Sso that it is hard to hit on accident,
             // it can be freely changed based on preference.
             // The equivalent button is start on Xbox-style controllers.
             if (gamepad1.options) {
@@ -104,9 +110,23 @@ public class Q2Testing extends LinearOpMode {
 //                backRightMotor.setPower(1);
 //            }
 
+            if(gamepad1.left_bumper){
+                blocker.setPosition(0.5);
+
+            } else if(gamepad1.right_bumper){
+                blocker.setPosition(0.3);
+
+            }
+
+            if(gamepad1.dpad_up){
+                shootSpeed = 1;
+            } else if(gamepad1.dpad_down){
+                shootSpeed = 0.8;
+            }
+
             intake.setPower(gamepad1.left_trigger);
 
-            if(gamepad1.a){
+            if(gamepad1.y){
                 transfer.setPower(1);
             } else if(gamepad1.b){
                 transfer.setPower(-1);
@@ -114,16 +134,11 @@ public class Q2Testing extends LinearOpMode {
                 transfer.setPower(0);
             }
 
-            shooterLeft.setPower(gamepad1.right_trigger*0.5);
-            shooterRight.setPower(gamepad1.right_trigger*0.5);
-
             //G2
 
-            shooterLeft.setPower(gamepad2.right_trigger*0.5);
-            shooterRight.setPower(gamepad2.right_trigger*0.5);
+            shooterLeft.setPower(gamepad1.right_trigger*shootSpeed);
+            shooterRight.setPower(gamepad1.right_trigger*shootSpeed);
 
-            intake.setPower(gamepad2.right_trigger);
-            transfer.setPower(gamepad2.right_trigger);
         }
     }
 }
