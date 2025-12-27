@@ -23,6 +23,23 @@ public class Q2Testing extends LinearOpMode {
     DcMotor transfer = null;
     DcMotor intake = null;
     Servo blocker = null;
+
+    double launchRevTime;
+    double shotPower;
+    double moveSpeed;
+    double timewait;
+
+    public void timeTransferAndIntake(double seconds) {
+        transfer.setPower(0.8);
+        intake.setPower(0.8);
+        sleep(Math.round(seconds * 1000)); // seconds → ms
+        transfer.setPower(0);
+        intake.setPower(0);
+    }
+    public void sleepSeconds(double seconds) {
+        sleep(Math.round(seconds * 1000));
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
@@ -42,7 +59,7 @@ public class Q2Testing extends LinearOpMode {
         // reverse the left side instead.
         // See the note about this earlier on this page.
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 //        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -95,6 +112,27 @@ public class Q2Testing extends LinearOpMode {
             frontRightMotor.setPower(frontRightPower*0.7);
             backRightMotor.setPower(backRightPower*0.7);
 
+            //Rev Time
+            if(gamepad1.dpad_up){
+                moveSpeed = 1;
+                shotPower = 1;
+                timeTransferAndIntake(0.4);
+            } else if(gamepad1.dpad_down){
+                moveSpeed = 0.65;
+                shotPower = 0.8;
+                timeTransferAndIntake(0.3);
+            }
+
+            if(gamepad1.dpad_left){
+                moveSpeed = 0.9;
+                timeTransferAndIntake(0.2);
+            } else if(gamepad1.dpad_right){
+                moveSpeed = 0.85;
+                timeTransferAndIntake(0.1);
+            }
+
+
+
 
 
 //            if(gamepad1.a){
@@ -110,19 +148,45 @@ public class Q2Testing extends LinearOpMode {
 //                backRightMotor.setPower(1);
 //            }
 
-            if(gamepad1.left_bumper){
-                blocker.setPosition(0.5);
+//            if(gamepad1.left_bumper){
+//                //out
+//                blocker.setPosition(0.5);
+//
+//            } else if(gamepad1.right_bumper){
+//                //close
+//                blocker.setPosition(0);
+//
+//            }
+            //Ultimate Function of Doom
+            if(gamepad1.aWasPressed()){
+                shooterRight.setPower(0.85);
+                shooterLeft.setPower(-0.85);
 
-            } else if(gamepad1.right_bumper){
-                blocker.setPosition(0.3);
+                //1st Ball
+                sleep(2000);
+                // For shot timing
+                timeTransferAndIntake(0.1);
+                //Half Sec Pause
+                sleepSeconds(1.5);
+
+                //2nd Ball
+                timeTransferAndIntake(0.1);
+                //Half Sec Pause
+                sleepSeconds(1.5);
+
+                //3rd Ball
+                timeTransferAndIntake(0.1);
+                //Half Sec Pause
+                sleepSeconds(1.5);
+
+                //Unwarm Up Launcher
+                shooterLeft.setPower(0);
+                shooterRight.setPower(0);
 
             }
 
-            if(gamepad1.dpad_up){
-                shootSpeed = 1;
-            } else if(gamepad1.dpad_down){
-                shootSpeed = 0.8;
-            }
+
+
 
             intake.setPower(gamepad1.left_trigger);
 
@@ -136,9 +200,20 @@ public class Q2Testing extends LinearOpMode {
 
             //G2
 
-            shooterLeft.setPower(gamepad1.right_trigger*shootSpeed);
-            shooterRight.setPower(gamepad1.right_trigger*shootSpeed);
+            shooterLeft.setPower(-gamepad1.right_trigger*moveSpeed);
+            shooterRight.setPower(gamepad1.right_trigger*moveSpeed);
+
+            telemetry.addData("shotPower",shotPower);
+            telemetry.addData("launchSpotTime",launchRevTime);
+            telemetry.addLine("DPAD LEFT/RIGHT 4 ADJUSTING REV TIME");
+            telemetry.addLine("OPTIONS: 1 & 0.8");
+            telemetry.addLine("DPAD UP/DOWN 4 ADJUSTING SHOT POWER");
+            telemetry.addLine("OPTIONS: 1 & 0.5");
+            telemetry.addData("moveSpeed",moveSpeed);
+            telemetry.addData("time test",time);
+            telemetry.update();
 
         }
+
     }
 }
