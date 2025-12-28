@@ -19,8 +19,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Scrimmage2AutoFarSideBlue", group = "Autonomous")
-public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
+@Autonomous(name = " FrontOfFieldToRedQ2", group = "Autonomous")
+public class FrontOfFieldRedQ2 extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -30,7 +30,7 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
 
     DcMotor transfer =null;
 
-   // DcMotor launcher = null;
+    // DcMotor launcher = null;
     DcMotor intake = null;
 
     DcMotor shooterRight = null;
@@ -73,8 +73,8 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
         public void run(){
             blocker.setPosition(0.5);
             // === ULTIMATE FUNCTION OF DOOM ===
-            shooterRight.setPower(-0.90);
-            shooterLeft.setPower(0.90);
+            shooterRight.setPower(-0.85);
+            shooterLeft.setPower(0.85);
 
 // Spin-up time
             sleep(2000);
@@ -102,8 +102,8 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
         @Override
         public void run(){
             //Change If needed
-            intake.setPower(-0.8);
-            transfer.setPower(0.8);
+            intake.setPower(-1);
+            transfer.setPower(1);
         }
     }
     public class stopSmartIntake implements InstantFunction{
@@ -130,7 +130,7 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
         shooterRight = hardwareMap.dcMotor.get("leftShooter");
         blocker = hardwareMap.servo.get("blocker");
 
-        Pose2d beginPose = new Pose2d(new Vector2d(65,-16), Math.toRadians(-170));
+        Pose2d beginPose = new Pose2d(new Vector2d(60,16), Math.toRadians(-170));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -218,20 +218,21 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
 
-                .strafeTo(new Vector2d(58,-16))
-                .turn(Math.toRadians(25))
+
+                .strafeToLinearHeading(new Vector2d(54,16),Math.toRadians(168))
                 .stopAndAdd(new functionOfDOOM() )
-
-                .strafeToLinearHeading(new Vector2d(39,-28), Math.toRadians(-90))
+                .strafeTo(new Vector2d(35,28))
+                .turn(Math.toRadians(-79))
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(39,-56))
-                .strafeTo(new Vector2d(39,-28))
-                .strafeToLinearHeading(new Vector2d(52,-16),Math.toRadians(-145))
+                .strafeTo(new Vector2d(35,52))
+                .strafeTo(new Vector2d(35,28))
                 .stopAndAdd(new stopSmartIntake())
-                .stopAndAdd( new functionOfDOOM())
+                .strafeToLinearHeading(new Vector2d(55,15),Math.toRadians(166))
+                .stopAndAdd(new functionOfDOOM() )
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(12,28))
 
-                .strafeTo(new Vector2d(12,-28))
-                        .build();
+                .build();
 
         Action Scrimmage2AutoWithShooting = drive.actionBuilder(beginPose)
 
@@ -247,6 +248,7 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
                 //add shoooting function
                 .strafeTo(new Vector2d(12,-28))
                 .build();
+        //Commit this
 
 
 
