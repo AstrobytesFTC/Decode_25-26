@@ -229,7 +229,7 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
                 .stopAndAdd(new stopSmartIntake())
 
 
-                .strafeToLinearHeading(new Vector2d(52,-16),Math.toRadians(-155))
+                .strafeToLinearHeading(new Vector2d(52,-16),Math.toRadians(-145))
                 .stopAndAdd( new functionOfDOOM())
 
                 .strafeTo(new Vector2d(12,-28))
