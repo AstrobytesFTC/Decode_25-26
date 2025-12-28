@@ -18,8 +18,8 @@ import com.acmerobotics.roadrunner.Pose2d;
 
 
 @Config
-@Autonomous(name = "Scrimmage2AutoCloseBlue", group = "Autonomous")
-public class Scrimmage2AutoCloseBlue extends LinearOpMode {
+@Autonomous(name = "FrontOfFieldToBlue", group = "Autonomous")
+public class FrontOfFieldToBlueQ2 extends LinearOpMode {
 
 
     DcMotor lf = null;
@@ -48,7 +48,6 @@ public class Scrimmage2AutoCloseBlue extends LinearOpMode {
             launcher.setPower(0.5);
         }
     }
-
     public class stopLauncher implements InstantFunction{
         @Override
         public void run(){
@@ -112,7 +111,7 @@ public class Scrimmage2AutoCloseBlue extends LinearOpMode {
         transfer = hardwareMap.dcMotor.get("transfer");
         launcher = hardwareMap.dcMotor.get("launcher");
         intake = hardwareMap.dcMotor.get("intake");
-        Pose2d beginPose = new Pose2d(new Vector2d(-52,-60), Math.toRadians(45));
+        Pose2d beginPose = new Pose2d(new Vector2d(56,-16), Math.toRadians(-170));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -162,7 +161,6 @@ public class Scrimmage2AutoCloseBlue extends LinearOpMode {
                 .build();
 
         Action path3 = drive.actionBuilder(beginPose)
-
                 .lineToX(-25)
                 .turn(Math.toRadians(-130))
                 .waitSeconds(1)
@@ -196,39 +194,12 @@ public class Scrimmage2AutoCloseBlue extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(-34,-20),Math.toRadians(-120))
                 .strafeTo(new Vector2d(-50, -16))
 
-                .build();
-
-        Action Scrimmage2Auto = drive.actionBuilder(beginPose)
-
-                .strafeToLinearHeading(new Vector2d(-15,-11),Math.toRadians(45))
-                .turn(Math.toRadians(-185))
-                .waitSeconds(1)
-                .waitSeconds(1)
-                .turn(Math.toRadians(45))
-                .strafeTo(new Vector2d(-12,-34))
-                .strafeTo(new Vector2d(-12,-54))
-                .strafeTo(new Vector2d(-16,-16))
-                .turn(Math.toRadians(-40))
-                .strafeTo(new Vector2d(-34,-10) )
-                .build();
-
-        Action Scrimmage2AutoWithShooting = drive.actionBuilder(beginPose)
-                .stopAndAdd(new warmupLaunch())
-                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
-                .stopAndAdd(new Shoot())
-                .waitSeconds(0.5)
-                .strafeTo(new Vector2d(35,-28))
-                .turn(Math.toRadians(80))
-                .strafeTo(new Vector2d(35,-52))
-                .strafeTo(new Vector2d(35,-28))
-                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
-                .waitSeconds(0.5)
-                .strafeTo(new Vector2d(12,-28))
-                .build();
+                        .build();
 
 
 
-        Actions.runBlocking(new SequentialAction(Scrimmage2Auto));
+
+        Actions.runBlocking(new SequentialAction(path4));
 
 
 

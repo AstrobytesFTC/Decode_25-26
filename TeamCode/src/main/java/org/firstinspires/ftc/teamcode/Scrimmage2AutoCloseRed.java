@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
@@ -27,90 +28,166 @@ public class Scrimmage2AutoCloseRed extends LinearOpMode {
     DcMotor rf = null;
     DcMotor rb = null;
 
+
+    DcMotor frontLeftMotor = null;
+    DcMotor backLeftMotor = null;
+    DcMotor frontRightMotor = null;
+    DcMotor backRightMotor = null;
+
     DcMotor transfer =null;
 
-    DcMotor launcher = null;
+    // DcMotor launcher = null;
     DcMotor intake = null;
+
+    DcMotor shooterRight = null;
+    DcMotor shooterLeft = null;
+    Servo blocker = null;
+
 
     // lift class
     private boolean initialized = false;
 
-    public class warmupLaunch implements InstantFunction{
+//    public class warmupLaunch implements InstantFunction{
+//        @Override
+//        public void run(){
+//            launcher.setPower(-0.8);
+//        }
+//    }
+//
+//    public class reverselaunch implements InstantFunction{
+//        @Override
+//        public void run(){
+//            launcher.setPower(0.5);
+//        }
+//    }
+//    public class stopLauncher implements InstantFunction{
+//        @Override
+//        public void run(){
+//            launcher.setPower(0);
+//        }
+//    }
+//
+//    public class transferArtifact implements InstantFunction{
+//        @Override
+//        public void run(){
+//            transfer.setPower(-1);
+//
+//        }
+//    }
+//
+//    public class reverseTransferArtifact implements InstantFunction{
+//        @Override
+//        public void run(){
+//            transfer.setPower(0.5);
+//            sleep(60);
+//
+//        }
+//    }
+//
+//    public class intakeFeed implements InstantFunction{
+//        @Override
+//        public void run(){
+//            intake.setPower(1);
+//
+//
+//        }
+//    }
+//    public class stopintake implements InstantFunction{
+//        @Override
+//        public void run(){
+//            intake.setPower(0);
+//
+//        }
+//    }
+//
+//    public class Shoot implements InstantFunction{
+//        @Override
+//        public void run(){
+//
+//            transfer.setPower(-1);
+//            sleep(600);
+//            transfer.setPower(0);
+//        }
+//    }
+//    public class slowNSteady implements InstantFunction{
+//        @Override
+//        public void run(){
+//            intake.setPower(0.2);
+//
+//        }
+//    }
+public void timeTransferAndIntake(double seconds) {
+    transfer.setPower(0.8);
+    intake.setPower(-0.8);
+    sleep(Math.round(seconds * 1000)); // seconds → ms
+    transfer.setPower(0);
+    intake.setPower(0);
+}
+
+    public class functionOfDOOM implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(-0.8);
+            blocker.setPosition(0.5);
+            // === ULTIMATE FUNCTION OF DOOM ===
+            shooterRight.setPower(-0.90);
+            shooterLeft.setPower(0.90);
+
+// Spin-up time
+            sleep(2000);
+
+// === 1st Ball ===
+            timeTransferAndIntake(0.15);
+            sleep(1500);
+
+// === 2nd Ball ===
+            timeTransferAndIntake(0.25);
+            sleep(1500);
+
+// === 3rd Ball ===
+            timeTransferAndIntake(0.35);
+            sleep(1500);
+
+// Power down shooter
+            shooterLeft.setPower(0);
+            shooterRight.setPower(0);
+
+            blocker.setPosition(0);
         }
     }
-
-    public class reverselaunch implements InstantFunction{
+    public class smartIntake implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(0.5);
+            //Change If needed
+            intake.setPower(-0.8);
+            transfer.setPower(0.8);
         }
     }
-    public class stopLauncher implements InstantFunction{
+    public class stopSmartIntake implements InstantFunction{
         @Override
         public void run(){
-            launcher.setPower(0);
-        }
-    }
-
-    public class transferArtifact implements InstantFunction{
-        @Override
-        public void run(){
-            transfer.setPower(-1);
-
-        }
-    }
-
-    public class reverseTransferArtifact implements InstantFunction{
-        @Override
-        public void run(){
-            transfer.setPower(0.5);
-            sleep(60);
-
-        }
-    }
-
-    public class intakeFeed implements InstantFunction{
-        @Override
-        public void run(){
-            intake.setPower(1);
-
-
-        }
-    }
-    public class stopintake implements InstantFunction{
-        @Override
-        public void run(){
+            //Change If needed
             intake.setPower(0);
-
-        }
-    }
-
-    public class Shoot implements InstantFunction{
-        @Override
-        public void run(){
-
-            transfer.setPower(-1);
-            sleep(600);
             transfer.setPower(0);
-        }
-    }
-    public class slowNSteady implements InstantFunction{
-        @Override
-        public void run(){
-            intake.setPower(0.2);
-
         }
     }
 
 
 
     public void runOpMode() {
-        transfer = hardwareMap.dcMotor.get("transfer");
-        launcher = hardwareMap.dcMotor.get("launcher");
-        intake = hardwareMap.dcMotor.get("intake");
+
+
+        frontLeftMotor = hardwareMap.dcMotor.get("frontleft");
+        backLeftMotor  = hardwareMap.dcMotor.get("backleft");
+        frontRightMotor = hardwareMap.dcMotor.get("frontright");
+        backRightMotor  = hardwareMap.dcMotor.get("backright");
+        transfer = hardwareMap.dcMotor.get("intake");
+        intake = hardwareMap.dcMotor.get("transfer");
+        shooterLeft = hardwareMap.dcMotor.get("rightShooter");
+        shooterRight = hardwareMap.dcMotor.get("leftShooter");
+        blocker = hardwareMap.servo.get("blocker");
+
+
+
         Pose2d beginPose = new Pose2d(new Vector2d(-54,58), Math.toRadians(-45));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
@@ -123,27 +200,27 @@ public class Scrimmage2AutoCloseRed extends LinearOpMode {
         // actionBuilder builds from the drive steps passed to it
         //this path moves backwards and turns
         Action path = drive.actionBuilder(beginPose)
-                .stopAndAdd(new slowNSteady())
+//                .stopAndAdd(new slowNSteady())
                 .lineToX(-25)
-                .stopAndAdd(new warmupLaunch())
-                .turn(Math.toRadians(-125))
-                .stopAndAdd(new Shoot())
-                .waitSeconds(1)
-                .lineToX(-34)
-                .stopAndAdd(new intakeFeed())
-                .stopAndAdd(new transferArtifact())
-                .waitSeconds(3)
-                .turn(Math.toRadians(45))
-                .stopAndAdd(new stopLauncher())
-                .stopAndAdd(new reverselaunch())
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-12,-22))
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-12,-33))
-                .strafeTo(new Vector2d(-12,-22))
-                .stopAndAdd(new stopintake())
-                .strafeTo(new Vector2d(-52,-12))
-                .turn(Math.toRadians(-30))
+//                .stopAndAdd(new warmupLaunch())
+//                .turn(Math.toRadians(-125))
+//                .stopAndAdd(new Shoot())
+//                .waitSeconds(1)
+//                .lineToX(-34)
+//                .stopAndAdd(new intakeFeed())
+//                .stopAndAdd(new transferArtifact())
+//                .waitSeconds(3)
+//                .turn(Math.toRadians(45))
+//                .stopAndAdd(new stopLauncher())
+//                .stopAndAdd(new reverselaunch())
+//                .waitSeconds(1)
+//                .strafeTo(new Vector2d(-12,-22))
+//                .waitSeconds(1)
+//                .strafeTo(new Vector2d(-12,-33))
+//                .strafeTo(new Vector2d(-12,-22))
+//                .stopAndAdd(new stopintake())
+//                .strafeTo(new Vector2d(-52,-12))
+//                .turn(Math.toRadians(-30))
                 .build();
         Action path2 = drive.actionBuilder(beginPose)
                 .lineToX(-25)
@@ -201,16 +278,18 @@ public class Scrimmage2AutoCloseRed extends LinearOpMode {
 
 
                 .strafeTo(new Vector2d(-12, 13))
-                .turn(Math.toRadians(185))
+                .turn(Math.toRadians(160))
+
                 .waitSeconds(2)
-                .turn(Math.toRadians(-35))
+                .turn(Math.toRadians(-53))
                 .strafeTo(new Vector2d(-13, 30))
                 .waitSeconds(2)
-                .strafeTo(new Vector2d(-13, 56))
+                //Intake and Transfer Starts
+                .strafeTo(new Vector2d(-13, 54))
                 .strafeTo(new Vector2d(-12, 13))
-                .turn(Math.toRadians(40))
+                .turn(Math.toRadians(51))
                 .waitSeconds(2)
-                .waitSeconds(1)
+                //Shooter Rev Starts
                 .strafeTo(new Vector2d(0, 25))
                 .build();
 

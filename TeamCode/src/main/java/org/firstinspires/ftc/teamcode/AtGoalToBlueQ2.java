@@ -19,8 +19,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = " FrontOfFieldToRedQ2", group = "Autonomous")
-public class FrontOfFieldRedQ2 extends LinearOpMode {
+@Autonomous(name = "AtGoalToBlueQ2", group = "Autonomous")
+public class AtGoalToBlueQ2 extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -73,8 +73,8 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
         public void run(){
             blocker.setPosition(0.5);
             // === ULTIMATE FUNCTION OF DOOM ===
-            shooterRight.setPower(-0.85);
-            shooterLeft.setPower(0.85);
+            shooterRight.setPower(-0.90);
+            shooterLeft.setPower(0.90);
 
 // Spin-up time
             sleep(2000);
@@ -130,7 +130,7 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
         shooterRight = hardwareMap.dcMotor.get("leftShooter");
         blocker = hardwareMap.servo.get("blocker");
 
-        Pose2d beginPose = new Pose2d(new Vector2d(60,16), Math.toRadians(-170));
+        Pose2d beginPose = new Pose2d(new Vector2d(-55,-56), Math.toRadians(170));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -218,20 +218,17 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
 
-
-                .strafeToLinearHeading(new Vector2d(54,16),Math.toRadians(168))
+                .strafeTo(new Vector2d(-12, -13))
+                .turn(Math.toRadians(-290))
                 .stopAndAdd(new functionOfDOOM() )
-                .strafeTo(new Vector2d(35,28))
-                .turn(Math.toRadians(-79))
+                .turn(Math.toRadians(40))
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(35,52))
-                .strafeTo(new Vector2d(35,28))
+                .strafeTo(new Vector2d(-13, -51))
                 .stopAndAdd(new stopSmartIntake())
-                .strafeToLinearHeading(new Vector2d(58,15),Math.toRadians(166))
+                .strafeTo(new Vector2d(-12, -13))
+                .turn(Math.toRadians(-55))
                 .stopAndAdd(new functionOfDOOM() )
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(12,28))
-
+                .strafeTo(new Vector2d(20, -16))
                 .build();
 
         Action Scrimmage2AutoWithShooting = drive.actionBuilder(beginPose)
@@ -244,11 +241,10 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
                 .strafeTo(new Vector2d(35,-52))
                 .strafeTo(new Vector2d(35,-28))
                 //intake slow
-                .strafeToLinearHeading(new Vector2d(58,-16),Math.toRadians(-150))
+                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-150))
                 //add shoooting function
                 .strafeTo(new Vector2d(12,-28))
                 .build();
-        //Commit this
 
 
 
