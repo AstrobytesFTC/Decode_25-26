@@ -62,7 +62,7 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
 
     public void timeTransferAndIntake(double seconds) {
         transfer.setPower(0.8);
-        intake.setPower(0.8);
+        intake.setPower(-0.8);
         sleep(Math.round(seconds * 1000)); // seconds → ms
         transfer.setPower(0);
         intake.setPower(0);
@@ -73,22 +73,22 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
         public void run(){
             blocker.setPosition(0.5);
             // === ULTIMATE FUNCTION OF DOOM ===
-            shooterRight.setPower(-0.95);
-            shooterLeft.setPower(0.95);
+            shooterRight.setPower(-0.90);
+            shooterLeft.setPower(0.90);
 
 // Spin-up time
-            sleep(200);
+            sleep(2000);
 
 // === 1st Ball ===
-            timeTransferAndIntake(0.1);
+            timeTransferAndIntake(0.15);
             sleep(1500);
 
 // === 2nd Ball ===
-            timeTransferAndIntake(0.1);
+            timeTransferAndIntake(0.25);
             sleep(1500);
 
 // === 3rd Ball ===
-            timeTransferAndIntake(0.1);
+            timeTransferAndIntake(0.35);
             sleep(1500);
 
 // Power down shooter
@@ -102,7 +102,7 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
         @Override
         public void run(){
             //Change If needed
-            intake.setPower(0.8);
+            intake.setPower(-0.8);
             transfer.setPower(0.8);
         }
     }
@@ -112,55 +112,6 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
             //Change If needed
             intake.setPower(0);
             transfer.setPower(0);
-        }
-    }
-    public class transferArtifact implements InstantFunction{
-        @Override
-        public void run(){
-            transfer.setPower(-1);
-
-        }
-    }
-
-    public class reverseTransferArtifact implements InstantFunction{
-        @Override
-        public void run(){
-            transfer.setPower(0.5);
-            sleep(60);
-
-        }
-    }
-
-    public class intakeFeed implements InstantFunction{
-        @Override
-        public void run(){
-            intake.setPower(1);
-
-
-        }
-    }
-    public class stopintake implements InstantFunction{
-        @Override
-        public void run(){
-            intake.setPower(0);
-
-        }
-    }
-
-    public class Shoot implements InstantFunction{
-        @Override
-        public void run(){
-
-            transfer.setPower(-1);
-            sleep(600);
-            transfer.setPower(0);
-        }
-    }
-    public class slowNSteady implements InstantFunction{
-        @Override
-        public void run(){
-            intake.setPower(0.2);
-
         }
     }
 
@@ -190,29 +141,29 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
 
         // actionBuilder builds from the drive steps passed to it
         //this path moves backwards and turns
-        Action path = drive.actionBuilder(beginPose)
-                .stopAndAdd(new slowNSteady())
-                .lineToX(-25)
-//                .stopAndAdd(new warmupLaunch())
-                .turn(Math.toRadians(-125))
-                .stopAndAdd(new Shoot())
-                .waitSeconds(1)
-                .lineToX(-34)
-                .stopAndAdd(new intakeFeed())
-                .stopAndAdd(new transferArtifact())
-                .waitSeconds(3)
-                .turn(Math.toRadians(45))
-//                .stopAndAdd(new stopLauncher())
-//                .stopAndAdd(new reverselaunch())
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-12,-22))
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-12,-33))
-                .strafeTo(new Vector2d(-12,-22))
-                .stopAndAdd(new stopintake())
-                .strafeTo(new Vector2d(-52,-12))
-                .turn(Math.toRadians(-30))
-                .build();
+//        Action path = drive.actionBuilder(beginPose)
+//                .stopAndAdd(new slowNSteady())
+//                .lineToX(-25)
+////                .stopAndAdd(new warmupLaunch())
+//                .turn(Math.toRadians(-125))
+//                .stopAndAdd(new Shoot())
+//                .waitSeconds(1)
+//                .lineToX(-34)
+//                .stopAndAdd(new intakeFeed())
+//                .stopAndAdd(new transferArtifact())
+//                .waitSeconds(3)
+//                .turn(Math.toRadians(45))
+////                .stopAndAdd(new stopLauncher())
+////                .stopAndAdd(new reverselaunch())
+//                .waitSeconds(1)
+//                .strafeTo(new Vector2d(-12,-22))
+//                .waitSeconds(1)
+//                .strafeTo(new Vector2d(-12,-33))
+//                .strafeTo(new Vector2d(-12,-22))
+//                .stopAndAdd(new stopintake())
+//                .strafeTo(new Vector2d(-52,-12))
+//                .turn(Math.toRadians(-30))
+//                .build();
         Action path2 = drive.actionBuilder(beginPose)
                 .lineToX(-25)
                 .turn(Math.toRadians(-130))
@@ -268,7 +219,7 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
 
                 .strafeTo(new Vector2d(58,-16))
-                .turn(Math.toRadians(20))
+                .turn(Math.toRadians(25))
                 .stopAndAdd(new functionOfDOOM() )
 
                 .strafeToLinearHeading(new Vector2d(39,-28), Math.toRadians(-90))
@@ -278,7 +229,7 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
                 .stopAndAdd(new stopSmartIntake())
 
 
-                .strafeToLinearHeading(new Vector2d(52,-16),Math.toRadians(-150))
+                .strafeToLinearHeading(new Vector2d(52,-16),Math.toRadians(-155))
                 .stopAndAdd( new functionOfDOOM())
 
                 .strafeTo(new Vector2d(12,-28))
