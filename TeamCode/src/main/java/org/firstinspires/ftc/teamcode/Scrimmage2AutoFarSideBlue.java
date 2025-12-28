@@ -102,7 +102,7 @@ public class Scrimmage2AutoFarSideBlue extends LinearOpMode {
         @Override
         public void run(){
             //Change If needed
-            intake.setPower(-0.8);
+            intake.setPower(-0.9);
             transfer.setPower(0.8);
         }
     }

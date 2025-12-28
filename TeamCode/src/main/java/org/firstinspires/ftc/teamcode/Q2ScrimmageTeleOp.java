@@ -22,7 +22,7 @@ public class Q2ScrimmageTeleOp extends LinearOpMode {
     double moveSpeed = 0.65;
     double shootSpeed = 0.9;
     //Function Variables
-    double doomSpeed = 0.85;
+    double doomSpeed = 0.9;
     int revTime = 1500;
     boolean doomCancelled = false;
 
@@ -63,7 +63,9 @@ public class Q2ScrimmageTeleOp extends LinearOpMode {
     }
     public void doomFunction() {
         doomCancelled = false; // reset cancel flag at start
+        ballPos();
         blocker.setPosition(0.5);
+
 //aDD Servo
         shooterRight.setPower(-doomSpeed);
         shooterLeft.setPower(doomSpeed);
@@ -73,17 +75,17 @@ public class Q2ScrimmageTeleOp extends LinearOpMode {
         if (doomCancelled) return;
 
         timeTransferAndIntake(0.15);
-        if (safeSleep(1.0)) return;
+        if (safeSleep(1.5)) return;
         if (doomCancelled) return;
 
         // 2nd Ball
-        timeTransferAndIntake(0.3);
-        if (safeSleep(1.0)) return;
+        timeTransferAndIntake(0.25);
+        if (safeSleep(1.5)) return;
         if (doomCancelled) return;
 
         // 3rd Ball
-        timeTransferAndIntake(0.3);
-        if (safeSleep(1.0)) return;
+        timeTransferAndIntake(0.35);
+        if (safeSleep(1.5)) return;
         if (doomCancelled) return;
 
         // Stop shooter
@@ -109,6 +111,12 @@ public class Q2ScrimmageTeleOp extends LinearOpMode {
             idle(); // allows other robot functions to continue
         }
         return false;
+    }
+
+    public void ballPos(){
+        transfer.setPower(-0.3);
+        sleep(200);
+        transfer.setPower(0);
     }
 
     @Override
@@ -192,7 +200,7 @@ public class Q2ScrimmageTeleOp extends LinearOpMode {
                 intake.setPower(0);
             }
             if(gamepad1.x){
-                transfer.setPower(0.8);
+                transfer.setPower(1);
                 sleep(200);
                 transfer.setPower(0);
             }
@@ -220,13 +228,13 @@ public class Q2ScrimmageTeleOp extends LinearOpMode {
             //Adjusting Function Rev Speed & Rev Time
             if(gamepad2.back){
                 //Far Range
-                doomSpeed = 0.85;
+                doomSpeed = 0.9;
                 revTime = 1500;
                 gamepad2.rumble(200);
             }
             if(gamepad2.options){
                 //Close Range
-                doomSpeed = 0.65;
+                doomSpeed = 0.70;
                 revTime = 1500;
                 gamepad2.rumble(200);
             }
@@ -237,6 +245,8 @@ public class Q2ScrimmageTeleOp extends LinearOpMode {
 
             if(gamepad2.left_bumper) blocker.setPosition(0);
             if(gamepad2.right_bumper) blocker.setPosition(0.5);
+
+            if(gamepad2.y) ballPos();
 
 
             //Shooter Code - Left Trigger
