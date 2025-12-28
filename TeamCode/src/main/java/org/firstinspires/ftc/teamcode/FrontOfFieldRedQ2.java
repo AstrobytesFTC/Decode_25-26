@@ -102,8 +102,8 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
         @Override
         public void run(){
             //Change If needed
-            intake.setPower(-1);
-            transfer.setPower(1);
+            intake.setPower(-0.8);
+            transfer.setPower(0.8);
         }
     }
     public class stopSmartIntake implements InstantFunction{
