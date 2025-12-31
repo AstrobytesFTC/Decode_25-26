@@ -29,7 +29,7 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
 
     double waitTime = 1000;
 
-    double transferTime = 1;
+    double transferTime = 0.5;
 
     // DOOM state machine
     boolean doomActive = false;
@@ -109,7 +109,7 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
             frontRightMotor.setPower((y - x - rx) / denominator * moveSpeed);
             backRightMotor.setPower((y + x - rx) / denominator * moveSpeed);
 
-            if (gamepad1.left_bumper) moveSpeed = 1.0;
+            if (gamepad1.left_bumper) moveSpeed = 0.35;
             if (gamepad1.right_bumper) moveSpeed = 0.85;
 
             // ================= SMART INTAKE =================
@@ -147,14 +147,14 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
                 gamepad2.rumble(200);
                 revTime = 2500;
                 waitTime = 1250;
-                transferTime = 0.75;
+                transferTime = 0.3;
             }
             if (gamepad2.dpad_down) {
                 doomSpeed = 0.75;
                 gamepad2.rumble(200);
                 revTime = 2500;
                 waitTime = 1500;
-                transferTime = 0.75;
+                transferTime = 0.3;
             }
 
             // ================= DOOM START =================
@@ -195,11 +195,11 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
                         transfer.setPower(-0.3);
                         intake.setPower(0.3);
 
-                        if (safeSleep(0.25)) return;  // 500ms
+
                         blocker.setPosition(0.1);
-                        if (safeSleep(0.25)) return;  // 500ms
+                        if (safeSleep(0.5)) return;  // 500ms
                         blocker.setPosition(0.5);
-                        if (safeSleep(0.25)) return;  // 500ms
+                        if (safeSleep(0.5)) return;  // 500ms
 
                         shooterLeft.setPower(0);
                         shooterRight.setPower(0);
@@ -210,7 +210,7 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
                         telemetry.update();
                         shooterRight.setPower(-shooterPower);
                         shooterLeft.setPower(shooterPower);
-                        intake.setPower(0.25);
+                        intake.setPower(0.15);
                         doomTimer = System.currentTimeMillis();
                         doomStep++; // go to normal rev step next
                         break;
@@ -222,7 +222,7 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
                                 transfer.setPower(0.65);
                                 //intake.setPower(0.8);
                                 // new code
-                                if (safeSleep(transferTime)) return;
+                                if (safeSleep(transferTime-.1)) return;
                                 transfer.setPower(0);
                                 doomTimer = System.currentTimeMillis();
                                 doomStep++;
@@ -271,7 +271,7 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
                             telemetry.update();
                             transfer.setPower(0.7);
                             intake.setPower(0.7);
-                            if (safeSleep(transferTime)) return;
+                            if (safeSleep(transferTime+.1)) return;
                             transfer.setPower(0);
                             doomTimer = System.currentTimeMillis();
                             doomStep++;
@@ -330,6 +330,7 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
             telemetry.addData("Shooter Power", doomSpeed);
             telemetry.addData("Shooter Power", shooterPower);
             telemetry.addData("wait time", waitTime);
+            telemetry.addData("Transfer Time",transferTime);
             telemetry.update();
         }
     }
