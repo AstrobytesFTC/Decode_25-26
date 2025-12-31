@@ -19,8 +19,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "AtGoalToBlueQ2", group = "Autonomous")
-public class AtGoalToBlueQ2 extends LinearOpMode {
+@Autonomous(name = "Scrimmage2AutoFarSideBlue", group = "Autonomous")
+public class Q2AutoFarSideBlue extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -30,7 +30,7 @@ public class AtGoalToBlueQ2 extends LinearOpMode {
 
     DcMotor transfer =null;
 
-    // DcMotor launcher = null;
+   // DcMotor launcher = null;
     DcMotor intake = null;
 
     DcMotor shooterRight = null;
@@ -102,7 +102,7 @@ public class AtGoalToBlueQ2 extends LinearOpMode {
         @Override
         public void run(){
             //Change If needed
-            intake.setPower(-0.8);
+            intake.setPower(-0.9);
             transfer.setPower(0.8);
         }
     }
@@ -130,7 +130,7 @@ public class AtGoalToBlueQ2 extends LinearOpMode {
         shooterRight = hardwareMap.dcMotor.get("leftShooter");
         blocker = hardwareMap.servo.get("blocker");
 
-        Pose2d beginPose = new Pose2d(new Vector2d(-55,-56), Math.toRadians(170));
+        Pose2d beginPose = new Pose2d(new Vector2d(65,-16), Math.toRadians(-170));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -218,18 +218,20 @@ public class AtGoalToBlueQ2 extends LinearOpMode {
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
 
-                .strafeTo(new Vector2d(-12, -13))
-                .turn(Math.toRadians(-290))
+                .strafeTo(new Vector2d(58,-16))
+                .turn(Math.toRadians(25))
                 .stopAndAdd(new functionOfDOOM() )
-                .turn(Math.toRadians(40))
+
+                .strafeToLinearHeading(new Vector2d(39,-28), Math.toRadians(-90))
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-13, -51))
+                .strafeTo(new Vector2d(39,-56))
+                .strafeTo(new Vector2d(39,-28))
+                .strafeToLinearHeading(new Vector2d(52,-16),Math.toRadians(-145))
                 .stopAndAdd(new stopSmartIntake())
-                .strafeTo(new Vector2d(-12, -13))
-                .turn(Math.toRadians(-55))
-                .stopAndAdd(new functionOfDOOM() )
-                .strafeTo(new Vector2d(20, -16))
-                .build();
+                .stopAndAdd( new functionOfDOOM())
+
+                .strafeTo(new Vector2d(12,-28))
+                        .build();
 
         Action Scrimmage2AutoWithShooting = drive.actionBuilder(beginPose)
 

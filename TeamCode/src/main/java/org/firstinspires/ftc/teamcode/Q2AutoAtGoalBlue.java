@@ -19,8 +19,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = " FrontOfFieldToRedQ2", group = "Autonomous")
-public class FrontOfFieldRedQ2 extends LinearOpMode {
+@Autonomous(name = "Q2AutoAtGoalBlue", group = "Autonomous")
+public class Q2AutoAtGoalBlue extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -73,8 +73,8 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
         public void run(){
             blocker.setPosition(0.5);
             // === ULTIMATE FUNCTION OF DOOM ===
-            shooterRight.setPower(-0.85);
-            shooterLeft.setPower(0.85);
+            shooterRight.setPower(-0.75);
+            shooterLeft.setPower(0.75);
 
 // Spin-up time
             sleep(2000);
@@ -102,7 +102,7 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
         @Override
         public void run(){
             //Change If needed
-            intake.setPower(-0.8);
+            intake.setPower(-0.9);
             transfer.setPower(0.8);
         }
     }
@@ -130,7 +130,7 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
         shooterRight = hardwareMap.dcMotor.get("leftShooter");
         blocker = hardwareMap.servo.get("blocker");
 
-        Pose2d beginPose = new Pose2d(new Vector2d(60,16), Math.toRadians(-170));
+        Pose2d beginPose = new Pose2d(new Vector2d(-52,-60), Math.toRadians(-140));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -164,74 +164,83 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
 //                .strafeTo(new Vector2d(-52,-12))
 //                .turn(Math.toRadians(-30))
 //                .build();
-        Action path2 = drive.actionBuilder(beginPose)
-                .lineToX(-25)
-                .turn(Math.toRadians(-130))
-                .waitSeconds(1)
-                .lineToX(-34)
-                .waitSeconds(3)
-                .turn(Math.toRadians(45))
-                .strafeTo(new Vector2d(-12,-22))
-                .strafeTo(new Vector2d(-12,-32))
-                .strafeTo(new Vector2d(-12,-22))
-                .strafeTo(new Vector2d(-25,-12))
-                .turn(Math.toRadians(-50))
-                .lineToX(-34)
-                .build();
+//        Action path2 = drive.actionBuilder(beginPose)
+//                .lineToX(-25)
+//                .turn(Math.toRadians(-130))
+//                .waitSeconds(1)
+//                .lineToX(-34)
+//                .waitSeconds(3)
+//                .turn(Math.toRadians(45))
+//                .strafeTo(new Vector2d(-12,-22))
+//                .strafeTo(new Vector2d(-12,-32))
+//                .strafeTo(new Vector2d(-12,-22))
+//                .strafeTo(new Vector2d(-25,-12))
+//                .turn(Math.toRadians(-50))
+//                .lineToX(-34)
+//                .build();
+//
+//        Action path3 = drive.actionBuilder(beginPose)
+//
+//                .lineToX(-25)
+//                .turn(Math.toRadians(-130))
+//                .waitSeconds(1)
+//                .lineToX(-34)
+//                .waitSeconds(3)
+//                .turn(Math.toRadians(45))
+//                .strafeTo(new Vector2d(-14,-22))
+//                .strafeTo(new Vector2d(-14,-40))
+//                .strafeTo(new Vector2d(-14,-22))
+//                .strafeTo(new Vector2d(-52,-12))
+//                .turn(Math.toRadians(-30))
+//
+//                .build();
+//
+//        Action path4 = drive.actionBuilder(beginPose)
+//                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
+//                .strafeTo(new Vector2d(35,-28))
+//                .turn(Math.toRadians(80))
+//                .strafeTo(new Vector2d(35,-52))
+//                .strafeTo(new Vector2d(35,-28))
+//                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
+//                .strafeTo(new Vector2d(12,-28))
+//                .turn(Math.toRadians(80))
+//                .strafeTo(new Vector2d(12,-52))
+//                .strafeTo(new Vector2d(12,-28))
+//                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
+//                .strafeTo(new Vector2d(-11,-28))
+//                .turn(Math.toRadians(80))
+//                .strafeTo(new Vector2d(-11,-52))
+//                .strafeTo(new Vector2d(-11,-28))
+//                .strafeToLinearHeading(new Vector2d(-34,-20),Math.toRadians(-120))
+//                .strafeTo(new Vector2d(-50, -16))
+//
+//                .build();
 
-        Action path3 = drive.actionBuilder(beginPose)
-
-                .lineToX(-25)
-                .turn(Math.toRadians(-130))
-                .waitSeconds(1)
-                .lineToX(-34)
-                .waitSeconds(3)
-                .turn(Math.toRadians(45))
-                .strafeTo(new Vector2d(-14,-22))
-                .strafeTo(new Vector2d(-14,-40))
-                .strafeTo(new Vector2d(-14,-22))
-                .strafeTo(new Vector2d(-52,-12))
-                .turn(Math.toRadians(-30))
-
-                .build();
-
-        Action path4 = drive.actionBuilder(beginPose)
-                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
-                .strafeTo(new Vector2d(35,-28))
-                .turn(Math.toRadians(80))
-                .strafeTo(new Vector2d(35,-52))
-                .strafeTo(new Vector2d(35,-28))
-                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
-                .strafeTo(new Vector2d(12,-28))
-                .turn(Math.toRadians(80))
-                .strafeTo(new Vector2d(12,-52))
-                .strafeTo(new Vector2d(12,-28))
-                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
-                .strafeTo(new Vector2d(-11,-28))
-                .turn(Math.toRadians(80))
-                .strafeTo(new Vector2d(-11,-52))
-                .strafeTo(new Vector2d(-11,-28))
-                .strafeToLinearHeading(new Vector2d(-34,-20),Math.toRadians(-120))
-                .strafeTo(new Vector2d(-50, -16))
-
-                .build();
-
-        Action Scrimmage2Auto = drive.actionBuilder(beginPose)
-
-
-                .strafeToLinearHeading(new Vector2d(54,16),Math.toRadians(168))
-                .stopAndAdd(new functionOfDOOM() )
-                .strafeTo(new Vector2d(35,28))
-                .turn(Math.toRadians(-79))
+        Action Auto = drive.actionBuilder(beginPose)
+                .strafeTo(new Vector2d(-7,-16))
+                .stopAndAdd( new functionOfDOOM())
+                .strafeToLinearHeading(new Vector2d(-13, -45), Math.toRadians(-90))
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(35,52))
-                .strafeTo(new Vector2d(35,28))
+                .strafeTo(new Vector2d(-13,-69))
+                .strafeTo(new Vector2d(-13,-45))
                 .stopAndAdd(new stopSmartIntake())
-                .strafeToLinearHeading(new Vector2d(58,15),Math.toRadians(166))
-                .stopAndAdd(new functionOfDOOM() )
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(12,28))
+                .strafeToLinearHeading(new Vector2d(-7, -16), Math.toRadians(-140))
+                .stopAndAdd(new functionOfDOOM())
+                .strafeTo(new Vector2d(-34,-25))
+//
+//                .strafeTo(new Vector2d(58,-16))
+//                .turn(Math.toRadians(25))
+//                .stopAndAdd(new functionOfDOOM() )
+//
+//                .strafeToLinearHeading(new Vector2d(39,-28), Math.toRadians(-90))
+//                .stopAndAdd(new smartIntake())
+//                .strafeTo(new Vector2d(39,-56))
+//                .strafeTo(new Vector2d(39,-28))
+//                .strafeToLinearHeading(new Vector2d(52,-16),Math.toRadians(-145))
+//                .stopAndAdd(new stopSmartIntake())
+//                .stopAndAdd( new functionOfDOOM())
 
+//                .strafeTo(new Vector2d(12,-28))
                 .build();
 
         Action Scrimmage2AutoWithShooting = drive.actionBuilder(beginPose)
@@ -244,15 +253,14 @@ public class FrontOfFieldRedQ2 extends LinearOpMode {
                 .strafeTo(new Vector2d(35,-52))
                 .strafeTo(new Vector2d(35,-28))
                 //intake slow
-                .strafeToLinearHeading(new Vector2d(58,-16),Math.toRadians(-150))
+                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-150))
                 //add shoooting function
                 .strafeTo(new Vector2d(12,-28))
                 .build();
-        //Commit this
 
 
 
-        Actions.runBlocking(new SequentialAction(Scrimmage2Auto));
+        Actions.runBlocking(new SequentialAction(Auto));
 
 
 

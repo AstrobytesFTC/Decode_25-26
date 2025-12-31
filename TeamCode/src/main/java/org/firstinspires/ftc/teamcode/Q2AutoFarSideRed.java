@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 @Autonomous(name = "Scrimmage2AutoFarSideRed", group = "Autonomous")
-public class Scrimmage2AutoFarSideRed extends LinearOpMode {
+public class Q2AutoFarSideRed extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
