@@ -93,6 +93,12 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        shooterRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         waitForStart();
 
         while (opModeIsActive()) {
