@@ -203,7 +203,7 @@ public class Q2VelocityTeleOp extends LinearOpMode {
             // ================= DOOM STATE MACHINE =================
             if (doomActive) {
                 long now = System.currentTimeMillis();
-                double currentVelocity = shooterLeft.getVelocity();
+                double currentVelocity = shooterRight.getVelocity();
 
                 switch (doomStep) {
 
