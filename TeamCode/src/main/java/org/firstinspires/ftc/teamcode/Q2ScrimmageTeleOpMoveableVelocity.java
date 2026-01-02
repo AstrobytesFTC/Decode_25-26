@@ -3,12 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
-public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
+public class Q2ScrimmageTeleOpMoveableVelocity extends LinearOpMode {
 
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
@@ -16,8 +16,8 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
     DcMotor backRightMotor;
     DcMotor transfer;
     DcMotor intake;
-    DcMotor shooterRight;
-    DcMotor shooterLeft;
+    DcMotorEx shooterRight;
+    DcMotorEx shooterLeft;
     Servo blocker;
 
     double moveSpeed = 0.65;
@@ -84,8 +84,8 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
         backRightMotor  = hardwareMap.dcMotor.get("backright");
         transfer = hardwareMap.dcMotor.get("intake");
         intake = hardwareMap.dcMotor.get("transfer");
-        shooterLeft = hardwareMap.dcMotor.get("rightShooter");
-        shooterRight = hardwareMap.dcMotor.get("leftShooter");
+        shooterRight = hardwareMap.get(DcMotorEx.class, "rightShooter");
+        shooterLeft  = hardwareMap.get(DcMotorEx.class, "leftShooter");
         blocker = hardwareMap.servo.get("blocker");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -93,11 +93,9 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
-//        shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-////
-////        shooterRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-////        shooterLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        shooterRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        shooterLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         waitForStart();
 
@@ -122,8 +120,8 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
             if (gamepad1.a) {
                 transfer.setPower(0.6);
                 intake.setPower(0.75);
-                shooterRight.setPower(0.45);
-                shooterLeft.setPower(-0.45);
+                shooterRight.setPower(-0.45);
+                shooterLeft.setPower(0.45);
 
                 sleep(300);
 
@@ -160,6 +158,20 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
                 gamepad2.rumble(200);
                 revTime = 2500;
                 waitTime = 1500;
+                transferTime = 0.3;
+            }
+            if (gamepad2.dpad_left) {
+                doomSpeed = 0.65;
+                gamepad2.rumble(200);
+                revTime = 2500;
+                waitTime = 1250;
+                transferTime = 0.3;
+            }
+            if (gamepad2.dpad_right) {
+                doomSpeed = 0.70;
+                gamepad2.rumble(200);
+                revTime = 2500;
+                waitTime = 1250;
                 transferTime = 0.3;
             }
 
@@ -222,17 +234,21 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
                         break;
 
                     case 1: // Shoot 1
-                        if (System.currentTimeMillis() - doomTimer >= revTime) {
-                            telemetry.addLine(" Doom SHOOT 1");
-                            telemetry.update();
-                            transfer.setPower(0.65);
-                            //intake.setPower(0.8);
-                            // new code
-                            if (safeSleep(transferTime-.1)) return;
-                            transfer.setPower(0);
-                            doomTimer = System.currentTimeMillis();
-                            doomStep++;
-                        }
+                            if (System.currentTimeMillis() - doomTimer >= revTime) {
+                                telemetry.addLine(" Doom SHOOT 1");
+                              //  telemetry.addData("rightShooter Tpr",shooterRight.getCurrentPosition());
+                              //  telemetry.addData("leftShooter Tpr",shooterLeft.getCurrentPosition());
+                                telemetry.addData("Right Shooter Velocity",shooterRight.getVelocity());
+                                telemetry.addData("Left Shooter Velocity",shooterLeft.getVelocity());
+                                telemetry.update();
+                                transfer.setPower(0.65);
+                                //intake.setPower(0.8);
+                                // new code
+                                if (safeSleep(transferTime-.1)) return;
+                                transfer.setPower(0);
+                                doomTimer = System.currentTimeMillis();
+                                doomStep++;
+                            }
                         break;
 
                     /*case 2: // stop
@@ -250,6 +266,10 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
                     case 2: // Shoot 2
                         if (System.currentTimeMillis() - doomTimer >= waitTime) {
                             telemetry.addLine("DOOM - Shoot 2");
+                            //telemetry.addData("rightShooter Tpr",shooterRight.getCurrentPosition());
+                            //telemetry.addData("leftShooter Tpr",shooterLeft.getCurrentPosition());
+                            telemetry.addData("Right Shooter Velocity",shooterRight.getVelocity());
+                            telemetry.addData("Left Shooter Velocity",shooterLeft.getVelocity());
                             telemetry.update();
                             transfer.setPower(0.65);
                             if (safeSleep(transferTime)) return;
@@ -274,6 +294,10 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
                     case 3: // SHOOT 3
                         if (System.currentTimeMillis() - doomTimer >= waitTime) {
                             telemetry.addLine("DOOM - SHOOT 3");
+                            //telemetry.addData("rightShooter Tpr",shooterRight.getCurrentPosition());
+                            //telemetry.addData("leftShooter Tpr",shooterLeft.getCurrentPosition());
+                            telemetry.addData("Right Shooter Velocity",shooterRight.getVelocity());
+                            telemetry.addData("Left Shooter Velocity",shooterLeft.getVelocity());
                             telemetry.update();
                             transfer.setPower(0.7);
                             intake.setPower(0.7);
@@ -322,8 +346,8 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
 
             // ================= DOOM FUNCTION SHOOT CONTROL(DO NOT TOUCH) =================
             if(doomStep == 1){
-                shooterRight.setPower(-shooterPower);
-                shooterLeft.setPower(shooterPower);
+                shooterRight.setPower(shooterPower);
+                shooterLeft.setPower(-shooterPower);
             }
 
 
@@ -337,6 +361,7 @@ public class Q2ScrimmageTeleOpMoveableDOOM extends LinearOpMode {
             telemetry.addData("Shooter Power", shooterPower);
             telemetry.addData("wait time", waitTime);
             telemetry.addData("Transfer Time",transferTime);
+
             telemetry.update();
         }
     }
