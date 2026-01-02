@@ -211,8 +211,8 @@ public class Q2VelocityTeleOp extends LinearOpMode {
                         telemetry.addLine("DOOM Reverse IntakeTrans");
                         telemetry.update();
 
-                        shooterRight.setVelocity(1200);
-                        shooterLeft.setVelocity(-1200);
+                        shooterRight.setVelocity(1300);
+                        shooterLeft.setVelocity(-1300);
                         transfer.setPower(-0.3);
                         intake.setPower(0.3);
 
@@ -220,7 +220,7 @@ public class Q2VelocityTeleOp extends LinearOpMode {
                         blocker.setPosition(0.1);
                         if (safeSleep(0.5)) return;  // 500ms
                         blocker.setPosition(0.5);
-                        if (safeSleep(0.25)) return;  // 500ms
+                        if (safeSleep(0.5)) return;  // 500ms
 
 //                        shooterLeft.setPower(0);
 //                        shooterRight.setPower(0);
