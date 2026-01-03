@@ -149,28 +149,28 @@ public class Q2VelocityTeleOp extends LinearOpMode {
 
             // ================= DOOM SETTINGS =================
             if (gamepad2.dpad_up) {
-                doomVelocity = 1980;//85 Shoot from Far
+                doomVelocity = 1900;//85 Shoot from Far //1980
                 gamepad2.rumble(200);
                 revTime = 2500;
                 waitTime = 1250;
                 transferTime = 0.3;
             }
             if (gamepad2.dpad_down) {
-                doomVelocity = 1863;//80 Shoot from Far
+                doomVelocity = 1950;//80 Shoot from Far //1863
                 gamepad2.rumble(200);
                 revTime = 2500;
                 waitTime = 1500;
                 transferTime = 0.3;
             }
             if (gamepad2.dpad_left) {
-                doomVelocity = 1760;// 65 Shoot from Close
+                doomVelocity = 1890;// 65 Shoot from Close // 1760
                 gamepad2.rumble(200);
                 revTime = 2500;
                 waitTime = 1250;
                 transferTime = 0.3;
             }
             if (gamepad2.dpad_right) {
-                doomVelocity = 1630;//70 Shoot from Close
+                doomVelocity = 1630;//70 Shoot from Close // 1630
                 gamepad2.rumble(200);
                 revTime = 2500;
                 waitTime = 1250;
@@ -211,15 +211,15 @@ public class Q2VelocityTeleOp extends LinearOpMode {
                         telemetry.addLine("DOOM Reverse IntakeTrans");
                         telemetry.update();
 
+                        blocker.setPosition(0.1);
+                        if (safeSleep(0.5)) return;  // 500ms
+                        blocker.setPosition(0.5);
+
                         shooterRight.setVelocity(1300);
                         shooterLeft.setVelocity(-1300);
                         transfer.setPower(-0.3);
                         intake.setPower(0.3);
 
-
-                        blocker.setPosition(0.1);
-                        if (safeSleep(0.5)) return;  // 500ms
-                        blocker.setPosition(0.5);
                         if (safeSleep(0.5)) return;  // 500ms
 
 //                        shooterLeft.setPower(0);
@@ -239,7 +239,7 @@ public class Q2VelocityTeleOp extends LinearOpMode {
                         break;
 
                     case 1: // Shoot 1
-                            if(Math.abs(currentVelocity - doomVelocity) < 50) {
+                            if(Math.abs(currentVelocity - doomVelocity) < 40) {
                            // if (System.currentTimeMillis() - doomTimer >= revTime) {
                                 telemetry.addLine(" Doom SHOOT 1");
                                 telemetry.addData("Right Shooter Velocity",shooterRight.getVelocity());
@@ -248,7 +248,9 @@ public class Q2VelocityTeleOp extends LinearOpMode {
                                 transfer.setPower(0.65);
                                 //intake.setPower(0.8);
                                 // new code
-                                if (safeSleep(transferTime-.1)) return;
+                                if (safeSleep(transferTime-.15)) return;
+                                transfer.setPower(-0.4);
+                                if (safeSleep(transferTime-.15)) return;
                                 transfer.setPower(0);
                                 doomTimer = System.currentTimeMillis();
                                 doomStep++;
@@ -268,7 +270,7 @@ public class Q2VelocityTeleOp extends LinearOpMode {
                         break;
 */
                     case 2: // Shoot 2
-                        if(Math.abs(currentVelocity - doomVelocity) < 50){
+                        if(Math.abs(currentVelocity - doomVelocity) < 40){
 //                        if (System.currentTimeMillis() - doomTimer >= waitTime) {
                             telemetry.addLine("DOOM - Shoot 2");
                             //telemetry.addData("rightShooter Tpr",shooterRight.getCurrentPosition());
@@ -297,7 +299,7 @@ public class Q2VelocityTeleOp extends LinearOpMode {
                         break;
 */
                     case 3: // SHOOT 3
-                        if(Math.abs(currentVelocity - doomVelocity) < 50){
+                        if(Math.abs(currentVelocity - doomVelocity) < 40){
 //                        if (System.currentTimeMillis() - doomTimer >= waitTime) {
                             telemetry.addLine("DOOM - SHOOT 3");
                             //telemetry.addData("rightShooter Tpr",shooterRight.getCurrentPosition());
