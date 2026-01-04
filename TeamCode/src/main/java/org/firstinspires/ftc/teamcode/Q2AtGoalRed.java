@@ -188,7 +188,7 @@ public void timeTransferAndIntake(double seconds) {
 
 
 
-        Pose2d beginPose = new Pose2d(new Vector2d(-52,50), Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(new Vector2d(-54,50), Math.toRadians(-225));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -236,7 +236,9 @@ public void timeTransferAndIntake(double seconds) {
 //                .turn(Math.toRadians(-50))
 //                .lineToX(-34)
 //                .build();
-//
+
+
+
 //        Action path3 = drive.actionBuilder(beginPose)
 //
 //                .lineToX(-25)
@@ -278,11 +280,23 @@ public void timeTransferAndIntake(double seconds) {
 
 //this is very very very non functional someone pls fix it :>
 
-                .strafeTo(new Vector2d(-52,16))
+                .strafeTo(new Vector2d(-13,12))
+                .waitSeconds(2)
+                .turnTo(Math.toRadians(-270))
+                .strafeTo(new Vector2d(-13,32))
+                .strafeTo(new Vector2d(-13,45))
+                .strafeTo(new Vector2d(-13,12))
+                .turnTo(Math.toRadians(140))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(5,12))
 
-                .turn(Math.toRadians(-90))
-//                .stopAndAdd( new functionOfDOOM())
-                .strafeToLinearHeading(new Vector2d(-40, 45), Math.toRadians(90))
+
+
+
+
+//                .strafeToLinearHeading(new Vector2d(-50, -15), Math.toRadians(140))
+////                .stopAndAdd( new functionOfDOOM())
+
 ////                .stopAndAdd(new smartIntake())
 //                .strafeTo(new Vector2d(-13,69))
 //                .strafeTo(new Vector2d(-13,45))

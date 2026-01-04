@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Scrimmage2AutoFarSideBlue", group = "Autonomous")
+@Autonomous(name = "Q2AutoFarSideBlue", group = "Autonomous")
 public class Q2AutoFarSideBlue extends LinearOpMode {
 
 
@@ -219,10 +219,10 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
 
                 .strafeTo(new Vector2d(58,-16))
-                .turn(Math.toRadians(25))
+                .turn(Math.toRadians(20))
                 .stopAndAdd(new functionOfDOOM() )
 
-                .strafeToLinearHeading(new Vector2d(39,-28), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(36 ,-28), Math.toRadians(-90))
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(39,-56))
                 .strafeTo(new Vector2d(39,-28))

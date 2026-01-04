@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Scrimmage2AutoFarSideRed", group = "Autonomous")
+@Autonomous(name = "Q2AutoFarSideRed", group = "Autonomous")
 public class Q2AutoFarSideRed extends LinearOpMode {
 
 
@@ -130,7 +130,7 @@ public class Q2AutoFarSideRed extends LinearOpMode {
         shooterRight = hardwareMap.dcMotor.get("leftShooter");
         blocker = hardwareMap.servo.get("blocker");
 
-        Pose2d beginPose = new Pose2d(new Vector2d(56,12), Math.toRadians(0));
+        Pose2d beginPose = new Pose2d(new Vector2d(60,16), Math.toRadians(-180));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -148,24 +148,30 @@ public class Q2AutoFarSideRed extends LinearOpMode {
 ////                .strafeTo(new Vector2d(56,12))
 ////                .strafeTo(new Vector2d(56,35))
                 .build();
-        Action complex = drive.actionBuilder(beginPose)
-                .strafeTo(new Vector2d(58, 16))
-                .turn(Math.toRadians(-25))
-                .stopAndAdd(new functionOfDOOM())
+        Action Auto = drive.actionBuilder(beginPose)
+                .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(150))
 
-                .strafeToLinearHeading(new Vector2d(39, 28), Math.toRadians(90))
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(39, 56))
-                .strafeTo(new Vector2d(39, 28))
-                .stopAndAdd(new stopSmartIntake())
 
-                .strafeToLinearHeading(new Vector2d(52, 16), Math.toRadians(135))
-                .stopAndAdd(new functionOfDOOM())
+                .strafeToLinearHeading(new Vector2d(35,34),Math.toRadians(90))
 
-                .strafeTo(new Vector2d(12, 28))
+
+                .strafeTo(new Vector2d(35,49))
+                .strafeTo(new Vector2d(35,28))
+                .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(150))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(12,28))
+//                .stopAndAdd(new smartIntake())
+//                .strafeTo(new Vector2d(39, 56))
+//                .strafeTo(new Vector2d(39, 28))
+//                .stopAndAdd(new stopSmartIntake())
+//
+//                .strafeToLinearHeading(new Vector2d(52, 16), Math.toRadians(135))
+//                .stopAndAdd(new functionOfDOOM())
+//
+//                .strafeTo(new Vector2d(12, 28))
                 .build();
 
-        Actions.runBlocking(new SequentialAction(complex));
+        Actions.runBlocking(new SequentialAction(Auto));
 
 
 
