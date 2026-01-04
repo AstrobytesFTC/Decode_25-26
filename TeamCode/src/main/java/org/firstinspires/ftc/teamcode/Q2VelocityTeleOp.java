@@ -38,6 +38,22 @@ public class Q2VelocityTeleOp extends LinearOpMode {
     boolean doomActive = false;
     int doomStep = 0;
     long doomTimer = 0;
+    double closeHigh = 1450;
+    double closeMid  = 1400;
+    double closeLow  = 1350;
+//    double reverseClose = -1400;
+
+    // Far shot velocities (ticks/sec)
+    double farHigh = 1850;
+    double farMid  = 1800;
+    double farLow  = 1750;
+//    double reverseFar = -1750;
+    enum Mode {
+        CLOSE,
+        FAR
+    }
+
+    Mode currentMode = Mode.FAR;
 
     // Unified shooter control
 //    double shooterVelocity = 0;
@@ -139,43 +155,115 @@ public class Q2VelocityTeleOp extends LinearOpMode {
             }
 
             // ============INVERSE TRANSFER===============
-            if(gamepad2.y){
-                transfer.setPower(-0.3);
-                intake.setPower(0.7);
-                sleep(250);
+
+//            if(gamepad2.y){
+//                transfer.setPower(-0.3);
+//                intake.setPower(0.7);
+//                sleep(250);
+//                transfer.setPower(0);
+//                intake.setPower(0);
+//            }
+
+            // ================= DOOM SETTINGS =================
+            //Setting far or close mode
+            // ============DOOM CONTROL!!=================
+            if (gamepad2.y) {
+                currentMode = Mode.CLOSE;
+                gamepad2.rumble(200);
+
+                doomVelocity = closeMid;
+                revTime = 2500;
+                waitTime = 1250;
+                transferTime = 0.3;
+            }
+            if (gamepad2.x) {
+                currentMode = Mode.FAR;
+                gamepad2.rumble(200);
+
+                doomVelocity = farMid;
+                revTime = 2500;
+                waitTime = 1250;
+            }
+
+            if(gamepad1.x){
+                transfer.setPower(1);
+                sleep(200);
                 transfer.setPower(0);
+            }
+            if(gamepad1.y){
+                intake.setPower(1);
+                sleep(200);
                 intake.setPower(0);
             }
 
-            // ================= DOOM SETTINGS =================
-            if (gamepad2.dpad_up) {
-                doomVelocity = 1900;//85 Shoot from Far //1980
-                gamepad2.rumble(200);
-                revTime = 2500;
-                waitTime = 1250;
-                transferTime = 0.3;
-            }
-            if (gamepad2.dpad_down) {
-                doomVelocity = 1950;//80 Shoot from Far //1863
-                gamepad2.rumble(200);
-                revTime = 2500;
-                waitTime = 1500;
-                transferTime = 0.3;
-            }
-            if (gamepad2.dpad_left) {
-                doomVelocity = 1890;// 65 Shoot from Close // 1760
-                gamepad2.rumble(200);
-                revTime = 2500;
-                waitTime = 1250;
-                transferTime = 0.3;
-            }
-            if (gamepad2.dpad_right) {
-                doomVelocity = 1630;//70 Shoot from Close // 1630
-                gamepad2.rumble(200);
-                revTime = 2500;
-                waitTime = 1250;
-                transferTime = 0.3;
-            }
+            if (currentMode == Mode.CLOSE) {
+
+                if (gamepad2.dpad_up) {
+
+                    doomVelocity = closeHigh;
+                    gamepad2.rumble(200);
+                    revTime = 2500;
+                    waitTime = 1250;
+                    transferTime = 0.3;
+
+                } else if (gamepad2.dpad_left) {
+
+                    doomVelocity = closeMid;
+                    gamepad2.rumble(200);
+                    revTime = 2500;
+                    waitTime = 1250;
+                    transferTime = 0.3;
+
+                } else if (gamepad2.dpad_down) {
+
+                    doomVelocity = closeLow;
+                    gamepad2.rumble(200);
+                    revTime = 2500;
+                    waitTime = 1250;
+                    transferTime = 0.3;
+
+                } else if (gamepad2.dpad_right) {
+//Super Velocity
+                    doomVelocity = closeHigh+50;
+                    gamepad2.rumble(200);
+                    revTime = 2500;
+                    waitTime = 1250;
+                    transferTime = 0.3;
+
+                }
+
+            } // Removed Reverse
+            else if (currentMode == Mode.FAR) {
+
+
+                if (gamepad2.dpad_up) {
+
+                    doomVelocity = farHigh;
+                    gamepad2.rumble(200);
+                    revTime = 2500;
+                    waitTime = 1250;
+                    transferTime = 0.3;
+
+                } else if (gamepad2.dpad_left) {
+
+                    doomVelocity = farMid;
+                    gamepad2.rumble(200);
+                    revTime = 2500;
+                    waitTime = 1250;
+
+                } else if (gamepad2.dpad_down) {
+                    doomVelocity = farLow;
+                    gamepad2.rumble(200);
+                    revTime = 2500;
+                    waitTime = 1250;
+                    //Temporarily removed reverse
+                } else if (gamepad2.dpad_right) {
+                    doomVelocity = farHigh+50;
+                    gamepad2.rumble(200);
+                    revTime = 2500;
+                    waitTime = 1250;
+                }
+            } // Removed Reverse
 
             // ================= DOOM START =================
             if (gamepad2.a && !doomActive) {
@@ -372,6 +460,7 @@ public class Q2VelocityTeleOp extends LinearOpMode {
             telemetry.addData("Transfer Time",transferTime);
             //Pos
             telemetry.addData("current Velocity",shooterLeft.getVelocity());
+            telemetry.addData("currentMode",currentMode);
 
             telemetry.update();
         }
