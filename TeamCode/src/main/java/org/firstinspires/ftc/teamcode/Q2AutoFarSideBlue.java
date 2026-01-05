@@ -92,7 +92,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
         @Override
         public void run(){
             boolean shootControl = false;
-            double doomVelocity = 1700;
+            double doomVelocity = 1680;
             double transfertime = 0.3;
 
             blocker.setPosition(0.1);
