@@ -92,7 +92,7 @@ public class Q2AutoFarSideRed extends LinearOpMode {
         @Override
         public void run(){
             boolean shootControl = false;
-            double doomVelocity = 1640;
+            double doomVelocity = 1700;
             double transfertime = 0.3;
 
             blocker.setPosition(0.1);
@@ -237,11 +237,11 @@ public class Q2AutoFarSideRed extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(160))
                 .stopAndAdd(new functionOfDOOM())
                 .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(38,34),Math.toRadians(100))
+                .strafeToLinearHeading(new Vector2d(38,34),Math.toRadians(88))
                 .strafeTo(new Vector2d(35,57))
                 .strafeTo(new Vector2d(35,28))
                 .stopAndAdd(new stopSmartIntake())
-                .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(155))
+                .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(153))
                 .stopAndAdd(new functionOfDOOM())
                 .waitSeconds(1)
                 .strafeTo(new Vector2d(12,28))
