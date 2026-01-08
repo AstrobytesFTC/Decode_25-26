@@ -92,7 +92,7 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
         @Override
         public void run(){
             boolean shootControl = false;
-            double doomVelocity = 1400;
+            double doomVelocity = 1420;
             double transfertime = 0.3;
 
             blocker.setPosition(0.1);
