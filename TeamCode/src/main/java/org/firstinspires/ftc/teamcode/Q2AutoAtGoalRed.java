@@ -122,6 +122,7 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
                 transfer.setPower(-0.4);
                 sleepSeconds(transfertime - 0.15);
                 transfer.setPower(0);
+
             }
 
             if (waitForShooter(shooterLeft, doomVelocity, 4000)) {
