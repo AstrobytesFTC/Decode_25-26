@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode;
 
 // RR-specific imports
 
+import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
+import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.FLOAT;
+
 import com.acmerobotics.dashboard.config.Config;
 
 // Non-RR imports
@@ -92,7 +95,7 @@ public class Q2AutoFarSideRed extends LinearOpMode {
         @Override
         public void run(){
             boolean shootControl = false;
-            double doomVelocity = 1700;
+            double doomVelocity = 1690;
             double transfertime = 0.3;
 
             blocker.setPosition(0.1);
@@ -113,6 +116,8 @@ public class Q2AutoFarSideRed extends LinearOpMode {
 
             shooterRight.setVelocity(doomVelocity);
             shooterLeft.setVelocity(-doomVelocity);
+
+            intake.setPower(0.3);
 
             if (waitForShooter(shooterRight, doomVelocity, 1500)) {
                 transfer.setPower(0.65);
@@ -137,6 +142,63 @@ public class Q2AutoFarSideRed extends LinearOpMode {
             doomVelocity = 0;
             shooterRight.setVelocity(0);
             shooterLeft.setVelocity(0);
+            intake.setPower(0);
+        }
+    }
+    public class fasterFunctionOfDOOM implements InstantFunction{
+        @Override
+        public void run(){
+            boolean shootControl = false;
+            double doomVelocity = 1670;
+            double transfertime = 0.3;
+
+            blocker.setPosition(0.1);
+            sleep(1000);  // 500ms
+            blocker.setPosition(0.5);
+
+            shooterRight.setVelocity(1300);
+            shooterLeft.setVelocity(-1300);
+            transfer.setPower(-0.3);
+            intake.setPower(0.3);
+
+            sleep(900);
+
+            shooterRight.setVelocity(0);
+            shooterLeft.setVelocity(0);
+            transfer.setPower(0);
+            intake.setPower(0);
+
+            shooterRight.setVelocity(doomVelocity);
+            shooterLeft.setVelocity(-doomVelocity);
+
+            intake.setPower(0.3);
+
+            if (waitForShooter(shooterRight, doomVelocity, 1500)) {
+                transfer.setPower(0.65);
+                sleepSeconds(transfertime - 0.15);
+                transfer.setPower(-0.4);
+                sleepSeconds(transfertime - 0.15);
+                transfer.setPower(0);
+            }
+
+            if (waitForShooter(shooterLeft, doomVelocity, 3000)) {
+                transfer.setPower(0.65);
+                sleepSeconds(transfertime+0.1);
+                transfer.setPower(0);
+            }
+
+            if (waitForShooter(shooterLeft, doomVelocity, 3000)) {
+                transfer.setPower(0.7);
+                intake.setPower(0.7);
+                sleepSeconds(transfertime + 0.3);
+                transfer.setPower(0);
+            }
+            doomVelocity = 0;
+            shooterRight.setVelocity(-1400);
+            shooterLeft.setVelocity(1400);
+           // shooterRight.setVelocity(0);
+           // shooterLeft.setVelocity(0);
+            //new stopLauncher();
             intake.setPower(0);
         }
     }
@@ -194,6 +256,19 @@ public class Q2AutoFarSideRed extends LinearOpMode {
         }
     }
 
+    public class stopLauncher implements InstantFunction{
+        @Override
+        public void run(){
+            //Change If needed
+            //shooterRight.setVelocity(-300);
+            //shooterLeft.setVelocity(-300);
+            //sleepSeconds(0.2);
+            shooterRight.setVelocity(0);
+            shooterLeft.setVelocity(0);
+        }
+    }
+
+
 
 
     public void runOpMode() {
@@ -238,13 +313,13 @@ public class Q2AutoFarSideRed extends LinearOpMode {
                 .stopAndAdd(new functionOfDOOM())
                 .stopAndAdd(new smartIntake())
                 .strafeToLinearHeading(new Vector2d(38,34),Math.toRadians(88))
-                .strafeTo(new Vector2d(35,57))
+                .strafeTo(new Vector2d(35,60))
                 .strafeTo(new Vector2d(35,28))
+                .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(156))
                 .stopAndAdd(new stopSmartIntake())
-                .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(153))
-                .stopAndAdd(new functionOfDOOM())
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(12,28))
+                .stopAndAdd(new fasterFunctionOfDOOM())
+                .strafeTo(new Vector2d(40,28))
+                .stopAndAdd(new stopLauncher())
                 .build();
 
         Actions.runBlocking(new SequentialAction(complex));
