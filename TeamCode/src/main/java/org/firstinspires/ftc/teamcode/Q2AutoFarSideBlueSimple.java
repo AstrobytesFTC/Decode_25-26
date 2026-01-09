@@ -4,25 +4,23 @@ package org.firstinspires.ftc.teamcode;
 // RR-specific imports
 
 import com.acmerobotics.dashboard.config.Config;
-
-// Non-RR imports
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantFunction;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Q2AutoFarSideBlue", group = "Autonomous")
-public class Q2AutoFarSideBlue extends LinearOpMode {
+@Autonomous(name = "Q2AutoFarSideBlueSimple", group = "Autonomous")
+public class Q2AutoFarSideBlueSimple extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -334,18 +332,23 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
 
                 .turn(Math.toRadians(26))
                 .stopAndAdd(new functionOfDOOM() )
-                .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(36 ,-28), Math.toRadians(-90))
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(39,-75))
-                .strafeTo(new Vector2d(39,-32))
-                .strafeToLinearHeading(new Vector2d(52,-25),Math.toRadians(-145))
-                .stopAndAdd(new stopSmartIntake())
-                .stopAndAdd( new functionOfDOOM())
+                .lineToX(40)
                 .stopAndAdd(new stopLauncher())
-
-                .strafeTo(new Vector2d(40,-28))
+                .waitSeconds(1)
                 .stopAndAdd(new stopLauncher1())
+
+//                .stopAndAdd(new smartIntake())
+//                .strafeToLinearHeading(new Vector2d(36 ,-28), Math.toRadians(-90))
+//                .stopAndAdd(new smartIntake())
+//                .strafeTo(new Vector2d(39,-75))
+//                .strafeTo(new Vector2d(39,-32))
+//                .strafeToLinearHeading(new Vector2d(52,-25),Math.toRadians(-145))
+//                .stopAndAdd(new stopSmartIntake())
+//                .stopAndAdd( new functionOfDOOM())
+//                .stopAndAdd(new stopLauncher())
+//
+//                .strafeTo(new Vector2d(40,-28))
+//                .stopAndAdd(new stopLauncher1())
                 .build();
 
         Action Scrimmage2AutoWithShooting = drive.actionBuilder(beginPose)
