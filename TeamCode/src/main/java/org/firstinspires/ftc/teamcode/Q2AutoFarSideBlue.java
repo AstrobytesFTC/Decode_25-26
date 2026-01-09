@@ -104,7 +104,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
             transfer.setPower(-0.3);
             intake.setPower(0.3);
 
-            sleep(500);
+            sleep(800);
 
             shooterRight.setVelocity(0);
             shooterLeft.setVelocity(0);
@@ -114,7 +114,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
             shooterRight.setVelocity(doomVelocity);
             shooterLeft.setVelocity(-doomVelocity);
 
-            if (waitForShooter(shooterRight, doomVelocity, 1500)) {
+            if (waitForShooter(shooterRight, doomVelocity, 3000)) {
                 transfer.setPower(0.65);
                 sleepSeconds(transfertime - 0.15);
                 transfer.setPower(-0.4);
@@ -122,16 +122,16 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
                 transfer.setPower(0);
             }
 
-            if (waitForShooter(shooterLeft, doomVelocity, 1500)) {
+            if (waitForShooter(shooterLeft, doomVelocity, 3000)) {
                 transfer.setPower(0.65);
                 sleepSeconds(transfertime);
                 transfer.setPower(0);
             }
 
-            if (waitForShooter(shooterLeft, doomVelocity, 1500)) {
-                transfer.setPower(0.7);
+            if (waitForShooter(shooterLeft, doomVelocity, 3000)) {
+                transfer.setPower(0.8);
                 intake.setPower(0.7);
-                sleepSeconds(transfertime + 0.1);
+                sleepSeconds(transfertime + 0.3);
                 transfer.setPower(0);
             }
             doomVelocity = 0;
@@ -139,6 +139,31 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
             shooterLeft.setVelocity(0);
             intake.setPower(0);
         }
+    }
+
+    public class stopLauncher implements InstantFunction {
+        @Override
+        public void run() {
+            //Change If needed
+            //shooterRight.setVelocity(-300);
+            //shooterLeft.setVelocity(-300);
+            //sleepSeconds(0.2);
+            shooterRight.setVelocity(-300);
+            shooterLeft.setVelocity(300);
+        }
+    }
+
+        public class stopLauncher1 implements InstantFunction{
+            @Override
+            public void run(){
+                //Change If needed
+                //shooterRight.setVelocity(-300);
+                //shooterLeft.setVelocity(-300);
+                //sleepSeconds(0.2);
+                shooterRight.setVelocity(0);
+                shooterLeft.setVelocity(0);
+
+            }
     }
 
 
@@ -179,8 +204,8 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
             //Change If needed
             transfer.setPower(0.6);
             intake.setPower(0.75);
-            shooterRight.setVelocity(-1450);
-            shooterLeft.setVelocity(1450);
+            shooterRight.setVelocity(-1000);
+            shooterLeft.setVelocity(1000);
         }
     }
     public class stopSmartIntake implements InstantFunction{
@@ -314,11 +339,13 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(39,-75))
                 .strafeTo(new Vector2d(39,-32))
-                .strafeToLinearHeading(new Vector2d(52,-16),Math.toRadians(-145))
+                .strafeToLinearHeading(new Vector2d(52,-25),Math.toRadians(-145))
                 .stopAndAdd(new stopSmartIntake())
                 .stopAndAdd( new functionOfDOOM())
+                .stopAndAdd(new stopLauncher())
 
-                .strafeTo(new Vector2d(12,-28))
+                .strafeTo(new Vector2d(40,-28))
+                .stopAndAdd(new stopLauncher1())
                 .build();
 
         Action Scrimmage2AutoWithShooting = drive.actionBuilder(beginPose)
