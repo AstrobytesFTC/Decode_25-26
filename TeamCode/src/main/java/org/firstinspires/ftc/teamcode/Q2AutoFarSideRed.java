@@ -263,14 +263,26 @@ public class Q2AutoFarSideRed extends LinearOpMode {
         @Override
         public void run(){
             //Change If needed
+            shooterRight.setVelocity(-300);
+            shooterLeft.setVelocity(300);
+            //sleepSeconds(0.2);
+            //shooterRight.setVelocity(0);
+            //shooterLeft.setVelocity(0);
+        }
+    }
+
+    public class stopLauncher1 implements InstantFunction{
+        @Override
+        public void run(){
+            //Change If needed
             //shooterRight.setVelocity(-300);
             //shooterLeft.setVelocity(-300);
             //sleepSeconds(0.2);
             shooterRight.setVelocity(0);
             shooterLeft.setVelocity(0);
+
         }
     }
-
 
 
 
@@ -321,8 +333,9 @@ public class Q2AutoFarSideRed extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(59,13),Math.toRadians(158))
                 .stopAndAdd(new stopSmartIntake())
                 .stopAndAdd(new fasterFunctionOfDOOM())
-                .strafeTo(new Vector2d(40,28))
                 .stopAndAdd(new stopLauncher())
+                .strafeTo(new Vector2d(40,28))
+                .stopAndAdd(new stopLauncher1())
                 .build();
 
         Actions.runBlocking(new SequentialAction(complex));

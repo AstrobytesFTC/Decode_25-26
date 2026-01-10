@@ -77,7 +77,7 @@ public class Q2AutoFarSideBlueSimple extends LinearOpMode {
 
             double velocity = Math.abs(shooter.getVelocity());
 
-            if (Math.abs(velocity - target) < 20) {
+            if (Math.abs(velocity - target) < 30) {
                 return true;
             }
 
@@ -95,7 +95,7 @@ public class Q2AutoFarSideBlueSimple extends LinearOpMode {
 
             blocker.setPosition(0.1);
             sleep(1000);  // 500ms
-            blocker.setPosition(0.5);
+            blocker.setPosition(0.6);
 
             shooterRight.setVelocity(1300);
             shooterLeft.setVelocity(-1300);
@@ -113,6 +113,7 @@ public class Q2AutoFarSideBlueSimple extends LinearOpMode {
             shooterLeft.setVelocity(-doomVelocity);
 
             if (waitForShooter(shooterRight, doomVelocity, 3000)) {
+                sleepSeconds(0.2);
                 transfer.setPower(0.65);
                 sleepSeconds(transfertime - 0.15);
                 transfer.setPower(-0.4);
@@ -121,6 +122,7 @@ public class Q2AutoFarSideBlueSimple extends LinearOpMode {
             }
 
             if (waitForShooter(shooterLeft, doomVelocity, 3000)) {
+                sleepSeconds(0.2);
                 transfer.setPower(0.65);
                 sleepSeconds(transfertime);
                 transfer.setPower(0);

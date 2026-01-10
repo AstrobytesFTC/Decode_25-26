@@ -79,7 +79,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
 
             double velocity = Math.abs(shooter.getVelocity());
 
-            if (Math.abs(velocity - target) < 20) {
+            if (Math.abs(velocity - target) < 30) {
                 return true;
             }
 
@@ -92,7 +92,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
         @Override
         public void run(){
             boolean shootControl = false;
-            double doomVelocity = 1680;
+            double doomVelocity = 1690;
             double transfertime = 0.3;
 
             blocker.setPosition(0.1);
@@ -140,6 +140,60 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
             intake.setPower(0);
         }
     }
+    public class fasterfunctionOfDOOM implements InstantFunction{
+        @Override
+        public void run(){
+            boolean shootControl = false;
+            double doomVelocity = 1685;
+            double transfertime = 0.3;
+
+            blocker.setPosition(0.1);
+            sleep(1000);  // 500ms
+            blocker.setPosition(0.5);
+
+            shooterRight.setVelocity(1300);
+            shooterLeft.setVelocity(-1300);
+            transfer.setPower(-0.3);
+            intake.setPower(0.3);
+
+            sleep(800);
+
+            shooterRight.setVelocity(0);
+            shooterLeft.setVelocity(0);
+            transfer.setPower(0);
+            intake.setPower(0);
+
+            shooterRight.setVelocity(doomVelocity);
+            shooterLeft.setVelocity(-doomVelocity);
+
+            if (waitForShooter(shooterRight, doomVelocity, 3000)) {
+//                sleepSeconds(0.2);
+                transfer.setPower(0.65);
+                sleepSeconds(transfertime - 0.15);
+                transfer.setPower(-0.4);
+                sleepSeconds(transfertime - 0.15);
+                transfer.setPower(0);
+            }
+
+            if (waitForShooter(shooterLeft, doomVelocity, 4000)) {
+//                sleepSeconds(0.2);
+                transfer.setPower(0.65);
+                sleepSeconds(transfertime);
+                transfer.setPower(0);
+            }
+
+            if (waitForShooter(shooterLeft, doomVelocity, 4000)) {
+                transfer.setPower(0.8);
+                intake.setPower(0.7);
+                sleepSeconds(transfertime + 0.3);
+                transfer.setPower(0);
+            }
+            doomVelocity = 0;
+            shooterRight.setVelocity(-1000);
+            shooterLeft.setVelocity(1000);
+            intake.setPower(0);
+        }
+    }
 
     public class stopLauncher implements InstantFunction {
         @Override
@@ -153,7 +207,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
         }
     }
 
-        public class stopLauncher1 implements InstantFunction{
+    public class stopLauncher1 implements InstantFunction{
             @Override
             public void run(){
                 //Change If needed
@@ -341,7 +395,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
                 .strafeTo(new Vector2d(39,-32))
                 .strafeToLinearHeading(new Vector2d(52,-25),Math.toRadians(-145))
                 .stopAndAdd(new stopSmartIntake())
-                .stopAndAdd( new functionOfDOOM())
+                .stopAndAdd( new fasterfunctionOfDOOM())
                 .stopAndAdd(new stopLauncher())
 
                 .strafeTo(new Vector2d(40,-28))

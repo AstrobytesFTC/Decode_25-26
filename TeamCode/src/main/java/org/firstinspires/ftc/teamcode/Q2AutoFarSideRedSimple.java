@@ -255,11 +255,20 @@ public class Q2AutoFarSideRedSimple extends LinearOpMode {
         @Override
         public void run(){
             //Change If needed
+            shooterRight.setVelocity(-300);
+            shooterLeft.setVelocity(300);
+               }
+    }
+    public class stopLauncher1 implements InstantFunction{
+        @Override
+        public void run(){
+            //Change If needed
             //shooterRight.setVelocity(-300);
             //shooterLeft.setVelocity(-300);
             //sleepSeconds(0.2);
             shooterRight.setVelocity(0);
             shooterLeft.setVelocity(0);
+
         }
     }
 
@@ -306,6 +315,7 @@ public class Q2AutoFarSideRedSimple extends LinearOpMode {
         Action complex = drive.actionBuilder(beginPose)
                 .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(160))
                 .stopAndAdd(new functionOfDOOM())
+                .stopAndAdd(new stopLauncher())
 //                .stopAndAdd(new smartIntake())
 //                .strafeToLinearHeading(new Vector2d(38,34),Math.toRadians(88))
 //                .strafeTo(new Vector2d(35,60))
@@ -314,7 +324,7 @@ public class Q2AutoFarSideRedSimple extends LinearOpMode {
 //                .stopAndAdd(new stopSmartIntake())
 //                .stopAndAdd(new fasterFunctionOfDOOM())
                 .strafeTo(new Vector2d(40,28))
-                .stopAndAdd(new stopLauncher())
+                .stopAndAdd(new stopLauncher1())
                 .build();
 
         Actions.runBlocking(new SequentialAction(complex));
