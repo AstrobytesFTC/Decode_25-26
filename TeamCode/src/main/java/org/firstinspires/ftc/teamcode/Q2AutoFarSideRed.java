@@ -149,7 +149,7 @@ public class Q2AutoFarSideRed extends LinearOpMode {
         @Override
         public void run(){
             boolean shootControl = false;
-            double doomVelocity = 1670;
+            double doomVelocity = 1680;
             double transfertime = 0.3;
 
             blocker.setPosition(0.1);
@@ -161,7 +161,7 @@ public class Q2AutoFarSideRed extends LinearOpMode {
             transfer.setPower(-0.3);
             intake.setPower(0.3);
 
-            sleep(900);
+            sleep(1200);
 
             shooterRight.setVelocity(0);
             shooterLeft.setVelocity(0);
@@ -171,7 +171,7 @@ public class Q2AutoFarSideRed extends LinearOpMode {
             shooterRight.setVelocity(doomVelocity);
             shooterLeft.setVelocity(-doomVelocity);
 
-            intake.setPower(0.3);
+            //intake.setPower(0.3);
 
             if (waitForShooter(shooterRight, doomVelocity, 1500)) {
                 transfer.setPower(0.65);
@@ -183,7 +183,9 @@ public class Q2AutoFarSideRed extends LinearOpMode {
 
             if (waitForShooter(shooterLeft, doomVelocity, 3000)) {
                 transfer.setPower(0.65);
-                sleepSeconds(transfertime+0.1);
+                sleepSeconds(transfertime - 0.15);
+                transfer.setPower(-0.4);
+                sleepSeconds(transfertime - 0.15);
                 transfer.setPower(0);
             }
 
@@ -192,6 +194,7 @@ public class Q2AutoFarSideRed extends LinearOpMode {
                 intake.setPower(0.7);
                 sleepSeconds(transfertime + 0.3);
                 transfer.setPower(0);
+                sleepSeconds(0.5);
             }
             doomVelocity = 0;
             shooterRight.setVelocity(-1400);
@@ -309,13 +312,13 @@ public class Q2AutoFarSideRed extends LinearOpMode {
 ////                .strafeTo(new Vector2d(56,35))
                 .build();
         Action complex = drive.actionBuilder(beginPose)
-                .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(160))
+                .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(159))
                 .stopAndAdd(new functionOfDOOM())
                 .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(38,34),Math.toRadians(88))
+                .strafeToLinearHeading(new Vector2d(39,30),Math.toRadians(87))
                 .strafeTo(new Vector2d(35,60))
                 .strafeTo(new Vector2d(35,28))
-                .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(156))
+                .strafeToLinearHeading(new Vector2d(59,13),Math.toRadians(158))
                 .stopAndAdd(new stopSmartIntake())
                 .stopAndAdd(new fasterFunctionOfDOOM())
                 .strafeTo(new Vector2d(40,28))
