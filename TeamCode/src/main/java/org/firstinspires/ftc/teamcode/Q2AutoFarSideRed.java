@@ -327,7 +327,7 @@ public class Q2AutoFarSideRed extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(56,16),Math.toRadians(159))
                 .stopAndAdd(new functionOfDOOM())
                 .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(39,30),Math.toRadians(87))
+                .strafeToLinearHeading(new Vector2d(39,30),Math.toRadians(86.5))
                 .strafeTo(new Vector2d(35,60))
                 .strafeTo(new Vector2d(35,28))
                 .strafeToLinearHeading(new Vector2d(59,13),Math.toRadians(158))
