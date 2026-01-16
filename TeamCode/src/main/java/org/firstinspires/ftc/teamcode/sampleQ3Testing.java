@@ -159,6 +159,7 @@ public class sampleQ3Testing extends LinearOpMode {
         shooterRight = hardwareMap.get(DcMotorEx.class, "rightShooter");
         shooterLeft  = hardwareMap.get(DcMotorEx.class, "leftShooter");
         blocker = hardwareMap.servo.get("blocker");
+        //extra
         Servo bocker = hardwareMap.servo.get("bockerservo");
         rgbLight = hardwareMap.get(Servo.class, "blinkin");
 
