@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -15,12 +14,11 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
 import java.util.List;
 
 @TeleOp
-public class sampleQ3Testing extends LinearOpMode {
+public class FinalTeleOpQ3 extends LinearOpMode {
 
     // Drive motors
     DcMotor frontLeftMotor;
@@ -148,8 +146,8 @@ public class sampleQ3Testing extends LinearOpMode {
         telemetry.update();
     }
 
-    private void blinkColor(double color){
-        rgbLight.setPosition(color);
+    private void blinkColor(){
+        rgbLight.setPosition(0.5);
         block.start(200);
         if(block.done()){
             rgbLight.setPosition(0);
@@ -172,7 +170,7 @@ public class sampleQ3Testing extends LinearOpMode {
         shooterLeft  = hardwareMap.get(DcMotorEx.class, "leftShooter");
         blocker = hardwareMap.servo.get("blocker");
         //extra
-        Servo bocker = hardwareMap.servo.get("bockerservo");
+        Servo blocker2 = hardwareMap.servo.get("bockerservo");
         rgbLight = hardwareMap.get(Servo.class, "blinkin");
 
 
@@ -215,29 +213,29 @@ public class sampleQ3Testing extends LinearOpMode {
             if (gamepad1.dpad_up)  moveSpeed = 0.35; // slow
             if (gamepad1.dpad_down) moveSpeed = 0.85; // fast
 
-            if(gamepad1.a) {
-                blinkColor(0.5);
+            if(gamepad2.a) {
+                blinkColor();
                 closeShot = true;
                 gamepad1.rumble(200);
                 pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
                 shooterLeft.setVelocity(-1550);
                 shooterRight.setVelocity(1550);
-            } else if(gamepad1.b){
-                blinkColor(0.5);
+            } else if(gamepad2.b){
+                blinkColor();
                 closeShot = true;
                 gamepad1.rumble(200);
                 pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
                 shooterLeft.setVelocity(-1700);
                 shooterRight.setVelocity(1700);
-            } else if(gamepad1.x){
-                blinkColor(0.5);
+            } else if(gamepad2.x){
+                blinkColor();
                 closeShot = false;
                 gamepad1.rumble(200);
                 pf = new PIDFCoefficients(3.0004, 0, 0, 13.103);
                 shooterLeft.setVelocity(-1900);
                 shooterRight.setVelocity(1900);
-            } else if(gamepad1.y){
-                blinkColor(0.5);
+            } else if(gamepad2.y){
+                blinkColor();
                 closeShot = false;
                 gamepad1.rumble(200);
                 pf = new PIDFCoefficients(3.0004, 0, 0, 13.103);
@@ -251,10 +249,21 @@ public class sampleQ3Testing extends LinearOpMode {
             transfer.setPower(gamepad1.right_trigger);
             intake.setPower(gamepad1.right_trigger);
 
+            //reverse shooter
+            if(gamepad2.b){
+                shooterLeft.setVelocity(500);
+                shooterRight.setVelocity(-500);
+
+                sleep(200);
+
+                shooterLeft.setVelocity(0);
+                shooterRight.setVelocity(0);
+            }
+
 
             DelayAction blockDelay = new DelayAction();
 
-            if(gamepad1.options){
+            if(gamepad1.y){
                 intake.setPower(-0.8);
                 blockDelay.start(200);
                 if(blockDelay.done()){
