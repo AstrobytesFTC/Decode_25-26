@@ -214,6 +214,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
             if (gamepad1.dpad_down) moveSpeed = 0.85; // fast
 
             if(gamepad2.a) {
+                //close
                 blinkColor();
                 closeShot = true;
                 gamepad1.rumble(200);
@@ -221,6 +222,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
                 shooterLeft.setVelocity(-1550);
                 shooterRight.setVelocity(1550);
             } else if(gamepad2.b){
+                //close
                 blinkColor();
                 closeShot = true;
                 gamepad1.rumble(200);
@@ -228,6 +230,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
                 shooterLeft.setVelocity(-1700);
                 shooterRight.setVelocity(1700);
             } else if(gamepad2.x){
+                //far
                 blinkColor();
                 closeShot = false;
                 gamepad1.rumble(200);
@@ -235,6 +238,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
                 shooterLeft.setVelocity(-1900);
                 shooterRight.setVelocity(1900);
             } else if(gamepad2.y){
+                //far
                 blinkColor();
                 closeShot = false;
                 gamepad1.rumble(200);
@@ -250,7 +254,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
             intake.setPower(gamepad1.right_trigger);
 
             //reverse shooter
-            if(gamepad2.b){
+            if(gamepad1.b){
                 shooterLeft.setVelocity(500);
                 shooterRight.setVelocity(-500);
 
@@ -262,7 +266,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
 
 
             DelayAction blockDelay = new DelayAction();
-
+//inverse intake
             if(gamepad1.y){
                 intake.setPower(-0.8);
                 blockDelay.start(200);
@@ -271,7 +275,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
                 }
             }
 
-
+//blocker
             if(gamepad1.left_bumper){
                 blocker.setPosition(0.5);
                 blockDelay.start(500);
