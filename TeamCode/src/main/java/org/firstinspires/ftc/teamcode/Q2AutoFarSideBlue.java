@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.InstantFunction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -21,6 +22,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
+@Disabled
 @Autonomous(name = "Q2AutoFarSideBlue", group = "Autonomous")
 public class Q2AutoFarSideBlue extends LinearOpMode {
 

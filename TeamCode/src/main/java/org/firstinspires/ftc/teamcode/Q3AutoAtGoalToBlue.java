@@ -11,7 +11,6 @@ import com.acmerobotics.roadrunner.InstantFunction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -22,9 +21,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Disabled
-@Autonomous(name = "Q2AutoAtGoalRed", group = "Autonomous")
-public class Q2AutoAtGoalRed extends LinearOpMode {
+@Autonomous(name = "Q3AutoAtGoalToBlue", group = "Autonomous")
+public class Q3AutoAtGoalToBlue extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -94,7 +92,7 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
         @Override
         public void run(){
             boolean shootControl = false;
-            double doomVelocity = 1420;
+            double doomVelocity = 1400;
             double transfertime = 0.3;
 
             blocker.setPosition(0.1);
@@ -124,7 +122,6 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
                 transfer.setPower(-0.4);
                 sleepSeconds(transfertime - 0.15);
                 transfer.setPower(0);
-
             }
 
             if (waitForShooter(shooterLeft, doomVelocity, 4000)) {
@@ -144,13 +141,15 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
                 transfer.setPower(0);
             }
             doomVelocity = 0;
+            shooterRight.setVelocity(-200);
+            shooterLeft.setVelocity(200);
+            sleepSeconds(0.1);
             shooterRight.setVelocity(0);
             shooterLeft.setVelocity(0);
             intake.setPower(0);
         }
     }
-
-    public class fastFunctionOfDOOM implements InstantFunction{
+    public class fasterfunctionOfDOOM implements InstantFunction{
         @Override
         public void run(){
             boolean shootControl = false;
@@ -166,7 +165,7 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
             transfer.setPower(-0.3);
             intake.setPower(0.3);
 
-            sleep(800);
+            sleep(500);
 
             shooterRight.setVelocity(0);
             shooterLeft.setVelocity(0);
@@ -203,33 +202,16 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
                 transfer.setPower(0);
             }
             doomVelocity = 0;
+            shooterRight.setVelocity(-200);
+            shooterLeft.setVelocity(200);
+            sleepSeconds(0.1);
+            shooterRight.setVelocity(0);
+            shooterLeft.setVelocity(0);
             intake.setPower(0);
         }
     }
-    public class stopLauncher implements InstantFunction {
-        @Override
-        public void run() {
-            //Change If needed
-            //shooterRight.setVelocity(-300);
-            //shooterLeft.setVelocity(-300);
-            //sleepSeconds(0.2);
-            shooterRight.setVelocity(-300);
-            shooterLeft.setVelocity(300);
-        }
-    }
 
-    public class stopLauncher1 implements InstantFunction{
-        @Override
-        public void run(){
-            //Change If needed
-            //shooterRight.setVelocity(-300);
-            //shooterLeft.setVelocity(-300);
-            //sleepSeconds(0.2);
-            shooterRight.setVelocity(0);
-            shooterLeft.setVelocity(0);
 
-        }
-    }
 
 //    public class functionOfDOOM implements InstantFunction{
 //        @Override
@@ -250,11 +232,11 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
 //            timeTransferAndIntake(0.25);
 //            sleep(1500);
 //
-//// === 3rd Ball ===
+    //// === 3rd Ball ===
 //            timeTransferAndIntake(0.35);
 //            sleep(1500);
 //
-    //// Power down shooter
+//    // Power down shooter
 //            shooterLeft.setPower(0);
 //            shooterRight.setPower(0);
 //
@@ -282,7 +264,30 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
         }
     }
 
+    public class stopLauncher implements InstantFunction {
+        @Override
+        public void run() {
+            //Change If needed
+            //shooterRight.setVelocity(-300);
+            //shooterLeft.setVelocity(-300);
+            //sleepSeconds(0.2);
+            shooterRight.setVelocity(-300);
+            shooterLeft.setVelocity(300);
+        }
+    }
 
+    public class stopLauncher1 implements InstantFunction{
+        @Override
+        public void run(){
+            //Change If needed
+            //shooterRight.setVelocity(-300);
+            //shooterLeft.setVelocity(-300);
+            //sleepSeconds(0.2);
+            shooterRight.setVelocity(0);
+            shooterLeft.setVelocity(0);
+
+        }
+    }
 
 
     public void runOpMode() {
@@ -306,7 +311,7 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
         shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        Pose2d beginPose = new Pose2d(new Vector2d(-54,50), Math.toRadians(-225));
+        Pose2d beginPose = new Pose2d(new Vector2d(-52,-50), Math.toRadians(180));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -314,22 +319,57 @@ public class Q2AutoAtGoalRed extends LinearOpMode {
         waitForStart();
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
-                .strafeTo(new Vector2d(-13,12))
-                .stopAndAdd(new functionOfDOOM())
-//                .waitSeconds(2)
-                .turnTo(Math.toRadians(-270))
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-13,32))
-                .strafeTo(new Vector2d(-13,48))
-                .stopAndAdd(new stopSmartIntake())
-                .strafeTo(new Vector2d(-13,12))
-                .turnTo(Math.toRadians(142))
-                .stopAndAdd(new fastFunctionOfDOOM())
-//                .waitSeconds(0.8)
-                .stopAndAdd(new stopLauncher())
-                .strafeTo(new Vector2d(5,12))
-                .stopAndAdd(new stopLauncher1())
+                .strafeToLinearHeading(new Vector2d(-10,0), Math.toRadians(-140))
+                //goes to intake artifacts
+
+                .strafeToLinearHeading(new Vector2d(-11,-28), Math.toRadians(-90))
+
+//intakes artifacts
+
+                .strafeTo(new Vector2d(-11,-52))
+                .strafeTo(new Vector2d(-11,-28))
+
+//goes to shooting position
+
+                .strafeToLinearHeading(new Vector2d(-14,-15), Math.toRadians(-140))
+                //goes to intake second row of artifacts
+
+                .strafeToLinearHeading(new Vector2d(12,-28), Math.toRadians(-90))
+
+//intakes artifacts
+
+                .strafeTo(new Vector2d(12,-52))
+                .strafeTo(new Vector2d(12,-28))
+
+//goes to shooting position
+
+                .strafeToLinearHeading(new Vector2d(-14,-15), Math.toRadians(-140))
+
+                //goes to intake third row of artifacts
+                .strafeToLinearHeading(new Vector2d(35,-28), Math.toRadians(-90))
+                //intakes artifacts
+
+                .strafeTo(new Vector2d(35,-52))
+                .strafeTo(new Vector2d(35,-28))
+
+//goes to shooting position
+
+                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
+                //shoots
+                .strafeTo(new Vector2d(38,-16))
+
+
+
+//goes to shooting position
+
+                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
+                //shoots
+                .strafeTo(new Vector2d(38,-16))
+
+
                 .build();
+
+
 
 
 
