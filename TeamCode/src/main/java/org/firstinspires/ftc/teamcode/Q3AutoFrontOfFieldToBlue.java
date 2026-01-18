@@ -161,20 +161,32 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
                 //shooting position [THIS IS FRONT OF FIELD TO BLUE]
+                .stopAndAdd(new blockerDown())
+                .stopAndAdd(new runShooter())
                 .strafeToLinearHeading(new Vector2d(53,-15),Math.toRadians(-170))
+                .stopAndAdd(new blockerUp())
+                .stopAndAdd(new smartFeed())
+                .stopAndAdd(new blockerDown())
 //go to intake artifacts
                 .strafeToLinearHeading(new Vector2d(21,-28), Math.toRadians(-90))
 
 //intakes artifacts
+                .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(23,-62))
                 .strafeTo(new Vector2d(23,-28))
+                .stopAndAdd(new stopSmartIntake())
 //goes to shooting position
                 .strafeToLinearHeading(new Vector2d(45,-18),Math.toRadians(-170))
+                .stopAndAdd(new blockerUp())
+                .stopAndAdd(new smartFeed())
+                .stopAndAdd(new blockerDown())
 //goes to intake second rack
                 .strafeToLinearHeading(new Vector2d(-5,-28), Math.toRadians(-90))
 //intakes artifacts
+                .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(0,-62))
                 .strafeTo(new Vector2d(0,-28))
+                .stopAndAdd(new stopSmartIntake())
 //goes to shooting position front of field
                 .strafeToLinearHeading(new Vector2d(-23,-19), Math.toRadians(-140))
 
