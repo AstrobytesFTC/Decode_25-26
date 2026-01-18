@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -17,34 +16,32 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
-@TeleOp
+@TeleOp(name="finalTeleOpQ3", group="Main")
 public class FinalTeleOpQ3 extends LinearOpMode {
 
-    // Drive motors
-    DcMotor frontLeftMotor;
-    DcMotor backLeftMotor;
-    DcMotor frontRightMotor;
-    DcMotor backRightMotor;
-    DcMotor transfer;
-    DcMotor intake;
-    DcMotorEx shooterRight;
-    DcMotorEx shooterLeft;
-    Servo blocker;
-    Servo rgbLight;
+    // ---------- Motors ----------
+    DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
+    DcMotor transfer, intake;
+    DcMotorEx shooterRight, shooterLeft;
 
+    // ---------- Servos ----------
+    Servo blocker, rgbLight;
+
+    // ---------- Vision ----------
     private AprilTagProcessor aprilTag;
-
     private VisionPortal visionPortal;
 
-    // Movement speed modifier
+    // ---------- Misc ----------
     double moveSpeed = 0.65;
-    boolean USE_WEBCAM = true;
+    boolean closeShot = false;
 
+    // ---------- Blink vars ----------
+    long lastBlink = 0;
+    boolean lightState = false;
 
+    // ---------- DelayAction helper ----------
     public class DelayAction {
-
         ElapsedTime timer = new ElapsedTime();
-
         boolean active = false;
         double delay;
 
@@ -63,123 +60,33 @@ public class FinalTeleOpQ3 extends LinearOpMode {
         }
     }
 
-    DelayAction block;
-    boolean closeShot;
-
-
-    private void initAprilTag() {
-
-        // Create the AprilTag processor.
-        aprilTag = new AprilTagProcessor.Builder()
-
-                // The following default settings are available to un-comment and edit as needed.
-                //.setDrawAxes(false)
-                //.setDrawCubeProjection(false)
-                //.setDrawTagOutline(true)
-                //.setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
-                //.setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
-                //.setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
-
-                // == CAMERA CALIBRATION ==
-                // If you do not manually specify calibration parameters, the SDK will attempt
-                // to load a predefined calibration for your camera.
-                //.setLensIntrinsics(578.272, 578.272, 402.145, 221.506)
-                // ... these parameters are fx, fy, cx, cy.
-
-                .build();
-
-        // Adjust Image Decimation to trade-off detection-range for detection-rate.
-        // eg: Some typical detection data using a Logitech C920 WebCam
-        // Decimation = 1 ..  Detect 2" Tag from 10 feet away at 10 Frames per second
-        // Decimation = 2 ..  Detect 2" Tag from 6  feet away at 22 Frames per second
-        // Decimation = 3 ..  Detect 2" Tag from 4  feet away at 30 Frames Per Second (default)
-        // Decimation = 3 ..  Detect 5" Tag from 10 feet away at 30 Frames Per Second (default)
-        // Note: Decimation can be changed on-the-fly to adapt during a match.
-        //aprilTag.setDecimation(3);
-
-        // Create the vision portal by using a builder.
-        VisionPortal.Builder builder = new VisionPortal.Builder();
-
-        // Set the camera (webcam vs. built-in RC phone camera).
-        if (USE_WEBCAM) {
-            builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
-        } else {
-            builder.setCamera(BuiltinCameraDirection.BACK);
-        }
-
-        // Choose a camera resolution. Not all cameras support all resolutions.
-        //builder.setCameraResolution(new Size(640, 480));
-
-        // Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
-        //builder.enableLiveView(true);
-
-        // Set the stream format; MJPEG uses less bandwidth than default YUY2.
-        //builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
-
-        // Choose whether or not LiveView stops if no processors are enabled.
-        // If set "true", monitor shows solid orange screen if no processors enabled.
-        // If set "false", monitor shows camera view without annotations.
-        //builder.setAutoStopLiveView(false);
-
-        // Set and enable the processor.
-        builder.addProcessor(aprilTag);
-
-        // Build the Vision Portal, using the above settings.
-        visionPortal = builder.build();
-
-        // Disable or re-enable the aprilTag processor at any time.
-        //visionPortal.setProcessorEnabled(aprilTag, true);
-
-    }   // end method initAprilTag()
-
-    private void telemetryAprilTag() {
-        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-
-        for (AprilTagDetection detection : currentDetections) {
-            if (detection.metadata != null) {
-                telemetry.addData("Tag ID", detection.id);
-                telemetry.addData("Yaw (deg)", "%.1f", detection.ftcPose.yaw);
-            } else {
-                telemetry.addLine(String.format("Unknown Tag ID %d", detection.id));
-            }
-        }
-        telemetry.update();
-    }
-
-    private void blinkColor(){
-        rgbLight.setPosition(0.5);
-        block.start(200);
-        if(block.done()){
-            rgbLight.setPosition(0);
-        }
-
-    }
-
+    DelayAction blockDelay = new DelayAction(); // only 1 object, not created in loop
 
     @Override
     public void runOpMode() {
 
-        // Hardware map
-        frontLeftMotor = hardwareMap.dcMotor.get("frontleft");
-        backLeftMotor  = hardwareMap.dcMotor.get("backleft");
+        // ---------- Hardware Map ----------
+        frontLeftMotor  = hardwareMap.dcMotor.get("frontleft");
+        backLeftMotor   = hardwareMap.dcMotor.get("backleft");
         frontRightMotor = hardwareMap.dcMotor.get("frontright");
         backRightMotor  = hardwareMap.dcMotor.get("backright");
-        transfer = hardwareMap.dcMotor.get("intake");
-        intake = hardwareMap.dcMotor.get("transfer");
+
+        transfer = hardwareMap.dcMotor.get("transfer");
+        intake   = hardwareMap.dcMotor.get("intake");
+
         shooterRight = hardwareMap.get(DcMotorEx.class, "rightShooter");
         shooterLeft  = hardwareMap.get(DcMotorEx.class, "leftShooter");
+
         blocker = hardwareMap.servo.get("blocker");
-        //extra
-        Servo blocker2 = hardwareMap.servo.get("bockerservo");
-        rgbLight = hardwareMap.get(Servo.class, "blinkin");
+        rgbLight = hardwareMap.servo.get("blinkin");
 
-
-
+        // ---------- Motor directions ----------
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        // ---------- Shooter PID ----------
         shooterRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -187,86 +94,81 @@ public class FinalTeleOpQ3 extends LinearOpMode {
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         PIDFCoefficients pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
-
         shooterLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);
         shooterRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);
 
+        // ---------- Initialize AprilTag ----------
+        aprilTag = new AprilTagProcessor.Builder().build();
+        visionPortal = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+                .addProcessor(aprilTag)
+                .build();
+
+        telemetry.addLine("Ready.");
+        telemetry.update();
         waitForStart();
 
         while (opModeIsActive()) {
 
-            // Read joystick inputs
-            double y  = -gamepad1.left_stick_y;  // forward/backward
-            double x  = gamepad1.left_stick_x;   // strafing
-            double rx = gamepad1.right_stick_x;  // rotation
+            // ---------- Mecanum Drive ----------
+            double y  = -gamepad1.left_stick_y;
+            double x  = gamepad1.left_stick_x;
+            double rx = gamepad1.right_stick_x;
 
-            // Normalize the values so no motor exceeds 1
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
 
-            // Apply powers
             frontLeftMotor.setPower((y + x + rx) / denominator * moveSpeed);
             backLeftMotor.setPower((y - x + rx) / denominator * moveSpeed);
             frontRightMotor.setPower((y - x - rx) / denominator * moveSpeed);
             backRightMotor.setPower((y + x - rx) / denominator * moveSpeed);
 
-            // Adjust move speed
-            if (gamepad1.dpad_up)  moveSpeed = 0.35; // slow
-            if (gamepad1.dpad_down) moveSpeed = 0.85; // fast
+            // ---------- Move speed adjust ----------
+            if (gamepad1.dpad_up) moveSpeed = 0.35; // slow
+            if (gamepad1.dpad_down) moveSpeed = 1;  // fast
 
+            // ---------- Shooter presets ----------
             if(gamepad2.a) {
-                //close
-                blinkColor();
                 closeShot = true;
-                gamepad1.rumble(200);
-                pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
+                gamepad2.rumble(200);
                 shooterLeft.setVelocity(-1550);
                 shooterRight.setVelocity(1550);
             } else if(gamepad2.b){
-                //close
-                blinkColor();
                 closeShot = true;
-                gamepad1.rumble(200);
-                pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
+                gamepad2.rumble(200);
                 shooterLeft.setVelocity(-1700);
                 shooterRight.setVelocity(1700);
             } else if(gamepad2.x){
-                //far
-                blinkColor();
                 closeShot = false;
-                gamepad1.rumble(200);
-                pf = new PIDFCoefficients(3.0004, 0, 0, 13.103);
+                gamepad2.rumble(200);
                 shooterLeft.setVelocity(-1900);
                 shooterRight.setVelocity(1900);
             } else if(gamepad2.y){
-                //far
-                blinkColor();
                 closeShot = false;
-                gamepad1.rumble(200);
-                pf = new PIDFCoefficients(3.0004, 0, 0, 13.103);
+                gamepad2.rumble(200);
                 shooterLeft.setVelocity(-2000);
                 shooterRight.setVelocity(2000);
             }
-//smart outake
-            transfer.setPower(-gamepad1.left_trigger);
-            intake.setPower(-gamepad1.left_trigger);
-//smart intake
-            transfer.setPower(gamepad1.right_trigger);
-            intake.setPower(gamepad1.right_trigger);
 
-            //reverse shooter
+            // ---------- Intake / Transfer ----------
+            double intakePower = gamepad1.right_trigger - gamepad1.left_trigger;
+            intake.setPower(intakePower);
+            transfer.setPower(intakePower);
+
+            // ---------- Reverse Shooter ----------
             if(gamepad1.b){
                 shooterLeft.setVelocity(500);
                 shooterRight.setVelocity(-500);
-
                 sleep(200);
-
                 shooterLeft.setVelocity(0);
                 shooterRight.setVelocity(0);
             }
 
+            // ---------- Auto-turn ----------
+            if(gamepad2.right_bumper){
+                turnToYawZero();
+            }
 
-            DelayAction blockDelay = new DelayAction();
-//inverse intake
+            // ---------- Intake Invert / Delay ----------
             if(gamepad1.y){
                 intake.setPower(-0.8);
                 blockDelay.start(200);
@@ -275,7 +177,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
                 }
             }
 
-//blocker
+            // ---------- Blocker ----------
             if(gamepad1.left_bumper){
                 blocker.setPosition(0.5);
                 blockDelay.start(500);
@@ -286,10 +188,61 @@ public class FinalTeleOpQ3 extends LinearOpMode {
                 blocker.setPosition(0.1);
             }
 
-
             telemetry.addData("Close Shot?",closeShot);
             telemetry.update();
         }
     }
-}
 
+    // ---------- Auto-turn using AprilTag ----------
+    public void turnToYawZero() {
+        List<AprilTagDetection> det = aprilTag.getDetections();
+        if(det.size() == 0){
+            telemetry.addLine("No tag!");
+            return;
+        }
+
+        double yaw = det.get(0).ftcPose.yaw;
+        double kP = 0.02;
+        double turn = -yaw * kP;
+        turn = Math.max(Math.min(turn, 0.5), -0.5);
+
+        if(Math.abs(yaw) < 2){
+            telemetry.addLine("Aligned!");
+            drive(0,0,0);
+            blinkLight(0.5,200);
+            return;
+        }
+
+        drive(0,0,turn);
+        telemetry.addData("Yaw", yaw);
+        telemetry.addData("TurnPower", turn);
+    }
+
+    // ---------- Mecanum drive method ----------
+    public void drive(double x, double y, double turn){
+        double lf = y + x + turn;
+        double rf = y - x - turn;
+        double lr = y - x + turn;
+        double rr = y + x - turn;
+
+        frontLeftMotor.setPower(lf);
+        frontRightMotor.setPower(rf);
+        backLeftMotor.setPower(lr);
+        backRightMotor.setPower(rr);
+    }
+
+    // ---------- Blinkin LED blink ----------
+    public void blinkLight(double colorPos, long speedMs){
+        long now = System.currentTimeMillis();
+        if(now - lastBlink > speedMs){
+            lightState = !lightState;
+            lastBlink = now;
+        }
+
+        if(lightState){
+            rgbLight.setPosition(colorPos);
+        } else{
+            rgbLight.setPosition(0.0);
+        }
+    }
+}

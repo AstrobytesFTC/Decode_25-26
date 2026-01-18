@@ -73,7 +73,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
             transfer.setPower(0.8);
             intake.setPower(0.8);
 
-            sleepSeconds(0.2);
+            sleepSeconds(1.2);
 
             transfer.setPower(0);
             intake.setPower(0);
