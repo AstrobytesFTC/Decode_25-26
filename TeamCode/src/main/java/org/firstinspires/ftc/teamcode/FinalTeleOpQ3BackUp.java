@@ -17,7 +17,7 @@
     import java.util.List;
 
     @TeleOp(name="finalTeleOpQ3", group="Main")
-    public class FinalTeleOpQ3 extends LinearOpMode {
+    public class FinalTeleOpQ3BackUp extends LinearOpMode {
 
         // ---------- Motors ----------
         DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
