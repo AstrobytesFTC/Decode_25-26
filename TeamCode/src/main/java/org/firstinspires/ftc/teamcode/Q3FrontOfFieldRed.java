@@ -42,8 +42,8 @@ public class Q3FrontOfFieldRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1680;
-    double velocityPowerNear = 1550;
+    double velocityPowerFar = 1690;
+    double velocityPowerNear = 1500;
 
 
     // lift class
@@ -280,7 +280,7 @@ public class Q3FrontOfFieldRed extends LinearOpMode {
 
                 //intakes
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-7, 52))
+                .strafeTo(new Vector2d(-7, 55))
                 .strafeTo(new Vector2d(-7, 28))
                 .stopAndAdd(new stopSmartIntake())
 
