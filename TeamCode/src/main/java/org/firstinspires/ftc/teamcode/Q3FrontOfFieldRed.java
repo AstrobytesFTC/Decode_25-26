@@ -243,7 +243,7 @@ public class Q3FrontOfFieldRed extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(145))
+                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(148))
                 .stopAndAdd(new smartFeedFar())
 
                 //goes to intake position
@@ -272,7 +272,7 @@ public class Q3FrontOfFieldRed extends LinearOpMode {
 
                 //goes to shooting position
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-34, 20), Math.toRadians(112))
+                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(112))
                 .stopAndAdd(new smartFeedNear())
 
                 //goes to intake
@@ -286,7 +286,7 @@ public class Q3FrontOfFieldRed extends LinearOpMode {
 
                 //goes to shooting position
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-34, 20), Math.toRadians(112))
+                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(112))
                 .stopAndAdd(new smartFeedNear())
 
                 //leave points
