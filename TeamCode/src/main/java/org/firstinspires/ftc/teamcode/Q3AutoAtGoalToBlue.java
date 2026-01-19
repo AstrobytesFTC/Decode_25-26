@@ -311,7 +311,7 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
         shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        Pose2d beginPose = new Pose2d(new Vector2d(-52,-50), Math.toRadians(180));
+        Pose2d beginPose = new Pose2d(new Vector2d(-52,-60), Math.toRadians(-140));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);

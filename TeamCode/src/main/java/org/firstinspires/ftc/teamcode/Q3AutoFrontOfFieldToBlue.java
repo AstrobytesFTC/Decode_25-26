@@ -42,7 +42,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
+    double velocityPowerFar = 1680;
     double velocityPowerNear = 1500;
 
 
@@ -136,7 +136,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(.8);
+                sleepSeconds(.7);
 
                 transfer.setPower(0);
                 intake.setPower(0);
@@ -158,7 +158,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(0.8);
+                sleepSeconds(0.7);
 
                 transfer.setPower(0);
                 intake.setPower(0);
