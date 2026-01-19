@@ -32,7 +32,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
     private VisionPortal visionPortal;
 
     // ---------- Misc ----------
-    double moveSpeed = 0.65;
+    double moveSpeed = 0.9;
     boolean closeShot = false;
 
     // ---------- Blink vars ----------
@@ -123,8 +123,8 @@ public class FinalTeleOpQ3 extends LinearOpMode {
             backRightMotor.setPower((y + x - rx) / denominator * moveSpeed);
 
             // ---------- Move speed adjust ----------
-            if (gamepad1.dpad_up) moveSpeed = 0.35; // slow
-            if (gamepad1.dpad_down) moveSpeed = 1;  // fast
+            if (gamepad1.dpad_up) moveSpeed = 1; // fast
+            if (gamepad1.dpad_down) moveSpeed = 0.85;  // dieuhaf
 
             // ---------- Shooter presets ----------
             if(gamepad2.a) {
@@ -135,24 +135,26 @@ public class FinalTeleOpQ3 extends LinearOpMode {
             } else if(gamepad2.b){
                 closeShot = true;
                 gamepad2.rumble(200);
-                shooterLeft.setVelocity(-1700);
-                shooterRight.setVelocity(1700);
+                shooterLeft.setVelocity(-1600);
+                shooterRight.setVelocity(1600);
             } else if(gamepad2.x){
                 closeShot = false;
                 gamepad2.rumble(200);
-                shooterLeft.setVelocity(-1900);
-                shooterRight.setVelocity(1900);
+                shooterLeft.setVelocity(-1850);
+                shooterRight.setVelocity(1850);
             } else if(gamepad2.y){
                 closeShot = false;
                 gamepad2.rumble(200);
-                shooterLeft.setVelocity(-2000);
-                shooterRight.setVelocity(2000);
+                shooterLeft.setVelocity(-1800);
+                shooterRight.setVelocity(1800);
             }
 
             // ---------- Intake / Transfer ----------
-            double intakePower = gamepad1.right_trigger - gamepad1.left_trigger;
-            intake.setPower(intakePower);
-            transfer.setPower(intakePower);
+            intake.setPower(gamepad1.left_trigger);
+            transfer.setPower(gamepad1.left_trigger);
+
+            intake.setPower(-gamepad1.right_trigger);
+            transfer.setPower(-gamepad1.right_trigger);
 
             // ---------- Reverse Shooter ----------
             if(gamepad1.b){
@@ -206,7 +208,7 @@ public class FinalTeleOpQ3 extends LinearOpMode {
         double turn = -yaw * kP;
         turn = Math.max(Math.min(turn, 0.5), -0.5);
 
-        if(Math.abs(yaw) < 2){
+        if(Math.abs(yaw) < 4){
             telemetry.addLine("Aligned!");
             drive(0,0,0);
             blinkLight(0.5,200);
