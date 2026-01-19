@@ -42,7 +42,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1725;
+    double velocityPowerFar = 1700;
     double velocityPowerNear = 1500;
 
 
@@ -136,7 +136,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(1);
+                sleepSeconds(.8);
 
                 transfer.setPower(0);
                 intake.setPower(0);
@@ -158,7 +158,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(1);
+                sleepSeconds(0.8);
 
                 transfer.setPower(0);
                 intake.setPower(0);
@@ -234,7 +234,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
                 //shooting position [THIS IS FRONT OF FIELD TO BLUE]
                 .stopAndAdd(new runShooter())
-                .stopAndAdd(new blockerDown())
+                //.stopAndAdd(new blockerDown())
                 //.waitSeconds(.5)
                 .strafeToLinearHeading(new Vector2d(53,-15),Math.toRadians(-165))
                 .stopAndAdd(new smartFeedFar())
