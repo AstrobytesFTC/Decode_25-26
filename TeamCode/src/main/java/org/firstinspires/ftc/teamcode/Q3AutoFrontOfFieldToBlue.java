@@ -130,20 +130,20 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
         @Override
         public void run(){
             blocker.setPosition(0.5);
-            telemetry.addLine("NOT DONE");
+           // telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
-                telemetry.addLine("SHOT");
+             //   telemetry.addLine("SHOT");
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(1.2);
+                sleepSeconds(1);
 
                 transfer.setPower(0);
                 intake.setPower(0);
             }
-            telemetry.addLine("DONEE");
+            //telemetry.addLine("DONEE");
             blocker.setPosition(0.1);
-            telemetry.update();
+            //telemetry.update();
         }
 
     }
@@ -152,20 +152,20 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
         @Override
         public void run(){
             blocker.setPosition(0.5);
-            telemetry.addLine("NOT DONE");
+            //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
                 telemetry.addLine("SHOT");
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(1.2);
+                sleepSeconds(1);
 
                 transfer.setPower(0);
                 intake.setPower(0);
             }
-            telemetry.addLine("DONEE");
+            //telemetry.addLine("DONEE");
             blocker.setPosition(0.1);
-            telemetry.update();
+            //telemetry.update();
         }
 
     }
