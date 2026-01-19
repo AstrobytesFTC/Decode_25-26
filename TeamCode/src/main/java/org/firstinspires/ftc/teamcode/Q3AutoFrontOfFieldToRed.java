@@ -23,8 +23,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Q3AutoFrontOfFieldToBlue", group = "Autonomous")
-public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
+@Autonomous(name = "Q3AutoFrontOfFieldToRed", group = "Autonomous")
+public class Q3AutoFrontOfFieldToRed extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -42,7 +42,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
+    double velocityPowerFar = 1750;
     double velocityPowerNear = 1500;
 
 
@@ -86,7 +86,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
             transfer.setPower(0.8);
             intake.setPower(0.8);
 
-            sleepSeconds(1);
+            sleepSeconds(1.2);
 
             transfer.setPower(0);
             intake.setPower(0);
@@ -130,20 +130,20 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
         @Override
         public void run(){
             blocker.setPosition(0.5);
-           // telemetry.addLine("NOT DONE");
+            telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
-             //   telemetry.addLine("SHOT");
+                telemetry.addLine("SHOT");
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(.8);
+                sleepSeconds(1.2);
 
                 transfer.setPower(0);
                 intake.setPower(0);
             }
-            //telemetry.addLine("DONEE");
+            telemetry.addLine("DONEE");
             blocker.setPosition(0.1);
-            //telemetry.update();
+            telemetry.update();
         }
 
     }
@@ -152,20 +152,20 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
         @Override
         public void run(){
             blocker.setPosition(0.5);
-            //telemetry.addLine("NOT DONE");
+            telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
                 telemetry.addLine("SHOT");
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(0.8);
+                sleepSeconds(1.2);
 
                 transfer.setPower(0);
                 intake.setPower(0);
             }
-            //telemetry.addLine("DONEE");
+            telemetry.addLine("DONEE");
             blocker.setPosition(0.1);
-            //telemetry.update();
+            telemetry.update();
         }
 
     }
@@ -224,7 +224,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
         shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        Pose2d beginPose = new Pose2d(new Vector2d(56,-12), Math.toRadians(180));
+        Pose2d beginPose = new Pose2d(new Vector2d(56,12), Math.toRadians(170));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -232,48 +232,37 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
         waitForStart();
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
-                //shooting position [THIS IS FRONT OF FIELD TO BLUE]
-                .stopAndAdd(new runShooter())
-                //.stopAndAdd(new blockerDown())
-                //.waitSeconds(.5)
-                .strafeToLinearHeading(new Vector2d(53,-15),Math.toRadians(-165))
-                .stopAndAdd(new smartFeedFar())
-//go to intake artifacts
-                .strafeToLinearHeading(new Vector2d(21,-28), Math.toRadians(-90))
-
-//intakes artifacts
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(23,-62))
-                .strafeTo(new Vector2d(23,-28))
-                .stopAndAdd(new stopSmartIntake())
-//goes to shooting position
-                .strafeToLinearHeading(new Vector2d(45,-18),Math.toRadians(-155))
-                .stopAndAdd(new smartFeedFar())
-                .stopAndAdd (new reduceShooterSpeed())
-//goes to intake second rack
-                .strafeToLinearHeading(new Vector2d(-5,-28), Math.toRadians(-90))
-//intakes artifacts
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(0,-62))
-                .strafeTo(new Vector2d(0,-28))
-                .stopAndAdd(new stopSmartIntake())
-//goes to shooting position front of field
-                .strafeToLinearHeading(new Vector2d(-23,-19), Math.toRadians(-135))
-                .stopAndAdd(new smartFeedNear())
-
-                //goes to intake row 3 of artifacts
-                .strafeToLinearHeading(new Vector2d(-30,-28), Math.toRadians(-89))
-//intakes artifacts
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-27,-52))
-                .strafeTo(new Vector2d(-27,-28))
-                .stopAndAdd(new stopSmartIntake())
-//goes to shooting position near goal
-                .strafeToLinearHeading(new Vector2d(-23,-23), Math.toRadians(-135))
-                .stopAndAdd(new smartFeedNear())
-
-//leave pts
-                .strafeTo(new Vector2d(-40, -18))
+                //shooting position
+                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(155))
+                //goes to shooting position
+                .strafeTo(new Vector2d(35, 28))
+                .turn(Math.toRadians(-70))
+                //intakes
+                .strafeTo(new Vector2d(35, 52))
+                .strafeTo(new Vector2d(35, 28))
+                //goes to shooting position
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(150))
+                .waitSeconds(1)
+                //goes to intake
+                .strafeTo(new Vector2d(12, 28))
+                .turn(Math.toRadians(-66))
+                //intakes
+                .strafeTo(new Vector2d(12, 52))
+                .strafeTo(new Vector2d(12, 28))
+                //goes to shooting position
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(157))
+                .waitSeconds(1)
+                //goes to intake
+                .strafeTo(new Vector2d(-11, 28))
+                .turn(Math.toRadians(-68))
+                //intakes
+                .strafeTo(new Vector2d(-11, 52))
+                .strafeTo(new Vector2d(-11, 28))
+                //goes to shooting position
+                .strafeToLinearHeading(new Vector2d(-30, 14), Math.toRadians(117))
+                .waitSeconds(1)
+                //leave points
+                .strafeTo(new Vector2d(20, 16))
 
                 .build();
 
