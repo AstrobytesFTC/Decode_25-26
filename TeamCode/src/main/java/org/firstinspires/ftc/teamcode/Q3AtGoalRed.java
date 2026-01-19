@@ -42,7 +42,7 @@ public class Q3AtGoalRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1680;
+    double velocityPowerFar = 1675;
     double velocityPowerNear = 1550;
 
 
@@ -144,7 +144,7 @@ public class Q3AtGoalRed extends LinearOpMode {
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(.6);
+                sleepSeconds(.7);
 
                 transfer.setPower(0);
                 intake.setPower(0);
@@ -166,7 +166,7 @@ public class Q3AtGoalRed extends LinearOpMode {
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(.6);
+                sleepSeconds(.7);
 
                 transfer.setPower(0);
                 intake.setPower(0);
@@ -268,21 +268,21 @@ public class Q3AtGoalRed extends LinearOpMode {
 
                 // Lines up for shot
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-24, 14), Math.toRadians(133))
+                .strafeToLinearHeading(new Vector2d(-24, 14), Math.toRadians(130))
                 .stopAndAdd(new smartFeedNear())
                 .stopAndAdd(new increaseShooterSpeed())
 
 
                 // Goes to intake the third row of balls
                 .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(16, 35), Math.toRadians(80))
-                .strafeTo(new Vector2d(40,52))
-                .strafeTo(new Vector2d(40,28))
+                .strafeToLinearHeading(new Vector2d(36, 14), Math.toRadians(90))
+                .strafeTo(new Vector2d(35,35))
+                .strafeTo(new Vector2d(35,25))
                 .stopAndAdd(new stopSmartIntake())
 
                 //Lines up to shoot
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(51, 2), Math.toRadians(145))
+                .strafeToLinearHeading(new Vector2d(51, 2), Math.toRadians(148))
                 .stopAndAdd(new smartFeedFar())
 
 
