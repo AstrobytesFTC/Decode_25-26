@@ -123,30 +123,30 @@ public class FinalTeleOpQ3 extends LinearOpMode {
             backRightMotor.setPower((y + x - rx) / denominator * moveSpeed);
 
             // ---------- Move speed adjust ----------
-            if (gamepad1.dpad_up) moveSpeed = 0.50; // slow
-            if (gamepad1.dpad_down) moveSpeed = 0.9;  // fast
+            if (gamepad1.dpad_up) moveSpeed = 1; // fast
+            if (gamepad1.dpad_down) moveSpeed = 0.85;  // dieuhaf
 
             // ---------- Shooter presets ----------
             if(gamepad2.a) {
                 closeShot = true;
                 gamepad2.rumble(200);
-                shooterLeft.setVelocity(-1500);
-                shooterRight.setVelocity(1500);
+                shooterLeft.setVelocity(-1550);
+                shooterRight.setVelocity(1550);
             } else if(gamepad2.b){
                 closeShot = true;
                 gamepad2.rumble(200);
-                shooterLeft.setVelocity(-1650);
-                shooterRight.setVelocity(1700);
+                shooterLeft.setVelocity(-1600);
+                shooterRight.setVelocity(1600);
             } else if(gamepad2.x){
-                closeShot = false;
-                gamepad2.rumble(200);
-                shooterLeft.setVelocity(-1700);
-                shooterRight.setVelocity(1700);
-            } else if(gamepad2.y){
                 closeShot = false;
                 gamepad2.rumble(200);
                 shooterLeft.setVelocity(-1850);
                 shooterRight.setVelocity(1850);
+            } else if(gamepad2.y){
+                closeShot = false;
+                gamepad2.rumble(200);
+                shooterLeft.setVelocity(-1800);
+                shooterRight.setVelocity(1800);
             }
 
             // ---------- Intake / Transfer ----------
