@@ -4,27 +4,23 @@ package org.firstinspires.ftc.teamcode;
 // RR-specific imports
 
 import com.acmerobotics.dashboard.config.Config;
-
-// Non-RR imports
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantFunction;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Disabled
-@Autonomous(name = "Q2AutoFarSideBlue", group = "Autonomous")
-public class Q2AutoFarSideBlue extends LinearOpMode {
+@Autonomous(name = "Q2AutoFarSideBlueSimple", group = "Autonomous")
+public class Q2AutoFarSideBlueSimple extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -94,12 +90,12 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
         @Override
         public void run(){
             boolean shootControl = false;
-            double doomVelocity = 1690;
+            double doomVelocity = 1680;
             double transfertime = 0.3;
 
             blocker.setPosition(0.1);
             sleep(1000);  // 500ms
-            blocker.setPosition(0.5);
+            blocker.setPosition(0.6);
 
             shooterRight.setVelocity(1300);
             shooterLeft.setVelocity(-1300);
@@ -117,6 +113,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
             shooterLeft.setVelocity(-doomVelocity);
 
             if (waitForShooter(shooterRight, doomVelocity, 3000)) {
+                sleepSeconds(0.2);
                 transfer.setPower(0.65);
                 sleepSeconds(transfertime - 0.15);
                 transfer.setPower(-0.4);
@@ -125,6 +122,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
             }
 
             if (waitForShooter(shooterLeft, doomVelocity, 3000)) {
+                sleepSeconds(0.2);
                 transfer.setPower(0.65);
                 sleepSeconds(transfertime);
                 transfer.setPower(0);
@@ -139,60 +137,6 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
             doomVelocity = 0;
             shooterRight.setVelocity(0);
             shooterLeft.setVelocity(0);
-            intake.setPower(0);
-        }
-    }
-    public class fasterfunctionOfDOOM implements InstantFunction{
-        @Override
-        public void run(){
-            boolean shootControl = false;
-            double doomVelocity = 1685;
-            double transfertime = 0.3;
-
-            blocker.setPosition(0.1);
-            sleep(1000);  // 500ms
-            blocker.setPosition(0.5);
-
-            shooterRight.setVelocity(1300);
-            shooterLeft.setVelocity(-1300);
-            transfer.setPower(-0.3);
-            intake.setPower(0.3);
-
-            sleep(800);
-
-            shooterRight.setVelocity(0);
-            shooterLeft.setVelocity(0);
-            transfer.setPower(0);
-            intake.setPower(0);
-
-            shooterRight.setVelocity(doomVelocity);
-            shooterLeft.setVelocity(-doomVelocity);
-
-            if (waitForShooter(shooterRight, doomVelocity, 3000)) {
-//                sleepSeconds(0.2);
-                transfer.setPower(0.65);
-                sleepSeconds(transfertime - 0.15);
-                transfer.setPower(-0.4);
-                sleepSeconds(transfertime - 0.15);
-                transfer.setPower(0);
-            }
-
-            if (waitForShooter(shooterLeft, doomVelocity, 4000)) {
-//                sleepSeconds(0.2);
-                transfer.setPower(0.65);
-                sleepSeconds(transfertime);
-                transfer.setPower(0);
-            }
-
-            if (waitForShooter(shooterLeft, doomVelocity, 4000)) {
-                transfer.setPower(0.8);
-                intake.setPower(0.7);
-                sleepSeconds(transfertime + 0.3);
-                transfer.setPower(0);
-            }
-            doomVelocity = 0;
-            shooterRight.setVelocity(-1000);
-            shooterLeft.setVelocity(1000);
             intake.setPower(0);
         }
     }
@@ -209,7 +153,7 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
         }
     }
 
-    public class stopLauncher1 implements InstantFunction{
+        public class stopLauncher1 implements InstantFunction{
             @Override
             public void run(){
                 //Change If needed
@@ -390,18 +334,23 @@ public class Q2AutoFarSideBlue extends LinearOpMode {
 
                 .turn(Math.toRadians(26))
                 .stopAndAdd(new functionOfDOOM() )
-                .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(36 ,-28), Math.toRadians(-90))
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(39,-75))
-                .strafeTo(new Vector2d(39,-32))
-                .strafeToLinearHeading(new Vector2d(52,-25),Math.toRadians(-145))
-                .stopAndAdd(new stopSmartIntake())
-                .stopAndAdd( new fasterfunctionOfDOOM())
+                .lineToX(40)
                 .stopAndAdd(new stopLauncher())
-
-                .strafeTo(new Vector2d(40,-28))
+                .waitSeconds(1)
                 .stopAndAdd(new stopLauncher1())
+
+//                .stopAndAdd(new smartIntake())
+//                .strafeToLinearHeading(new Vector2d(36 ,-28), Math.toRadians(-90))
+//                .stopAndAdd(new smartIntake())
+//                .strafeTo(new Vector2d(39,-75))
+//                .strafeTo(new Vector2d(39,-32))
+//                .strafeToLinearHeading(new Vector2d(52,-25),Math.toRadians(-145))
+//                .stopAndAdd(new stopSmartIntake())
+//                .stopAndAdd( new functionOfDOOM())
+//                .stopAndAdd(new stopLauncher())
+//
+//                .strafeTo(new Vector2d(40,-28))
+//                .stopAndAdd(new stopLauncher1())
                 .build();
 
         Action Scrimmage2AutoWithShooting = drive.actionBuilder(beginPose)

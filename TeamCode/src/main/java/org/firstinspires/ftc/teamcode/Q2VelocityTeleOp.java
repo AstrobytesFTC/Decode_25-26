@@ -47,7 +47,7 @@ public class Q2VelocityTeleOp extends LinearOpMode {
     double farHigh = 1850;
     double farMid  = 1800;
     double farLow  = 1750;
-//    double reverseFar = -1750;
+    //    double reverseFar = -1750;
     enum Mode {
         CLOSE,
         FAR
@@ -270,7 +270,7 @@ public class Q2VelocityTeleOp extends LinearOpMode {
                 doomActive = true;
                 doomStep = 0;
                 doomTimer = System.currentTimeMillis();
-               // shooterVelocity = doomVelocity;
+                // shooterVelocity = doomVelocity;
                 telemetry.addLine("DOOM START");
                 telemetry.update();
             }
@@ -327,22 +327,22 @@ public class Q2VelocityTeleOp extends LinearOpMode {
                         break;
 
                     case 1: // Shoot 1
-                            if(Math.abs(currentVelocity - doomVelocity) < 40) {
-                           // if (System.currentTimeMillis() - doomTimer >= revTime) {
-                                telemetry.addLine(" Doom SHOOT 1");
-                                telemetry.addData("Right Shooter Velocity",shooterRight.getVelocity());
-                                telemetry.addData("Left Shooter Velocity",shooterLeft.getVelocity());
-                                telemetry.update();
-                                transfer.setPower(0.65);
-                                //intake.setPower(0.8);
-                                // new code
-                                if (safeSleep(transferTime-.15)) return;
-                                transfer.setPower(-0.4);
-                                if (safeSleep(transferTime-.15)) return;
-                                transfer.setPower(0);
-                                doomTimer = System.currentTimeMillis();
-                                doomStep++;
-                            }
+                        if(Math.abs(currentVelocity - doomVelocity) < 40) {
+                            // if (System.currentTimeMillis() - doomTimer >= revTime) {
+                            telemetry.addLine(" Doom SHOOT 1");
+                            telemetry.addData("Right Shooter Velocity",shooterRight.getVelocity());
+                            telemetry.addData("Left Shooter Velocity",shooterLeft.getVelocity());
+                            telemetry.update();
+                            transfer.setPower(0.65);
+                            //intake.setPower(0.8);
+                            // new code
+                            if (safeSleep(transferTime-.15)) return;
+                            transfer.setPower(-0.4);
+                            if (safeSleep(transferTime-.15)) return;
+                            transfer.setPower(0);
+                            doomTimer = System.currentTimeMillis();
+                            doomStep++;
+                        }
                         break;
 
                     /*case 2: // stop
