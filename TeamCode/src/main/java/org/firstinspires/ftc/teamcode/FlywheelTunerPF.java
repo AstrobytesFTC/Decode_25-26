@@ -34,8 +34,8 @@ public class FlywheelTunerPF extends OpMode {
         flywheelRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // IMPORTANT: motors face opposite directions
-        flywheelLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        flywheelRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        flywheelLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        flywheelRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
         PIDFCoefficients pidf = new PIDFCoefficients(P, 0, 0, F);
 
@@ -77,7 +77,7 @@ public class FlywheelTunerPF extends OpMode {
         }
 
         // ---- APPLY PIDF ----
-        PIDFCoefficients pidf = new PIDFCoefficients(P, 0, 0, F);
+        PIDFCoefficients pidf = new PIDFCoefficients(0.2007, 0, 0, 15);
         flywheelLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidf);
         flywheelRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidf);
 
