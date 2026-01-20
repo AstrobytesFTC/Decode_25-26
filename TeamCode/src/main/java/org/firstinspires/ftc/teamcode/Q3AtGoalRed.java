@@ -42,7 +42,7 @@ public class Q3AtGoalRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1600;
+    double velocityPowerFar = 1650;
     double velocityPowerNear = 1450;
 
 
@@ -125,11 +125,11 @@ public class Q3AtGoalRed extends LinearOpMode {
 
             double velocity = Math.abs(shooter.getVelocity());
 
-            if (Math.abs(velocity - target) < 30) {
+            if (Math.abs(velocity - target) < 40) {
                 return true;
             }
 
-            sleep(10); // allow hardware loop
+            sleep(5); // allow hardware loop
         }
         return false; // timed out
     }
