@@ -238,7 +238,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
                 //.waitSeconds(.5)
                 .strafeToLinearHeading(new Vector2d(53,-15),Math.toRadians(-165))
                 .stopAndAdd(new smartFeedFar())
-//go to intake artifacts
+//go to intake artifacts row 1
                 .strafeToLinearHeading(new Vector2d(21,-28), Math.toRadians(-90))
 
 //intakes artifacts

@@ -319,52 +319,45 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
         waitForStart();
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
-                .strafeToLinearHeading(new Vector2d(-10,0), Math.toRadians(-140))
-                //goes to intake artifacts
+                .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
+                //goes to intake artifacts row 1
 
-                .strafeToLinearHeading(new Vector2d(-11,-28), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(-15,-40), Math.toRadians(-90))
 
 //intakes artifacts
 
-                .strafeTo(new Vector2d(-11,-52))
-                .strafeTo(new Vector2d(-11,-28))
+                .strafeTo(new Vector2d(-15,-62))
+                .strafeTo(new Vector2d(-15,-40))
 
 //goes to shooting position
 
-                .strafeToLinearHeading(new Vector2d(-14,-15), Math.toRadians(-140))
+                .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
                 //goes to intake second row of artifacts
 
-                .strafeToLinearHeading(new Vector2d(12,-28), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(10,-28), Math.toRadians(-90))
 
-//intakes artifacts
+//intakes artifacts row 2
 
-                .strafeTo(new Vector2d(12,-52))
-                .strafeTo(new Vector2d(12,-28))
+                .strafeTo(new Vector2d(10,-62))
+                .strafeTo(new Vector2d(10,-28))
 
 //goes to shooting position
 
-                .strafeToLinearHeading(new Vector2d(-14,-15), Math.toRadians(-140))
+                .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
 
                 //goes to intake third row of artifacts
-                .strafeToLinearHeading(new Vector2d(35,-28), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(35,-52), Math.toRadians(-90))
                 //intakes artifacts
 
+                .strafeTo(new Vector2d(35,-65))
                 .strafeTo(new Vector2d(35,-52))
-                .strafeTo(new Vector2d(35,-28))
 
 //goes to shooting position
 
-                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
+                .strafeToLinearHeading(new Vector2d(57,-35),Math.toRadians(-165))
                 //shoots
-                .strafeTo(new Vector2d(38,-16))
+                .strafeTo(new Vector2d(38,-25))
 
-
-
-//goes to shooting position
-
-                .strafeToLinearHeading(new Vector2d(56,-16),Math.toRadians(-170))
-                //shoots
-                .strafeTo(new Vector2d(38,-16))
 
 
                 .build();
