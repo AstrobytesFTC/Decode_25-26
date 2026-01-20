@@ -42,8 +42,8 @@ public class Q3AtGoalRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1655;
-    double velocityPowerNear = 1500;
+    double velocityPowerFar = 1600;
+    double velocityPowerNear = 1450;
 
 
     // lift class
@@ -250,8 +250,8 @@ public class Q3AtGoalRed extends LinearOpMode {
                 //Intakes Balls First Row
                 .strafeToLinearHeading(new Vector2d(-13, 26), Math.toRadians(90))
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-13,43))
-                .strafeTo(new Vector2d(-13,26))
+                .strafeTo(new Vector2d(-16,43))
+                .strafeTo(new Vector2d(-16,26))
                 .stopAndAdd(new stopSmartIntake())
 
                 //Lines up to shoot
@@ -261,9 +261,9 @@ public class Q3AtGoalRed extends LinearOpMode {
                 // Goes to intake second row of balls
                 .strafeTo(new Vector2d(14,12 ))
                 .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(12,14), Math.toRadians(85))
-                .strafeTo(new Vector2d(12,45))
-                .strafeTo(new Vector2d(12,17))
+                .strafeToLinearHeading(new Vector2d(12,14), Math.toRadians(90))
+                .strafeTo(new Vector2d(10,45))
+                .strafeTo(new Vector2d(10,17))
                 .stopAndAdd(new stopSmartIntake())
 
                 // Lines up for shot
@@ -282,7 +282,7 @@ public class Q3AtGoalRed extends LinearOpMode {
 
                 //Lines up to shoot
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(51, 2), Math.toRadians(143))
+                .strafeToLinearHeading(new Vector2d(46, 2), Math.toRadians(143))
                 .stopAndAdd(new smartFeedFar())
 
 
