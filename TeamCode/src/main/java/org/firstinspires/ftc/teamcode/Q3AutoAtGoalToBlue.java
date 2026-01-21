@@ -48,8 +48,8 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
     public class runShooter implements InstantFunction{
         @Override
         public void run(){
-            shooterLeft.setVelocity(-1420);
-            shooterRight.setVelocity(1420);
+            shooterLeft.setVelocity(-velocityPowerNear);
+            shooterRight.setVelocity(velocityPowerNear);
         }
 
     }
@@ -268,7 +268,7 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
 //intakes artifacts row 2
 
                 .strafeTo(new Vector2d(10,-62))
-                .strafeTo(new Vector2d(10,-30))
+                .strafeTo(new Vector2d(10,-34))
                 .stopAndAdd(new stopSmartIntake())
 
 //goes to shooting position
