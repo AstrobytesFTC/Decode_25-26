@@ -18,7 +18,7 @@
     import java.util.List;
 
     @TeleOp
-    public class FinalTeleOpQ3CameraColorSensor extends LinearOpMode {
+    public class FinalTeleOpQ3EnhancedAstroBytes extends LinearOpMode {
 
         // ---------- Motors ----------
         DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
@@ -38,11 +38,18 @@
         boolean closeShot = false;
 
         //-----------Angler Settings----
-         double blueCloseFar = 0;
-        double blueMidFar = 0;
-        double blueFarFar = 0;
-        double blueTipOfDiamond = 0;
+         double blueCloseFar = 35;
+        double blueMidFar = 25.5;
+        double blueFarFar = 23.2;
+        double redCloseFar = -34.3;
+        double redMidFar = -29.9;
+        double redFarFar = -22.6;
         double finalPos;
+        double targetVelocity = 0;
+        double closeA = 1450;
+        double closeB = 1550;
+        double farY = 1800;
+        double farX = 1850;
 
         // ---------- Blink vars ----------
         long lastBlink = 0;
@@ -74,32 +81,55 @@
             BLUE
         }
 
+        MODE currentMode = MODE.BLUE;//adjust for comp
+
+
 
         DelayAction blockDelay = new DelayAction(); // only 1 object, not created in loop
         public String detectColor() {
             if (colorSensor == null) return "NO SENSOR";
 
-            int r = colorSensor.red();
-            int g = colorSensor.green();
-            int b = colorSensor.blue();
+            double[] rgb = getNormalizedRGB();
+            double r = rgb[0];
+            double g = rgb[1];
+            double b = rgb[2];
 
-            int brightness = r + g + b;
+            double brightness = colorSensor.red()
+                    + colorSensor.green()
+                    + colorSensor.blue();
 
-            if (brightness < 300) {
+            // Reject darkness / far-away readings
+            if (brightness < 250) {
                 return "NONE";
             }
 
-            if (g > r * 1.2 && g > b * 1.2) {
+            // GREEN: dominant green channel
+            if (g > 0.45 && g > r + 0.10 && g > b + 0.10) {
                 return "GREEN";
             }
 
-            if (r > g * 1.1 && b > g * 1.1 &&
-                    Math.abs(r - b) < 0.3 * Math.max(r, b)) {
+            // PURPLE: red & blue both high, green suppressed
+            if (r > 0.35 && b > 0.35 && g < 0.25) {
                 return "PURPLE";
             }
 
             return "UNKNOWN";
         }
+        public double[] getNormalizedRGB() {
+            double r = colorSensor.red();
+            double g = colorSensor.green();
+            double b = colorSensor.blue();
+
+            double sum = r + g + b;
+            if (sum < 1) return new double[]{0, 0, 0};
+
+            return new double[]{
+                    r / sum,
+                    g / sum,
+                    b / sum
+            };
+        }
+
 
 
         @Override
@@ -172,24 +202,23 @@
                 if(gamepad2.a) {
                     closeShot = true;
                     gamepad2.rumble(200);
-                    shooterLeft.setVelocity(-1550);
-                    shooterRight.setVelocity(1550);
+                    targetVelocity = closeA;
                 } else if(gamepad2.b){
                     closeShot = true;
                     gamepad2.rumble(200);
-                    shooterLeft.setVelocity(-1600);
-                    shooterRight.setVelocity(1600);
+                    targetVelocity = closeB;
                 } else if(gamepad2.x){
                     closeShot = false;
                     gamepad2.rumble(200);
-                    shooterLeft.setVelocity(-1850);
-                    shooterRight.setVelocity(1850);
+                    targetVelocity = farX;
                 } else if(gamepad2.y){
                     closeShot = false;
+                    targetVelocity = farY;
                     gamepad2.rumble(200);
-                    shooterLeft.setVelocity(-1800);
-                    shooterRight.setVelocity(1800);
                 }
+
+                shooterLeft.setVelocity(-targetVelocity);
+                shooterRight.setVelocity(targetVelocity);
 
                 // ---------- Intake / Transfer ----------
                 intake.setPower(gamepad1.left_trigger);
@@ -206,11 +235,33 @@
                     shooterLeft.setVelocity(0);
                     shooterRight.setVelocity(0);
                 }
-                if(gamepad1.backWasPressed()) {
-                    if (gamepad2.dpad_left) finalPos = blueCloseFar;
-                    if (gamepad2.dpad_right) finalPos = blueMidFar;
-                    if (gamepad2.dpad_up) finalPos = blueFarFar;
-                    if (gamepad2.dpad_down) finalPos = blueTipOfDiamond;
+                if(currentMode.equals(MODE.BLUE)) {
+                    if (gamepad2.dpad_left){
+                        finalPos = blueCloseFar;
+                        gamepad2.rumble(200);
+                    }
+                    if (gamepad2.dpad_right){
+                        finalPos = blueMidFar;
+                        gamepad2.rumble(200);
+                    }
+                    if (gamepad2.dpad_up){
+                        finalPos = blueFarFar;
+                        gamepad2.rumble(200);
+                    }
+                }
+                if(currentMode.equals(MODE.RED)) {
+                    if (gamepad2.dpad_left){
+                        finalPos = redCloseFar;
+                        gamepad2.rumble(200);
+                    }
+                    if (gamepad2.dpad_right){
+                        finalPos = redMidFar;
+                        gamepad2.rumble(200);
+                    }
+                    if (gamepad2.dpad_up){
+                        finalPos = redFarFar;
+                        gamepad2.rumble(200);
+                    }
                 }
 
                 // ---------- Auto-turn ----------
