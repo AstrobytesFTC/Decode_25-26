@@ -77,7 +77,7 @@ public class Q3AtGoalRed extends LinearOpMode {
     public class blockerUp implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(0.5);
+            blocker.setPosition(1);
         }
 
     }
