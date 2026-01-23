@@ -298,13 +298,12 @@
 
                 // ---------- Blocker ----------
                 if(gamepad1.left_bumper){
-                    if(waitForShooter(shooterRight,targetVelocity,3000))
-                    blocker.setPosition(1);
-                    blockDelay.start(500);
-                    if(blockDelay.done()){
-                        blocker.setPosition(0.1);
+                    if(waitForShooter(shooterRight,targetVelocity,3000)){
+                        blocker.setPosition(1);
+
                     }
-                } else{
+                }
+                else{
                     blocker.setPosition(0.1);
                 }
 
