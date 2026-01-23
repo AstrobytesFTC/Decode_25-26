@@ -282,7 +282,7 @@ public class Q3AtGoalRed extends LinearOpMode {
 
                 //Lines up to shoot
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(46, 2), Math.toRadians(143))
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(155))
                 .stopAndAdd(new smartFeedFar())
                 //.stop
 
