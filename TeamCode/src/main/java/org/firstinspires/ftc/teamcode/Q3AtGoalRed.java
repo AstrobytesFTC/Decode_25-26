@@ -19,6 +19,7 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
@@ -42,10 +43,8 @@ public class Q3AtGoalRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1650;
-    double velocityPowerNear = 1450;
-
-
+    double velocityPowerFar = 1670;
+    double velocityPowerNear = 1430;
     // lift class
     private boolean initialized = false;
 
@@ -94,7 +93,7 @@ public class Q3AtGoalRed extends LinearOpMode {
             transfer.setPower(0.8);
             intake.setPower(0.8);
 
-            sleepSeconds(.5);
+            sleepSeconds(.7);
 
             transfer.setPower(0);
             intake.setPower(0);
@@ -141,10 +140,10 @@ public class Q3AtGoalRed extends LinearOpMode {
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
                 //telemetry.addLine("SHOT");
-                transfer.setPower(0.8);
+                transfer.setPower(0.9);
                 intake.setPower(0.8);
 
-                sleepSeconds(.5);
+                sleepSeconds(.6);
 
                 transfer.setPower(0);
                 intake.setPower(0);
@@ -166,7 +165,7 @@ public class Q3AtGoalRed extends LinearOpMode {
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(.5);
+                sleepSeconds(.6);
 
                 transfer.setPower(0);
                 intake.setPower(0);
@@ -232,6 +231,10 @@ public class Q3AtGoalRed extends LinearOpMode {
         shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        /*PIDFCoefficients pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
+        shooterLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);
+        shooterRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);*/
+
         Pose2d beginPose = new Pose2d(new Vector2d(-56,50), Math.toRadians(-225));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
@@ -288,7 +291,7 @@ public class Q3AtGoalRed extends LinearOpMode {
 
 
 
-                //Leave points 
+                //Leave points
                 .strafeTo(new Vector2d(38, 20))
                 .build();
 
