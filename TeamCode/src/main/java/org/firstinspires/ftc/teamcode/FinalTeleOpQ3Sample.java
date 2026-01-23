@@ -17,7 +17,7 @@
     import java.util.List;
 
     @TeleOp(name="finalTeleOpQ3", group="Main")
-    public class FinalTeleOpQ3 extends LinearOpMode {
+    public class FinalTeleOpQ3Sample extends LinearOpMode {
 
         // ---------- Motors ----------
         DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
@@ -181,15 +181,15 @@
                 }
 
                 // ---------- Blocker ----------
-                if(gamepad1.left_bumper){
-                    blocker.setPosition(1.0);
-                    blockDelay.start(500);
-                    if(blockDelay.done()){
-                        blocker.setPosition(0.1);
-                    }
-                } else{
-                    blocker.setPosition(0.1);
-                }
+//                if(gamepad1.left_bumper){
+//                    blocker.setPosition(0.5);
+//                    blockDelay.start(500);
+//                    if(blockDelay.done()){
+//                        blocker.setPosition(0.1);
+//                    }
+//                } else{
+//                    blocker.setPosition(0.1);
+//                }
 
                 telemetry.addData("Close Shot?",closeShot);
                 telemetry.update();
