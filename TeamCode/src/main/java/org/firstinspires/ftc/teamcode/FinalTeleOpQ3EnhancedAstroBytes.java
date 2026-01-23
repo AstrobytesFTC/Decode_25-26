@@ -83,7 +83,8 @@
 
         MODE currentMode = MODE.BLUE;//adjust for comp
 
-
+        String lastColor = "NONE";
+        ElapsedTime colorTimer = new ElapsedTime();
 
         DelayAction blockDelay = new DelayAction(); // only 1 object, not created in loop
         public String detectColor() {
@@ -130,6 +131,23 @@
             };
         }
 
+        public boolean waitForShooter(DcMotorEx shooter, double target, long timeoutMs) {
+            long start = System.currentTimeMillis();
+
+            while (opModeIsActive()
+                    && System.currentTimeMillis() - start < timeoutMs) {
+
+                double velocity = Math.abs(shooter.getVelocity());
+
+                if (Math.abs(velocity - target) < 30) {
+                    return true;
+                }
+
+                sleep(10); // allow hardware loop
+            }
+            return false; // timed out
+        }
+
 
 
         @Override
@@ -165,6 +183,7 @@
             shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+
             PIDFCoefficients pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
             shooterLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);
             shooterRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);
@@ -176,11 +195,10 @@
                     .addProcessor(aprilTag)
                     .build();
 
-
             waitForStart();
 
             while (opModeIsActive()) {
-
+                colorSensor.enableLed(true);
 
                 // ---------- Mecanum Drive ----------
                 double y  = -gamepad1.left_stick_y;
@@ -195,7 +213,7 @@
                 backRightMotor.setPower((y + x - rx) / denominator * moveSpeed);
 
                 // ---------- Move speed adjust ----------
-                if (gamepad1.dpad_up) moveSpeed = 1; // fast
+                if (gamepad1.dpad_up) moveSpeed = 0.35; // fast
                 if (gamepad1.dpad_down) moveSpeed = 0.85;  // dieuhaf
 
                 // ---------- Shooter presets ----------
@@ -280,6 +298,7 @@
 
                 // ---------- Blocker ----------
                 if(gamepad1.left_bumper){
+                    if(waitForShooter(shooterRight,targetVelocity,3000))
                     blocker.setPosition(1);
                     blockDelay.start(500);
                     if(blockDelay.done()){
