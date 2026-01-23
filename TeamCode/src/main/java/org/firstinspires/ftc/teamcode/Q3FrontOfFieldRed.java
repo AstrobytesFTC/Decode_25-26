@@ -43,7 +43,7 @@ public class Q3FrontOfFieldRed extends LinearOpMode {
     //    double velocityPower = 1880;
 
     double velocityPowerFar = 1680;
-    double velocityPowerNear = 1500;
+    double velocityPowerNear = 1430;
 
 
     // lift class
@@ -163,7 +163,7 @@ public class Q3FrontOfFieldRed extends LinearOpMode {
           //  telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
             //    telemetry.addLine("SHOT");
-                transfer.setPower(0.8);
+                transfer.setPower(0.7);
                 intake.setPower(0.8);
 
                 sleepSeconds(.7);
@@ -262,17 +262,17 @@ public class Q3FrontOfFieldRed extends LinearOpMode {
                 .stopAndAdd(new reduceShooterSpeed())
 
                 //goes to intake
-                .strafeToLinearHeading(new Vector2d(16, 35), Math.toRadians(80))
+                .strafeToLinearHeading(new Vector2d(18, 35), Math.toRadians(80))
 
                 //intakes
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(16, 52))
-                .strafeTo(new Vector2d(16, 28))
+                .strafeTo(new Vector2d(18, 56))
+                .strafeTo(new Vector2d(18, 28))
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(112))
+                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(115))
                 .stopAndAdd(new smartFeedNear())
 
                 //goes to intake
@@ -280,13 +280,13 @@ public class Q3FrontOfFieldRed extends LinearOpMode {
 
                 //intakes
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-7, 56))
+                .strafeTo(new Vector2d(-7, 59))
                 .strafeTo(new Vector2d(-7, 28))
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(112))
+                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(115))
                 .stopAndAdd(new smartFeedNear())
 
                 //leave points
