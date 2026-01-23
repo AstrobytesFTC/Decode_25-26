@@ -2,6 +2,7 @@
 
     import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
     import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+    import com.qualcomm.robotcore.hardware.ColorSensor;
     import com.qualcomm.robotcore.hardware.DcMotor;
     import com.qualcomm.robotcore.hardware.DcMotorEx;
     import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -16,8 +17,8 @@
 
     import java.util.List;
 
-    @TeleOp(name="finalTeleOpQ3", group="Main")
-    public class FinalTeleOpQ3 extends LinearOpMode {
+    @TeleOp
+    public class FinalTeleOpQ3CameraColorSensor extends LinearOpMode {
 
         // ---------- Motors ----------
         DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
@@ -26,6 +27,7 @@
 
         // ---------- Servos ----------
         Servo blocker, rgbLight;
+        ColorSensor colorSensor;
 
         // ---------- Vision ----------
         private AprilTagProcessor aprilTag;
@@ -34,6 +36,13 @@
         // ---------- Misc ----------
         double moveSpeed = 0.9;
         boolean closeShot = false;
+
+        //-----------Angler Settings----
+         double blueCloseFar = 0;
+        double blueMidFar = 0;
+        double blueFarFar = 0;
+        double blueTipOfDiamond = 0;
+        double finalPos;
 
         // ---------- Blink vars ----------
         long lastBlink = 0;
@@ -60,7 +69,38 @@
             }
         }
 
+        enum MODE{
+            RED,
+            BLUE
+        }
+
+
         DelayAction blockDelay = new DelayAction(); // only 1 object, not created in loop
+        public String detectColor() {
+            if (colorSensor == null) return "NO SENSOR";
+
+            int r = colorSensor.red();
+            int g = colorSensor.green();
+            int b = colorSensor.blue();
+
+            int brightness = r + g + b;
+
+            if (brightness < 300) {
+                return "NONE";
+            }
+
+            if (g > r * 1.2 && g > b * 1.2) {
+                return "GREEN";
+            }
+
+            if (r > g * 1.1 && b > g * 1.1 &&
+                    Math.abs(r - b) < 0.3 * Math.max(r, b)) {
+                return "PURPLE";
+            }
+
+            return "UNKNOWN";
+        }
+
 
         @Override
         public void runOpMode() {
@@ -79,6 +119,7 @@
 
             blocker = hardwareMap.servo.get("blocker");
             rgbLight = hardwareMap.servo.get("blinkin");
+            colorSensor = hardwareMap.colorSensor.get("colorsensor");
 
 
             // ---------- Motor directions ----------
@@ -105,11 +146,11 @@
                     .addProcessor(aprilTag)
                     .build();
 
-            telemetry.addLine("Ready.");
-            telemetry.update();
+
             waitForStart();
 
             while (opModeIsActive()) {
+
 
                 // ---------- Mecanum Drive ----------
                 double y  = -gamepad1.left_stick_y;
@@ -165,6 +206,12 @@
                     shooterLeft.setVelocity(0);
                     shooterRight.setVelocity(0);
                 }
+                if(gamepad1.backWasPressed()) {
+                    if (gamepad2.dpad_left) finalPos = blueCloseFar;
+                    if (gamepad2.dpad_right) finalPos = blueMidFar;
+                    if (gamepad2.dpad_up) finalPos = blueFarFar;
+                    if (gamepad2.dpad_down) finalPos = blueTipOfDiamond;
+                }
 
                 // ---------- Auto-turn ----------
                 if(gamepad2.right_bumper){
@@ -182,7 +229,7 @@
 
                 // ---------- Blocker ----------
                 if(gamepad1.left_bumper){
-                    blocker.setPosition(1.0);
+                    blocker.setPosition(1);
                     blockDelay.start(500);
                     if(blockDelay.done()){
                         blocker.setPosition(0.1);
@@ -191,7 +238,10 @@
                     blocker.setPosition(0.1);
                 }
 
-                telemetry.addData("Close Shot?",closeShot);
+                telemetry.addData("Color Sensor Red",colorSensor.red());
+                telemetry.addData("Color Sensor Blue",colorSensor.blue());
+                telemetry.addData("Color Sensor Green",colorSensor.green());
+                telemetry.addData("Current Detected Color",detectColor());
                 telemetry.update();
             }
         }
@@ -206,14 +256,12 @@
 
             double yaw = det.get(0).ftcPose.yaw;
 
-// ---- Right-side webcam yaw correction ----
-            yaw += 4.5;   // adjust this until turn-to-tag is perfect
 
             double kP = 0.02;
             double turn = -yaw * kP;
             turn = Math.max(Math.min(turn, 0.5), -0.5);
 
-            if(Math.abs(yaw) < 2){
+            if(Math.abs(yaw) < finalPos){
                 telemetry.addLine("Aligned!");
                 drive(0,0,0);
                 blinkLight(0.5,200);
@@ -251,5 +299,7 @@
             } else{
                 rgbLight.setPosition(0.0);
             }
+
+
         }
     }
