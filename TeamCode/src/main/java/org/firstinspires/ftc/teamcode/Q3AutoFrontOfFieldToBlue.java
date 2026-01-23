@@ -43,7 +43,7 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
     //    double velocityPower = 1880;
 
     double velocityPowerFar = 1680;
-    double velocityPowerNear = 1500;
+    double velocityPowerNear = 1430;
 
 
     // lift class
@@ -258,18 +258,19 @@ public class Q3AutoFrontOfFieldToBlue extends LinearOpMode {
                 .strafeTo(new Vector2d(0,-28))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position front of field
-                .strafeToLinearHeading(new Vector2d(-23,-19), Math.toRadians(-135))
+                //this used to be -135 btw for heading and same for the next shooting
+                .strafeToLinearHeading(new Vector2d(-23,-19), Math.toRadians(-130))
                 .stopAndAdd(new smartFeedNear())
 
                 //goes to intake row 3 of artifacts
                 .strafeToLinearHeading(new Vector2d(-30,-28), Math.toRadians(-89))
 //intakes artifacts
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-27,-52))
+                .strafeTo(new Vector2d(-27,-64))
                 .strafeTo(new Vector2d(-27,-28))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position near goal
-                .strafeToLinearHeading(new Vector2d(-23,-23), Math.toRadians(-135))
+                .strafeToLinearHeading(new Vector2d(-23,-25), Math.toRadians(-130))
                 .stopAndAdd(new smartFeedNear())
 
 //leave pts
