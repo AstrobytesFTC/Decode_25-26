@@ -137,7 +137,7 @@ public class Q3AtGoalRed extends LinearOpMode {
     public class smartFeedNear implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(0.5);
+            blocker.setPosition(1);
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
                 //telemetry.addLine("SHOT");
@@ -159,7 +159,7 @@ public class Q3AtGoalRed extends LinearOpMode {
     public class smartFeedFar implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(0.5);
+            blocker.setPosition(1);
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
               //  telemetry.addLine("SHOT");
