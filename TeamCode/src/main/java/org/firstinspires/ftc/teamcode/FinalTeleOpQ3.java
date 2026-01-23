@@ -125,19 +125,19 @@
 
                 // ---------- Move speed adjust ----------
                 if (gamepad1.dpad_up) moveSpeed = 1; // fast
-                if (gamepad1.dpad_down) moveSpeed = 0.85;  // dieuhaf
+                if (gamepad1.dpad_down) moveSpeed = 0.85;
 
                 // ---------- Shooter presets ----------
                 if(gamepad2.a) {
                     closeShot = true;
                     gamepad2.rumble(200);
-                    shooterLeft.setVelocity(-1550);
-                    shooterRight.setVelocity(1550);
+                    shooterLeft.setVelocity(-1450);
+                    shooterRight.setVelocity(1450);
                 } else if(gamepad2.b){
                     closeShot = true;
                     gamepad2.rumble(200);
-                    shooterLeft.setVelocity(-1600);
-                    shooterRight.setVelocity(1600);
+                    shooterLeft.setVelocity(-1550);
+                    shooterRight.setVelocity(1550);
                 } else if(gamepad2.x){
                     closeShot = false;
                     gamepad2.rumble(200);
@@ -185,10 +185,10 @@
                     blocker.setPosition(1.0);
                     blockDelay.start(500);
                     if(blockDelay.done()){
-                        blocker.setPosition(0.1);
+                        blocker.setPosition(0.2);
                     }
                 } else{
-                    blocker.setPosition(0.1);
+                    blocker.setPosition(0.2);
                 }
 
                 telemetry.addData("Close Shot?",closeShot);
