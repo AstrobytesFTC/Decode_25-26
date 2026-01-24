@@ -34,7 +34,7 @@
         private VisionPortal visionPortal;
 
         // ---------- Misc ----------
-        double moveSpeed = 0.9;
+        double moveSpeed = 0.85;
         boolean closeShot = false;
 
         //-----------Angler Settings----
@@ -254,31 +254,31 @@
                     shooterRight.setVelocity(0);
                 }
                 if(currentMode.equals(MODE.BLUE)) {
-                    if (gamepad2.dpad_left){
+                    if (gamepad1.dpad_left){
                         finalPos = blueCloseFar;
-                        gamepad2.rumble(200);
+                        gamepad1.rumble(200);
                     }
-                    if (gamepad2.dpad_right){
+                    if (gamepad1.dpad_right){
                         finalPos = blueMidFar;
-                        gamepad2.rumble(200);
+                        gamepad1.rumble(200);
                     }
-                    if (gamepad2.dpad_up){
+                    if (gamepad1.dpad_down){
                         finalPos = blueFarFar;
-                        gamepad2.rumble(200);
+                        gamepad1.rumble(200);
                     }
                 }
                 if(currentMode.equals(MODE.RED)) {
-                    if (gamepad2.dpad_left){
+                    if (gamepad1.dpad_left){
                         finalPos = redCloseFar;
-                        gamepad2.rumble(200);
+                        gamepad1.rumble(200);
                     }
-                    if (gamepad2.dpad_right){
+                    if (gamepad1.dpad_right){
                         finalPos = redMidFar;
-                        gamepad2.rumble(200);
+                        gamepad1.rumble(200);
                     }
-                    if (gamepad2.dpad_up){
+                    if (gamepad1.dpad_down){
                         finalPos = redFarFar;
-                        gamepad2.rumble(200);
+                        gamepad1.rumble(200);
                     }
                 }
 
