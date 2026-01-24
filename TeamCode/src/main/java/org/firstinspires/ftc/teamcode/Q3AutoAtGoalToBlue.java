@@ -40,8 +40,8 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
     DcMotorEx shooterLeft = null;
     Servo blocker = null;
 
-    double velocityPowerFar = 1700;
-    double velocityPowerNear = 1450;
+    double velocityPowerFar = 1680;
+    double velocityPowerNear = 1411;
     // lift class
     private boolean initialized = false;
 
@@ -89,7 +89,7 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
             transfer.setPower(0.8);
             intake.setPower(0.8);
 
-            sleepSeconds(.5);
+            sleepSeconds(.6);
 
             transfer.setPower(0);
             intake.setPower(0);
@@ -122,7 +122,7 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
 
             double velocity = Math.abs(shooter.getVelocity());
 //Dependable, keep if close
-            if (Math.abs(velocity - target) < 40) {
+            if (Math.abs(velocity - target) < 45) {
                 return true;
             }
 
@@ -140,10 +140,10 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
                 //telemetry.addLine("SHOT");
-                transfer.setPower(0.8);
-                intake.setPower(0.8);
+                transfer.setPower(0.9);
+                intake.setPower(0.9);
 
-                sleepSeconds(.5);
+                sleepSeconds(.7);
 
                 transfer.setPower(0);
                 intake.setPower(0);
@@ -165,7 +165,7 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(.5);
+                sleepSeconds(.6);
 
                 transfer.setPower(0);
                 intake.setPower(0);
@@ -235,6 +235,8 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
         shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        telemetry.addData("Current Velocity", Math.abs(shooterLeft.getVelocity()));
+
         Pose2d beginPose = new Pose2d(new Vector2d(-52,-60), Math.toRadians(-140));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
@@ -262,13 +264,13 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
                 .stopAndAdd(new smartFeedNear())
                 //goes to intake second row of artifacts
 
-                .strafeToLinearHeading(new Vector2d(10,-30), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(10,-40), Math.toRadians(-90))
                 .stopAndAdd(new smartIntake())
 
 //intakes artifacts row 2
 
                 .strafeTo(new Vector2d(10,-62))
-                .strafeTo(new Vector2d(10,-34))
+                .strafeTo(new Vector2d(10,-40))
                 .stopAndAdd(new stopSmartIntake())
 
 //goes to shooting position
@@ -302,6 +304,8 @@ public class Q3AutoAtGoalToBlue extends LinearOpMode {
 
 
         Actions.runBlocking(new SequentialAction(Scrimmage2Auto));
+
+        telemetry.update();
 
 
 
