@@ -42,7 +42,7 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1680;
+    double velocityPowerFar = 1670;
     double velocityPowerNear = 1430;
 
 
@@ -243,7 +243,7 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(150))
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
                 .stopAndAdd(new smartFeedFar())
 
                 //goes to intake position
