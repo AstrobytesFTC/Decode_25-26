@@ -22,7 +22,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Q3AtGoal3ArtifactAndLeaveBLUE", group = "Autonomous")
+@Autonomous(name = "Q3AutoSimpleAtGoalBlue", group = "Autonomous")
 public class Q3AutoSimpleAtGoalBlue extends LinearOpMode {
 
 
