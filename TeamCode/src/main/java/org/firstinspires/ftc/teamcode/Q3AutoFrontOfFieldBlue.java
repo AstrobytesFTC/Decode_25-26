@@ -251,26 +251,26 @@ public class Q3AutoFrontOfFieldBlue extends LinearOpMode {
                 .stopAndAdd(new smartFeedFar())
                 .stopAndAdd (new reduceShooterSpeed())
 //goes to intake second rack
-                .strafeToLinearHeading(new Vector2d(-5,-28), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(-5,-34), Math.toRadians(-90))
 //intakes artifacts
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(0,-62))
-                .strafeTo(new Vector2d(0,-28))
+                .strafeTo(new Vector2d(0,-34))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position front of field
                 //this used to be -135 btw for heading and same for the next shooting
-                .strafeToLinearHeading(new Vector2d(-23,-19), Math.toRadians(-130))
+                .strafeToLinearHeading(new Vector2d(-23,-19), Math.toRadians(-135))
                 .stopAndAdd(new smartFeedNear())
 
                 //goes to intake row 3 of artifacts
                 .strafeToLinearHeading(new Vector2d(-30,-28), Math.toRadians(-89))
 //intakes artifacts
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-27,-64))
+                .strafeTo(new Vector2d(-27,-62))
                 .strafeTo(new Vector2d(-27,-28))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position near goal
-                .strafeToLinearHeading(new Vector2d(-23,-25), Math.toRadians(-130))
+                .strafeToLinearHeading(new Vector2d(-50,-20), Math.toRadians(-126))
                 .stopAndAdd(new smartFeedNear())
 
 //leave pts
