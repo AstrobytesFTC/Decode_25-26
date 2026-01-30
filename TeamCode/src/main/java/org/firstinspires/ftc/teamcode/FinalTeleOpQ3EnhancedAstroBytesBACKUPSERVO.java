@@ -298,21 +298,22 @@
     
                 // ---------- Blocker ----------
                 if(gamepad1.left_bumper){
-                    blocker.setPosition(1);
+                    blocker.setPosition(0.5);
                     blockDelay.start(500);
                     if(blockDelay.done()){
-                        blocker.setPosition(0.1);
+                        blocker.setPosition(1);
                     }
 
                 }
                 else{
-                    blocker.setPosition(0.1);
+                    blocker.setPosition(1);
                 }
 
                 telemetry.addData("Color Sensor Red",colorSensor.red());
                 telemetry.addData("Color Sensor Blue",colorSensor.blue());
                 telemetry.addData("Color Sensor Green",colorSensor.green());
                 telemetry.addData("Current Detected Color",detectColor());
+                telemetry.addData("Bocker Servo Pos",blocker.getPosition());
                 telemetry.update();
             }
         }
