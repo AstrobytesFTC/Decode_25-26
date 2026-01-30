@@ -84,7 +84,7 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
     public class blockerDown implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(0.1);
+            blocker.setPosition(0.2);
         }
 
     }
@@ -150,7 +150,7 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
                 intake.setPower(0);
             }
             //telemetry.addLine("DONEE");
-            blocker.setPosition(0.1);
+            blocker.setPosition(0.2);
             //telemetry.update();
         }
 
@@ -172,7 +172,7 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
                 intake.setPower(0);
             }
             //telemetry.addLine("DONEE");
-            blocker.setPosition(0.1);
+            blocker.setPosition(0.2);
             //telemetry.update();
         }
 
