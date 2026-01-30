@@ -301,12 +301,12 @@
                     blocker.setPosition(1);
                     blockDelay.start(500);
                     if(blockDelay.done()){
-                        blocker.setPosition(0.1);
+                        blocker.setPosition(0.2);
                     }
 
                 }
                 else{
-                    blocker.setPosition(0.1);
+                    blocker.setPosition(0.2);
                 }
 
                 telemetry.addData("Color Sensor Red",colorSensor.red());
