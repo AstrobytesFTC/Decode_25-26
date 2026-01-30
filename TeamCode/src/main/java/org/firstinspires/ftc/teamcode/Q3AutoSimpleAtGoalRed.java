@@ -254,7 +254,7 @@ public class Q3AutoSimpleAtGoalRed extends LinearOpMode {
 
 
                 //Leave points
-                .strafeTo(new Vector2d(-8, 25))
+                .strafeTo(new Vector2d(-50, 25))
                 .build();
 
 

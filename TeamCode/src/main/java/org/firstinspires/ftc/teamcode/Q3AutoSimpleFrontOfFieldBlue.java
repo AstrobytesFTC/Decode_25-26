@@ -239,7 +239,7 @@ public class Q3AutoSimpleFrontOfFieldBlue extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(53,-15),Math.toRadians(-165))
                 .stopAndAdd(new smartFeedFar())
 //leave points
-                .strafeTo(new Vector2d(55,-35))
+                .strafeTo(new Vector2d(52,-35))
 
 
                 .build();

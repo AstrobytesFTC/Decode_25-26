@@ -243,12 +243,14 @@ public class Q3AutoSimpleFrontOfFieldRed extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(150))
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
                 .stopAndAdd(new smartFeedFar())
 
 
                 // leave points
-                .strafeTo(new Vector2d(38,20))
+                .turnTo(Math.toRadians(90))
+                .strafeTo(new Vector2d(63,26))
+
 
 
 
