@@ -249,6 +249,18 @@ public class AtGoalToBlueWithChanges extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
 
                 .stopAndAdd(new smartFeedNear())
+                /* Parallel Action for Intake
+                .stopAndAdd(
+                   new ParallelAction(
+                   new smartIntake(),
+                   drive.actionBuilder(currentPose)
+                   .strafeToLinearHeading(new Vector2d(10,-40), Math.toRadians(-90))
+                   .strafeTo(new Vector2d(10,-64))
+             .build()
+             )
+    )
+             */
+
                 //goes to intake artifacts row 1
 
 
