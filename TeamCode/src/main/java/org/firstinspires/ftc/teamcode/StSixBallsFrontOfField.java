@@ -1,31 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
-
-// RR-specific imports
-
-import static java.lang.Thread.sleep;
-
 import com.acmerobotics.dashboard.config.Config;
-
-// Non-RR imports
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantFunction;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Q3AutoAtGoalRed", group = "Autonomous")
-public class Q3AutoAtGoalRed extends LinearOpMode {
-
+@Autonomous(name = "StSixBallsFrontOfField", group = "Autonomous")
+public class StSixBallsFrontOfField extends LinearOpMode {
 
     DcMotor frontLeftMotor = null;
     DcMotor backLeftMotor = null;
@@ -47,7 +39,7 @@ public class Q3AutoAtGoalRed extends LinearOpMode {
     // lift class
     private boolean initialized = false;
 
-    public class runShooter implements InstantFunction{
+    public class runShooter implements InstantFunction {
         @Override
         public void run(){
             shooterLeft.setVelocity(-velocityPowerNear);
@@ -160,7 +152,7 @@ public class Q3AutoAtGoalRed extends LinearOpMode {
             blocker.setPosition(1);
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
-              //  telemetry.addLine("SHOT");
+                //  telemetry.addLine("SHOT");
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
@@ -169,7 +161,7 @@ public class Q3AutoAtGoalRed extends LinearOpMode {
                 transfer.setPower(0);
                 intake.setPower(0);
             }
-           // telemetry.addLine("DONEE");
+            // telemetry.addLine("DONEE");
             blocker.setPosition(0.2);
             //telemetry.update();
         }
@@ -237,7 +229,7 @@ public class Q3AutoAtGoalRed extends LinearOpMode {
         telemetry.addData("Current Velocity", Math.abs(shooterLeft.getVelocity()));
 
 
-        Pose2d beginPose = new Pose2d(new Vector2d(-56,50), Math.toRadians(-225));
+        Pose2d beginPose = new Pose2d(new Vector2d(56,12), Math.toRadians(170));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -246,53 +238,27 @@ public class Q3AutoAtGoalRed extends LinearOpMode {
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
 
-                // First Shooting
-                .stopAndAdd(new runShooter())
-                .strafeTo(new Vector2d(-20,14))
-                .stopAndAdd(new smartFeedNear())
 
+                // shoots preloads
+                .stopAndAdd(new runShooter())
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
+                .stopAndAdd(new smartFeedFar())
 
                 //Intakes Balls First Row
-                .strafeToLinearHeading(new Vector2d(-13, 26), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(40, 35), Math.toRadians(80))
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-16,43))
+                .strafeTo(new Vector2d(40, 52))
                 .stopAndAdd(new stopSmartIntake())
 
                 //Lines up to shoot
-               // .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-24, 14), Math.toRadians(135))
-                .stopAndAdd(new smartFeedNear())
-
-                // Goes to intake second row of balls
-                //.strafeTo(new Vector2d(14,12 ))
-                .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(12,14), Math.toRadians(90))
-                .strafeTo(new Vector2d(10,45))
-                .stopAndAdd(new stopSmartIntake())
-
-                // Lines up for shot
-                //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-24, 14), Math.toRadians(135))
-                .stopAndAdd(new smartFeedNear())
-                .stopAndAdd(new increaseShooterSpeed())
-
-
-                // Goes to intake the third row of balls
-                .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(36, 14), Math.toRadians(90))
-                .strafeTo(new Vector2d(35,35))
-                .stopAndAdd(new stopSmartIntake())
-
-                //Lines up to shoot
-                //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(155))
+                // .stopAndAdd(new runShooter())
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
                 .stopAndAdd(new smartFeedFar())
-                //.stop
-
 
 
                 //Leave points
-                .strafeTo(new Vector2d(38, 20))
+                .turnTo(Math.toRadians(90))
+                .strafeTo(new Vector2d(63,26))
                 .build();
 
 
@@ -311,3 +277,4 @@ public class Q3AutoAtGoalRed extends LinearOpMode {
     }
 
 }
+

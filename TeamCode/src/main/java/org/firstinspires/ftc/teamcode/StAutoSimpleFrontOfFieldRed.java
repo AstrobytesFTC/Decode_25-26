@@ -1,23 +1,31 @@
 package org.firstinspires.ftc.teamcode;
 
+
+// RR-specific imports
+
+import static java.lang.Thread.sleep;
+
 import com.acmerobotics.dashboard.config.Config;
+
+// Non-RR imports
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantFunction;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "SixBallsFrontOfField", group = "Autonomous")
-public class SixBallsFrontOfField extends LinearOpMode {
+@Autonomous(name = "StAutoSimpleFrontOfFieldRed", group = "Autonomous")
+public class StAutoSimpleFrontOfFieldRed extends LinearOpMode {
+
 
     DcMotor frontLeftMotor = null;
     DcMotor backLeftMotor = null;
@@ -35,15 +43,17 @@ public class SixBallsFrontOfField extends LinearOpMode {
     //    double velocityPower = 1880;
 
     double velocityPowerFar = 1680;
-    double velocityPowerNear = 1411;
+    double velocityPowerNear = 1500;
+
+
     // lift class
     private boolean initialized = false;
 
-    public class runShooter implements InstantFunction {
+    public class runShooter implements InstantFunction{
         @Override
         public void run(){
-            shooterLeft.setVelocity(-velocityPowerNear);
-            shooterRight.setVelocity(velocityPowerNear);
+            shooterLeft.setVelocity(-velocityPowerFar);
+            shooterRight.setVelocity(velocityPowerFar);
         }
 
     }
@@ -67,14 +77,14 @@ public class SixBallsFrontOfField extends LinearOpMode {
     public class blockerUp implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(1);
+            blocker.setPosition(0.5);
         }
 
     }
     public class blockerDown implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(0.2);
+            blocker.setPosition(0.1);
         }
 
     }
@@ -84,7 +94,7 @@ public class SixBallsFrontOfField extends LinearOpMode {
             transfer.setPower(0.8);
             intake.setPower(0.8);
 
-            sleepSeconds(.7);
+            sleepSeconds(1);
 
             transfer.setPower(0);
             intake.setPower(0);
@@ -115,11 +125,11 @@ public class SixBallsFrontOfField extends LinearOpMode {
 
             double velocity = Math.abs(shooter.getVelocity());
 
-            if (Math.abs(velocity - target) < 45) {
+            if (Math.abs(velocity - target) < 30) {
                 return true;
             }
 
-            sleep(5); // allow hardware loop
+            sleep(10); // allow hardware loop
         }
         return false; // timed out
     }
@@ -127,12 +137,12 @@ public class SixBallsFrontOfField extends LinearOpMode {
     public class smartFeedNear implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(1);
+            blocker.setPosition(0.5);
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
-                //telemetry.addLine("SHOT");
-                transfer.setPower(0.9);
-                intake.setPower(0.9);
+                //  telemetry.addLine("SHOT");
+                transfer.setPower(0.8);
+                intake.setPower(0.8);
 
                 sleepSeconds(.7);
 
@@ -140,7 +150,7 @@ public class SixBallsFrontOfField extends LinearOpMode {
                 intake.setPower(0);
             }
             //telemetry.addLine("DONEE");
-            blocker.setPosition(0.2);
+            blocker.setPosition(0.1);
             //telemetry.update();
         }
 
@@ -149,20 +159,20 @@ public class SixBallsFrontOfField extends LinearOpMode {
     public class smartFeedFar implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(1);
-            //telemetry.addLine("NOT DONE");
+            blocker.setPosition(0.5);
+            //  telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
-                //  telemetry.addLine("SHOT");
+                //    telemetry.addLine("SHOT");
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
-                sleepSeconds(.6);
+                sleepSeconds(.7);
 
                 transfer.setPower(0);
                 intake.setPower(0);
             }
-            // telemetry.addLine("DONEE");
-            blocker.setPosition(0.2);
+            //telemetry.addLine("DONEE");
+            blocker.setPosition(0.1);
             //telemetry.update();
         }
 
@@ -222,13 +232,6 @@ public class SixBallsFrontOfField extends LinearOpMode {
         shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-      /* PIDFCoefficients pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
-        shooterLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);
-        shooterRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);*/
-
-        telemetry.addData("Current Velocity", Math.abs(shooterLeft.getVelocity()));
-
-
         Pose2d beginPose = new Pose2d(new Vector2d(56,12), Math.toRadians(170));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
@@ -238,34 +241,25 @@ public class SixBallsFrontOfField extends LinearOpMode {
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
 
-
-                // shoots preloads
+                //shooting position
                 .stopAndAdd(new runShooter())
                 .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
                 .stopAndAdd(new smartFeedFar())
 
-                //Intakes Balls First Row
-                .strafeToLinearHeading(new Vector2d(40, 35), Math.toRadians(80))
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(40, 52))
-                .stopAndAdd(new stopSmartIntake())
 
-                //Lines up to shoot
-                // .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
-                .stopAndAdd(new smartFeedFar())
-
-
-                //Leave points
+                // leave points
                 .turnTo(Math.toRadians(90))
                 .strafeTo(new Vector2d(63,26))
+
+
+
+
+
                 .build();
 
 
 
         Actions.runBlocking(new SequentialAction(Scrimmage2Auto));
-
-        telemetry.update();
 
 
 
@@ -277,4 +271,3 @@ public class SixBallsFrontOfField extends LinearOpMode {
     }
 
 }
-

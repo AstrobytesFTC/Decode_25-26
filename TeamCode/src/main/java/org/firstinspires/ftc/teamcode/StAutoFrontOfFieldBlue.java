@@ -23,8 +23,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Q3AutoFrontOfFieldBlue", group = "Autonomous")
-public class Q3AutoFrontOfFieldBlue extends LinearOpMode {
+@Autonomous(name = "StAutoFrontOfFieldBlue", group = "Autonomous")
+public class StAutoFrontOfFieldBlue extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;

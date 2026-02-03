@@ -23,8 +23,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Q3AutoFrontOfFieldRed", group = "Autonomous")
-public class Q3AutoFrontOfFieldRed extends LinearOpMode {
+@Autonomous(name = "StFrontRedLoadingZone", group = "Autonomous")
+public class StFrontRedLoadingZone extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -42,8 +42,8 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1670;
-    double velocityPowerNear = 1430;
+    double velocityPowerFar = 1680;
+    double velocityPowerNear = 1500;
 
 
     // lift class
@@ -77,14 +77,14 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
     public class blockerUp implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(1);
+            blocker.setPosition(0.5);
         }
 
     }
     public class blockerDown implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(0.2);
+            blocker.setPosition(0.1);
         }
 
     }
@@ -137,10 +137,10 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
     public class smartFeedNear implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(1);
+            blocker.setPosition(0.5);
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
-              //  telemetry.addLine("SHOT");
+                //  telemetry.addLine("SHOT");
                 transfer.setPower(0.8);
                 intake.setPower(0.8);
 
@@ -150,7 +150,7 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
                 intake.setPower(0);
             }
             //telemetry.addLine("DONEE");
-            blocker.setPosition(0.2);
+            blocker.setPosition(0.1);
             //telemetry.update();
         }
 
@@ -159,11 +159,11 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
     public class smartFeedFar implements InstantFunction{
         @Override
         public void run(){
-            blocker.setPosition(1);
-          //  telemetry.addLine("NOT DONE");
+            blocker.setPosition(0.5);
+            //  telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
-            //    telemetry.addLine("SHOT");
-                transfer.setPower(0.7);
+                //    telemetry.addLine("SHOT");
+                transfer.setPower(0.8);
                 intake.setPower(0.8);
 
                 sleepSeconds(.7);
@@ -172,7 +172,7 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
                 intake.setPower(0);
             }
             //telemetry.addLine("DONEE");
-            blocker.setPosition(0.2);
+            blocker.setPosition(0.1);
             //telemetry.update();
         }
 
@@ -243,51 +243,39 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
+                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(150))
                 .stopAndAdd(new smartFeedFar())
 
+
                 //goes to intake position
+                .stopAndAdd(new smartIntake())
                 .strafeToLinearHeading(new Vector2d(40, 35), Math.toRadians(80))
 
                 //intakes
-                .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(40, 52))
+                .strafeTo(new Vector2d(40, 28))
                 .stopAndAdd(new stopSmartIntake())
 
+
                 //goes to shooting position
-               // .stopAndAdd(new runShooter())
                 .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(145))
                 .stopAndAdd(new smartFeedFar())
-                .stopAndAdd(new reduceShooterSpeed())
 
-                //goes to intake
-                .strafeToLinearHeading(new Vector2d(18, 35), Math.toRadians(80))
+                //goes to intake balls in loading zone
+                .stopAndAdd(new smartIntake())
+                .strafeToLinearHeading(new Vector2d(50, 58), Math.toRadians(0))
 
                 //intakes
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(18, 56))
+                .strafeTo(new Vector2d(65, 60))
+                .strafeTo(new Vector2d(50,58))
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position
-                //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(115))
-                .stopAndAdd(new smartFeedNear())
-
-                //goes to intake
-                .strafeToLinearHeading(new Vector2d(-7, 35), Math.toRadians(80))
-
-                //intakes
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(-7, 59))
-                .stopAndAdd(new stopSmartIntake())
-
-                //goes to shooting position
-                //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(115))
-                .stopAndAdd(new smartFeedNear())
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(145))
+                .stopAndAdd(new smartFeedFar())
 
                 //leave points
-                //.strafeTo(new Vector2d(20, 16))
+                .strafeTo(new Vector2d(20, 16))
                 .build();
 
 

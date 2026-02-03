@@ -1,31 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
-
-// RR-specific imports
-
-import static java.lang.Thread.sleep;
-
 import com.acmerobotics.dashboard.config.Config;
-
-// Non-RR imports
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantFunction;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "NineBallsAtGoalRed", group = "Autonomous")
-public class NineBallsAtGoalRed extends LinearOpMode {
-
+@Autonomous(name = "StSixBallsAtGoalRed", group = "Autonomous")
+public class StSixBallsAtGoalRed extends LinearOpMode {
 
     DcMotor frontLeftMotor = null;
     DcMotor backLeftMotor = null;
@@ -47,7 +39,7 @@ public class NineBallsAtGoalRed extends LinearOpMode {
     // lift class
     private boolean initialized = false;
 
-    public class runShooter implements InstantFunction{
+    public class runShooter implements InstantFunction {
         @Override
         public void run(){
             shooterLeft.setVelocity(-velocityPowerNear);
@@ -246,6 +238,8 @@ public class NineBallsAtGoalRed extends LinearOpMode {
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
 
+
+                // shoots preloads
                 .stopAndAdd(new runShooter())
                 .strafeTo(new Vector2d(-20,14))
                 .stopAndAdd(new smartFeedNear())
@@ -257,19 +251,10 @@ public class NineBallsAtGoalRed extends LinearOpMode {
                 .stopAndAdd(new stopSmartIntake())
 
                 //Lines up to shoot
+                // .stopAndAdd(new runShooter())
                 .strafeToLinearHeading(new Vector2d(-24, 14), Math.toRadians(135))
                 .stopAndAdd(new smartFeedNear())
 
-                // Goes to intake second row of balls
-                .strafeToLinearHeading(new Vector2d(12,14), Math.toRadians(90))
-                .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(12,45))
-                .stopAndAdd(new stopSmartIntake())
-
-                // Lines up for shot
-                //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-24, 14), Math.toRadians(135))
-                .stopAndAdd(new smartFeedNear())
 
                 //Leave points
                 .strafeTo(new Vector2d(-50, 25))
@@ -291,3 +276,4 @@ public class NineBallsAtGoalRed extends LinearOpMode {
     }
 
 }
+

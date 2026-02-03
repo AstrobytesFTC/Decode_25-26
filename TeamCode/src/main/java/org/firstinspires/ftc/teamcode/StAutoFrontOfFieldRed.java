@@ -23,8 +23,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "NineBallsFrontOfFieldRed", group = "Autonomous")
-public class NineBallsFrontOfFieldRed extends LinearOpMode {
+@Autonomous(name = "StAutoFrontOfFieldRed", group = "Autonomous")
+public class StAutoFrontOfFieldRed extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -42,16 +42,18 @@ public class NineBallsFrontOfFieldRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1680;
-    double velocityPowerNear = 1411;
+    double velocityPowerFar = 1670;
+    double velocityPowerNear = 1430;
+
+
     // lift class
     private boolean initialized = false;
 
     public class runShooter implements InstantFunction{
         @Override
         public void run(){
-            shooterLeft.setVelocity(-velocityPowerNear);
-            shooterRight.setVelocity(velocityPowerNear);
+            shooterLeft.setVelocity(-velocityPowerFar);
+            shooterRight.setVelocity(velocityPowerFar);
         }
 
     }
@@ -92,7 +94,7 @@ public class NineBallsFrontOfFieldRed extends LinearOpMode {
             transfer.setPower(0.8);
             intake.setPower(0.8);
 
-            sleepSeconds(.7);
+            sleepSeconds(1);
 
             transfer.setPower(0);
             intake.setPower(0);
@@ -123,11 +125,11 @@ public class NineBallsFrontOfFieldRed extends LinearOpMode {
 
             double velocity = Math.abs(shooter.getVelocity());
 
-            if (Math.abs(velocity - target) < 45) {
+            if (Math.abs(velocity - target) < 30) {
                 return true;
             }
 
-            sleep(5); // allow hardware loop
+            sleep(10); // allow hardware loop
         }
         return false; // timed out
     }
@@ -138,9 +140,9 @@ public class NineBallsFrontOfFieldRed extends LinearOpMode {
             blocker.setPosition(1);
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
-                //telemetry.addLine("SHOT");
-                transfer.setPower(0.9);
-                intake.setPower(0.9);
+              //  telemetry.addLine("SHOT");
+                transfer.setPower(0.8);
+                intake.setPower(0.8);
 
                 sleepSeconds(.7);
 
@@ -158,18 +160,18 @@ public class NineBallsFrontOfFieldRed extends LinearOpMode {
         @Override
         public void run(){
             blocker.setPosition(1);
-            //telemetry.addLine("NOT DONE");
+          //  telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
-                //  telemetry.addLine("SHOT");
-                transfer.setPower(0.8);
+            //    telemetry.addLine("SHOT");
+                transfer.setPower(0.7);
                 intake.setPower(0.8);
 
-                sleepSeconds(.6);
+                sleepSeconds(.7);
 
                 transfer.setPower(0);
                 intake.setPower(0);
             }
-            // telemetry.addLine("DONEE");
+            //telemetry.addLine("DONEE");
             blocker.setPosition(0.2);
             //telemetry.update();
         }
@@ -230,13 +232,6 @@ public class NineBallsFrontOfFieldRed extends LinearOpMode {
         shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-      /* PIDFCoefficients pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
-        shooterLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);
-        shooterRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);*/
-
-        telemetry.addData("Current Velocity", Math.abs(shooterLeft.getVelocity()));
-
-
         Pose2d beginPose = new Pose2d(new Vector2d(56,12), Math.toRadians(170));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
@@ -246,47 +241,58 @@ public class NineBallsFrontOfFieldRed extends LinearOpMode {
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
 
-
-                //Shoots Preloads
+                //shooting position
                 .stopAndAdd(new runShooter())
                 .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
                 .stopAndAdd(new smartFeedFar())
 
-                // Goes to intake third row of balls
-                //.strafeTo(new Vector2d(14,12 ))
-                .strafeToLinearHeading(new Vector2d(36, 14), Math.toRadians(90))
+                //goes to intake position
+                .strafeToLinearHeading(new Vector2d(40, 35), Math.toRadians(80))
+
+                //intakes
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(35,35))
+                .strafeTo(new Vector2d(40, 52))
                 .stopAndAdd(new stopSmartIntake())
 
+                //goes to shooting position
+               // .stopAndAdd(new runShooter())
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(145))
+                .stopAndAdd(new smartFeedFar())
+                .stopAndAdd(new reduceShooterSpeed())
 
-                // Lines up for shot
+                //goes to intake
+                .strafeToLinearHeading(new Vector2d(18, 35), Math.toRadians(80))
+
+                //intakes
+                .stopAndAdd(new smartIntake())
+                .strafeTo(new Vector2d(18, 56))
+                .stopAndAdd(new stopSmartIntake())
+
+                //goes to shooting position
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56,16), Math.toRadians(155))
-                .stopAndAdd(new smartFeedFar())
+                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(115))
+                .stopAndAdd(new smartFeedNear())
 
-                // Goes to intake the second row of balls
-                .strafeToLinearHeading(new Vector2d(12,14), Math.toRadians(90))
+                //goes to intake
+                .strafeToLinearHeading(new Vector2d(-7, 35), Math.toRadians(80))
+
+                //intakes
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(10,45))
+                .strafeTo(new Vector2d(-7, 59))
                 .stopAndAdd(new stopSmartIntake())
 
+                //goes to shooting position
+                //.stopAndAdd(new runShooter())
+                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(115))
+                .stopAndAdd(new smartFeedNear())
 
-                //Lines up to shoot
-                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(155))
-                .stopAndAdd(new smartFeedFar())
-                //.stop
-
-                //Leave points
-                .turnTo(Math.toRadians(90))
-                .strafeTo(new Vector2d(63,26))
+                //leave points
+                //.strafeTo(new Vector2d(20, 16))
                 .build();
 
 
 
         Actions.runBlocking(new SequentialAction(Scrimmage2Auto));
-
-        telemetry.update();
 
 
 
