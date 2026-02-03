@@ -18,7 +18,7 @@
     import java.util.List;
 
     @TeleOp
-    public class FinalTeleOpQ3EnhancedAstroBytesBACKUPSERVO extends LinearOpMode {
+    public class FinalTeleOpStates extends LinearOpMode {
 
         // ---------- Motors ----------
         DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
@@ -34,7 +34,7 @@
         private VisionPortal visionPortal;
 
         // ---------- Misc ----------
-        double moveSpeed = 0.85;
+        double moveSpeed = 0.95;
         boolean closeShot = false;
 
         //-----------Angler Settings----
@@ -165,7 +165,7 @@
             shooterRight = hardwareMap.get(DcMotorEx.class, "rightShooter");
             shooterLeft  = hardwareMap.get(DcMotorEx.class, "leftShooter");
 
-            blocker = hardwareMap.servo.get("bocker");
+            blocker = hardwareMap.servo.get("blocker");
             rgbLight = hardwareMap.servo.get("blinkin");
             colorSensor = hardwareMap.colorSensor.get("colorsensor");
 
@@ -214,7 +214,7 @@
 
                 // ---------- Move speed adjust ----------
                 if (gamepad1.dpad_up) moveSpeed = 0.35; // fast
-                if (gamepad1.dpad_down) moveSpeed = 0.85;  // dieuhaf
+                if (gamepad1.dpad_down) moveSpeed = 0.95;  // dieuhaf
 
                 // ---------- Shooter presets ----------
                 if(gamepad2.a) {
@@ -298,22 +298,21 @@
     
                 // ---------- Blocker ----------
                 if(gamepad1.left_bumper){
-                    blocker.setPosition(0.5);
+                    blocker.setPosition(1);
                     blockDelay.start(500);
                     if(blockDelay.done()){
-                        blocker.setPosition(1);
+                        blocker.setPosition(0.2);
                     }
 
                 }
                 else{
-                    blocker.setPosition(1);
+                    blocker.setPosition(0.2);
                 }
 
                 telemetry.addData("Color Sensor Red",colorSensor.red());
                 telemetry.addData("Color Sensor Blue",colorSensor.blue());
                 telemetry.addData("Color Sensor Green",colorSensor.green());
                 telemetry.addData("Current Detected Color",detectColor());
-                telemetry.addData("Bocker Servo Pos",blocker.getPosition());
                 telemetry.update();
             }
         }
