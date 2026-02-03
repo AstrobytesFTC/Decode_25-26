@@ -244,7 +244,6 @@ public class Q3AutoFrontOfFieldBlue extends LinearOpMode {
 //intakes artifacts
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(23,-62))
-                .strafeTo(new Vector2d(23,-28))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position
                 .strafeToLinearHeading(new Vector2d(45,-18),Math.toRadians(-155))
@@ -255,7 +254,6 @@ public class Q3AutoFrontOfFieldBlue extends LinearOpMode {
 //intakes artifacts
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(0,-62))
-                .strafeTo(new Vector2d(0,-34))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position front of field
                 //this used to be -135 btw for heading and same for the next shooting
@@ -267,7 +265,6 @@ public class Q3AutoFrontOfFieldBlue extends LinearOpMode {
 //intakes artifacts
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(-27,-62))
-                .strafeTo(new Vector2d(-27,-28))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position near goal
                 .strafeToLinearHeading(new Vector2d(-50,-20), Math.toRadians(-126))

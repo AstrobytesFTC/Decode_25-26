@@ -256,7 +256,6 @@ public class Q3AutoAtGoalRed extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(-13, 26), Math.toRadians(90))
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(-16,43))
-                .strafeTo(new Vector2d(-16,26))
                 .stopAndAdd(new stopSmartIntake())
 
                 //Lines up to shoot
@@ -269,7 +268,6 @@ public class Q3AutoAtGoalRed extends LinearOpMode {
                 .stopAndAdd(new smartIntake())
                 .strafeToLinearHeading(new Vector2d(12,14), Math.toRadians(90))
                 .strafeTo(new Vector2d(10,45))
-                .strafeTo(new Vector2d(10,17))
                 .stopAndAdd(new stopSmartIntake())
 
                 // Lines up for shot
@@ -283,7 +281,6 @@ public class Q3AutoAtGoalRed extends LinearOpMode {
                 .stopAndAdd(new smartIntake())
                 .strafeToLinearHeading(new Vector2d(36, 14), Math.toRadians(90))
                 .strafeTo(new Vector2d(35,35))
-                .strafeTo(new Vector2d(35,25))
                 .stopAndAdd(new stopSmartIntake())
 
                 //Lines up to shoot

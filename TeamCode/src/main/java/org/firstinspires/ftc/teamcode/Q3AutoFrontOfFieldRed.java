@@ -252,7 +252,6 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
                 //intakes
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(40, 52))
-                .strafeTo(new Vector2d(40, 28))
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position
@@ -267,7 +266,6 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
                 //intakes
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(18, 56))
-                .strafeTo(new Vector2d(18, 28))
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position
@@ -281,7 +279,6 @@ public class Q3AutoFrontOfFieldRed extends LinearOpMode {
                 //intakes
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(-7, 59))
-                .strafeTo(new Vector2d(-7, 28))
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position

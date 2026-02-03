@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 // RR-specific imports
+
 import static java.lang.Thread.sleep;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -22,8 +23,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "Q3AutoAtGoalBlue", group = "Autonomous")
-public class Q3AutoAtGoalBlue extends LinearOpMode {
+@Autonomous(name = "NineBallsAtGoalRed", group = "Autonomous")
+public class NineBallsAtGoalRed extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -39,6 +40,7 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
     DcMotorEx shooterRight = null;
     DcMotorEx shooterLeft = null;
     Servo blocker = null;
+    //    double velocityPower = 1880;
 
     double velocityPowerFar = 1680;
     double velocityPowerNear = 1411;
@@ -62,6 +64,7 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
         }
 
     }
+
     public class increaseShooterSpeed implements InstantFunction{
         @Override
         public void run(){
@@ -76,9 +79,9 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
         }
 
     }
-    public class blockerDown implements InstantFunction {
+    public class blockerDown implements InstantFunction{
         @Override
-        public void run() {
+        public void run(){
             blocker.setPosition(0.2);
         }
 
@@ -89,16 +92,16 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
             transfer.setPower(0.8);
             intake.setPower(0.8);
 
-            sleepSeconds(.6);
+            sleepSeconds(.7);
 
             transfer.setPower(0);
             intake.setPower(0);
         }
 
     }
-    public class smartIntake implements InstantFunction {
+    public class smartIntake implements InstantFunction{
         @Override
-        public void run() {
+        public void run(){
             intake.setPower(0.8);
             transfer.setPower(0.8);
         }
@@ -112,8 +115,6 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
         }
 
     }
-
-
     public boolean waitForShooter(DcMotorEx shooter, double target, long timeoutMs) {
         long start = System.currentTimeMillis();
 
@@ -121,7 +122,7 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
                 && System.currentTimeMillis() - start < timeoutMs) {
 
             double velocity = Math.abs(shooter.getVelocity());
-//Dependable, keep if close
+
             if (Math.abs(velocity - target) < 45) {
                 return true;
             }
@@ -130,8 +131,6 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
         }
         return false; // timed out
     }
-
-
 
     public class smartFeedNear implements InstantFunction{
         @Override
@@ -176,7 +175,25 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
         }
 
     }
+//    public class warmupLaunch implements InstantFunction{
+//        @Override
+//        public void run(){
+//            launcher.setPower(-0.8);
+//        }
+//    }
 
+    //    public class reverselaunch implements InstantFunction{
+//        @Override
+//        public void run(){
+//            launcher.setPower(0.5);
+//        }
+//    }
+//    public class stopLauncher implements InstantFunction{
+//        @Override
+//        public void run(){
+//            launcher.setPower(0);
+//        }
+//    }
     public void sleepSeconds(double seconds) {
         sleep((long)(seconds * 1000));
     }
@@ -188,30 +205,8 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
         intake.setPower(0);
     }
 
-//    public class stopLauncher implements InstantFunction {
-//        @Override
-//        public void run() {
-//            //Change If needed
-//            //shooterRight.setVelocity(-300);
-//            //shooterLeft.setVelocity(-300);
-//            //sleepSeconds(0.2);
-//            shooterRight.setVelocity(-300);
-//            shooterLeft.setVelocity(300);
-//        }
-//    }
-//
-//    public class stopLauncher1 implements InstantFunction{
-//        @Override
-//        public void run(){
-//            //Change If needed
-//            //shooterRight.setVelocity(-300);
-//            //shooterLeft.setVelocity(-300);
-//            //sleepSeconds(0.2);
-//            shooterRight.setVelocity(0);
-//            shooterLeft.setVelocity(0);
-//
-//        }
-//    }
+
+
 
 
     public void runOpMode() {
@@ -235,9 +230,14 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
         shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+      /* PIDFCoefficients pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
+        shooterLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);
+        shooterRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);*/
+
         telemetry.addData("Current Velocity", Math.abs(shooterLeft.getVelocity()));
 
-        Pose2d beginPose = new Pose2d(new Vector2d(-52,-60), Math.toRadians(-140));
+
+        Pose2d beginPose = new Pose2d(new Vector2d(-56,50), Math.toRadians(-225));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -245,55 +245,35 @@ public class Q3AutoAtGoalBlue extends LinearOpMode {
         waitForStart();
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
+
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
+                .strafeTo(new Vector2d(-20,14))
                 .stopAndAdd(new smartFeedNear())
-                //goes to intake artifacts row 1
-                .strafeToLinearHeading(new Vector2d(-15,-40), Math.toRadians(-90))
-                .stopAndAdd(new smartIntake())
-//intakes artifacts
 
-                .strafeTo(new Vector2d(-15,-66))
+                //Intakes Balls First Row
+                .strafeToLinearHeading(new Vector2d(-16, 26), Math.toRadians(90))
+                .stopAndAdd(new smartIntake())
+                .strafeTo(new Vector2d(-16,43))
                 .stopAndAdd(new stopSmartIntake())
 
-//goes to shooting position
-//                .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
+                //Lines up to shoot
+                .strafeToLinearHeading(new Vector2d(-24, 14), Math.toRadians(135))
                 .stopAndAdd(new smartFeedNear())
-                //goes to intake second row of artifacts
 
-                .strafeToLinearHeading(new Vector2d(10,-40), Math.toRadians(-90))
+                // Goes to intake second row of balls
+                .strafeToLinearHeading(new Vector2d(12,14), Math.toRadians(90))
                 .stopAndAdd(new smartIntake())
-
-//intakes artifacts row 2
-                .strafeTo(new Vector2d(10,-62))
+                .strafeTo(new Vector2d(12,45))
                 .stopAndAdd(new stopSmartIntake())
 
-//goes to shooting position
-
-                .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
+                // Lines up for shot
+                //.stopAndAdd(new runShooter())
+                .strafeToLinearHeading(new Vector2d(-24, 14), Math.toRadians(135))
                 .stopAndAdd(new smartFeedNear())
-                .stopAndAdd(new increaseShooterSpeed())
 
-                //goes to intake third row of artifacts
-                .strafeToLinearHeading(new Vector2d(35,-52), Math.toRadians(-90))
-                .stopAndAdd(new smartIntake())
-                //intakes artifacts
-                .strafeTo(new Vector2d(35,-65))
-                .stopAndAdd(new stopSmartIntake())
-
-//goes to shooting position
-
-                .strafeToLinearHeading(new Vector2d(62,-33),Math.toRadians(-160))
-                .stopAndAdd(new smartFeedFar())
-                //shoots
-                .strafeTo(new Vector2d(38,-25))
-
-
-
+                //Leave points
+                .strafeTo(new Vector2d(-50, 25))
                 .build();
-
-
 
 
 
