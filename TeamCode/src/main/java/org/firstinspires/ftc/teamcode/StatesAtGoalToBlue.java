@@ -22,14 +22,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-<<<<<<< Updated upstream:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/StatesAtGoalToBlue.java
-@Autonomous(group = "Autonomous")
-public class StatesAtGoalToBlue extends LinearOpMode {
-=======
-@Autonomous(name = "StatesAutoAtGoalBlue", group = "Autonomous")
-public class StatesAutoAtGoalBlue extends LinearOpMode {
->>>>>>> Stashed changes:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/StatesAutoAtGoalBlue.java
 
+
+@Autonomous(name = "StatesAutoAtGoalBlue", group = "Autonomous")
+public class StatesAtGoalToBlue extends LinearOpMode {
 
     DcMotor frontLeftMotor = null;
     DcMotor backLeftMotor = null;
