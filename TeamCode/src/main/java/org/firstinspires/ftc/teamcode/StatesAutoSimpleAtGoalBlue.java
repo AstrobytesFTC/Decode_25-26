@@ -22,11 +22,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-<<<<<<< Updated upstream
 @Autonomous(group = "Autonomous")
-=======
-@Autonomous(name = "StatesAutoSimpleAtGoalBlue", group = "Autonomous")
->>>>>>> Stashed changes
 public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
 
 
