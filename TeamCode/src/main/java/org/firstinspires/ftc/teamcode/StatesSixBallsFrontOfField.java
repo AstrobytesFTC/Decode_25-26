@@ -1,34 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
-
-// RR-specific imports
-import static java.lang.Thread.sleep;
-
 import com.acmerobotics.dashboard.config.Config;
-
-// Non-RR imports
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantFunction;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-<<<<<<< Updated upstream
-@Autonomous(group = "Autonomous")
-=======
-@Autonomous(name = "StatesAutoSimpleAtGoalBlue", group = "Autonomous")
->>>>>>> Stashed changes
-public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
-
+@Autonomous(name = "StatesSixBallsFrontOfField", group = "Autonomous")
+public class StatesSixBallsFrontOfField extends LinearOpMode {
 
     DcMotor frontLeftMotor = null;
     DcMotor backLeftMotor = null;
@@ -43,13 +32,14 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
     DcMotorEx shooterRight = null;
     DcMotorEx shooterLeft = null;
     Servo blocker = null;
+    //    double velocityPower = 1880;
 
     double velocityPowerFar = 1680;
     double velocityPowerNear = 1411;
     // lift class
     private boolean initialized = false;
 
-    public class runShooter implements InstantFunction{
+    public class runShooter implements InstantFunction {
         @Override
         public void run(){
             shooterLeft.setVelocity(-velocityPowerNear);
@@ -66,6 +56,7 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
         }
 
     }
+
     public class increaseShooterSpeed implements InstantFunction{
         @Override
         public void run(){
@@ -80,10 +71,10 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
         }
 
     }
-    public class blockerDown implements InstantFunction {
+    public class blockerDown implements InstantFunction{
         @Override
-        public void run() {
-            blocker.setPosition(0.1);
+        public void run(){
+            blocker.setPosition(0.2);
         }
 
     }
@@ -93,16 +84,16 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
             transfer.setPower(0.8);
             intake.setPower(0.8);
 
-            sleepSeconds(.6);
+            sleepSeconds(.7);
 
             transfer.setPower(0);
             intake.setPower(0);
         }
 
     }
-    public class smartIntake implements InstantFunction {
+    public class smartIntake implements InstantFunction{
         @Override
-        public void run() {
+        public void run(){
             intake.setPower(0.8);
             transfer.setPower(0.8);
         }
@@ -116,8 +107,6 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
         }
 
     }
-
-
     public boolean waitForShooter(DcMotorEx shooter, double target, long timeoutMs) {
         long start = System.currentTimeMillis();
 
@@ -125,7 +114,7 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
                 && System.currentTimeMillis() - start < timeoutMs) {
 
             double velocity = Math.abs(shooter.getVelocity());
-//Dependable, keep if close
+
             if (Math.abs(velocity - target) < 45) {
                 return true;
             }
@@ -134,8 +123,6 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
         }
         return false; // timed out
     }
-
-
 
     public class smartFeedNear implements InstantFunction{
         @Override
@@ -153,7 +140,7 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
                 intake.setPower(0);
             }
             //telemetry.addLine("DONEE");
-            blocker.setPosition(0.1);
+            blocker.setPosition(0.2);
             //telemetry.update();
         }
 
@@ -175,12 +162,30 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
                 intake.setPower(0);
             }
             // telemetry.addLine("DONEE");
-            blocker.setPosition(0.1);
+            blocker.setPosition(0.2);
             //telemetry.update();
         }
 
     }
+//    public class warmupLaunch implements InstantFunction{
+//        @Override
+//        public void run(){
+//            launcher.setPower(-0.8);
+//        }
+//    }
 
+    //    public class reverselaunch implements InstantFunction{
+//        @Override
+//        public void run(){
+//            launcher.setPower(0.5);
+//        }
+//    }
+//    public class stopLauncher implements InstantFunction{
+//        @Override
+//        public void run(){
+//            launcher.setPower(0);
+//        }
+//    }
     public void sleepSeconds(double seconds) {
         sleep((long)(seconds * 1000));
     }
@@ -192,30 +197,8 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
         intake.setPower(0);
     }
 
-//    public class stopLauncher implements InstantFunction {
-//        @Override
-//        public void run() {
-//            //Change If needed
-//            //shooterRight.setVelocity(-300);
-//            //shooterLeft.setVelocity(-300);
-//            //sleepSeconds(0.2);
-//            shooterRight.setVelocity(-300);
-//            shooterLeft.setVelocity(300);
-//        }
-//    }
-//
-//    public class stopLauncher1 implements InstantFunction{
-//        @Override
-//        public void run(){
-//            //Change If needed
-//            //shooterRight.setVelocity(-300);
-//            //shooterLeft.setVelocity(-300);
-//            //sleepSeconds(0.2);
-//            shooterRight.setVelocity(0);
-//            shooterLeft.setVelocity(0);
-//
-//        }
-//    }
+
+
 
 
     public void runOpMode() {
@@ -239,9 +222,14 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
         shooterRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+      /* PIDFCoefficients pf = new PIDFCoefficients(0.0005, 0, 0, 12.8222);
+        shooterLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);
+        shooterRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pf);*/
+
         telemetry.addData("Current Velocity", Math.abs(shooterLeft.getVelocity()));
 
-        Pose2d beginPose = new Pose2d(new Vector2d(-52,-60), Math.toRadians(-140));
+
+        Pose2d beginPose = new Pose2d(new Vector2d(56,12), Math.toRadians(170));
         //this pose assumes the robot starts with the intake facing away from the goal. the shooter will be facing away from the goal
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -249,15 +237,29 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
         waitForStart();
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
+
+
+                // shoots preloads
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
-                .stopAndAdd(new smartFeedNear())
-                //goes to intake artifacts row 1
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
+                .stopAndAdd(new smartFeedFar())
 
-                .strafeTo(new Vector2d(-50,-27))
+                //Intakes Balls First Row
+                .strafeToLinearHeading(new Vector2d(40, 35), Math.toRadians(80))
+                .stopAndAdd(new smartIntake())
+                .strafeTo(new Vector2d(40, 52))
+                .stopAndAdd(new stopSmartIntake())
+
+                //Lines up to shoot
+                // .stopAndAdd(new runShooter())
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
+                .stopAndAdd(new smartFeedFar())
+
+
+                //Leave points
+                .turnTo(Math.toRadians(90))
+                .strafeTo(new Vector2d(63,26))
                 .build();
-
-
 
 
 
@@ -275,3 +277,4 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
     }
 
 }
+
