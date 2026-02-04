@@ -42,7 +42,7 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1670;
+    double velocityPowerFar = 1800;
     double velocityPowerNear = 1430;
 
 
