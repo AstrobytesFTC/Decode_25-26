@@ -23,7 +23,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "StatesFrontRedLoadingZone", group = "Autonomous")
+@Autonomous(name = "StatesFrontRedLoadingZone ", group = "Autonomous")
 public class StatesFrontRedLoadingZone extends LinearOpMode {
 
 
