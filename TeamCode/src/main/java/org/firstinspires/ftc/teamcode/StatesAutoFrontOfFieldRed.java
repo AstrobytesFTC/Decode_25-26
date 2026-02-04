@@ -42,8 +42,8 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1800;
-    double velocityPowerNear = 1430;
+    double velocityPowerFar = 1850;
+    double velocityPowerNear = 1390;
 
 
     // lift class
@@ -54,6 +54,7 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
         public void run(){
             shooterLeft.setVelocity(-velocityPowerFar);
             shooterRight.setVelocity(velocityPowerFar);
+            sleepSeconds(.5);
         }
 
     }
@@ -249,23 +250,25 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
                 //goes to intake position
                 .strafeToLinearHeading(new Vector2d(40, 35), Math.toRadians(80))
 
-                //intakes
+                //intakes row 1
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(40, 52))
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position
                // .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(145))
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(140))
                 .stopAndAdd(new smartFeedFar())
                 .stopAndAdd(new reduceShooterSpeed())
 
                 //goes to intake
                 .strafeToLinearHeading(new Vector2d(18, 35), Math.toRadians(80))
 
-                //intakes
+                //intakes row 2
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(18, 56))
+                .strafeTo(new Vector2d(18, 35))
+
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position
@@ -276,14 +279,14 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
                 //goes to intake
                 .strafeToLinearHeading(new Vector2d(-7, 35), Math.toRadians(80))
 
-                //intakes
+                //intakes row 3
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(-7, 59))
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(115))
+                .strafeToLinearHeading(new Vector2d(-31, 27), Math.toRadians(110))
                 .stopAndAdd(new smartFeedNear())
 
                 //leave points
