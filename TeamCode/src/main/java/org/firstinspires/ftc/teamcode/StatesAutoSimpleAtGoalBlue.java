@@ -22,13 +22,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-<<<<<<< Updated upstream:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/StatesAtGoalToBlue.java
-@Autonomous(group = "Autonomous")
-public class StatesAtGoalToBlue extends LinearOpMode {
-=======
-@Autonomous(name = "StatesAutoAtGoalBlue", group = "Autonomous")
-public class StatesAutoAtGoalBlue extends LinearOpMode {
->>>>>>> Stashed changes:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/StatesAutoAtGoalBlue.java
+@Autonomous(name = "StatesAutoSimpleAtGoalBlue", group = "Autonomous")
+public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
 
 
     DcMotor frontLeftMotor = null;
@@ -84,7 +79,7 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
     public class blockerDown implements InstantFunction {
         @Override
         public void run() {
-            blocker.setPosition(0.2);
+            blocker.setPosition(0.1);
         }
 
     }
@@ -154,7 +149,7 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
                 intake.setPower(0);
             }
             //telemetry.addLine("DONEE");
-            blocker.setPosition(0.2);
+            blocker.setPosition(0.1);
             //telemetry.update();
         }
 
@@ -176,7 +171,7 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
                 intake.setPower(0);
             }
             // telemetry.addLine("DONEE");
-            blocker.setPosition(0.2);
+            blocker.setPosition(0.1);
             //telemetry.update();
         }
 
@@ -252,58 +247,10 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
                 .stopAndAdd(new runShooter())
                 .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
-
                 .stopAndAdd(new smartFeedNear())
                 //goes to intake artifacts row 1
 
-
-                .strafeToLinearHeading(new Vector2d(-15,-40), Math.toRadians(-90))
-                .stopAndAdd(new smartIntake())
-//intakes artifacts
-
-                .strafeTo(new Vector2d(-15,-66))
-
-                .stopAndAdd(new stopSmartIntake())
-
-//goes to shooting position
-//                .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
-                .stopAndAdd(new smartFeedNear())
-                //goes to intake second row of artifacts
-                .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(10,-40), Math.toRadians(-90))
-
-
-//intakes artifacts row 2
-
-                .strafeTo(new Vector2d(10,-64))
-                .stopAndAdd(new stopSmartIntake())
-
-//goes to shooting position
-
-                .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
-                .stopAndAdd(new smartFeedNear())
-                .stopAndAdd(new increaseShooterSpeed())
-
-                //goes to intake third row of artifacts
-                .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(35,-52), Math.toRadians(-90))
-
-                //intakes artifacts
-
-                .strafeTo(new Vector2d(35,-65))
-
-                .stopAndAdd(new stopSmartIntake())
-
-//goes to shooting position
-
-                .strafeToLinearHeading(new Vector2d(62,-33),Math.toRadians(-160))
-                .stopAndAdd(new smartFeedFar())
-                //shoots
-                .strafeTo(new Vector2d(38,-25))
-
-
-
+                .strafeTo(new Vector2d(-50,-27))
                 .build();
 
 
