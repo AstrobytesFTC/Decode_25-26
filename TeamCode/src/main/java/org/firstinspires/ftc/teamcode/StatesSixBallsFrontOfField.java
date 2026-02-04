@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "StatesSixBallsFrontOfField ", group = "Autonomous")
+@Autonomous(name = "StatesSixBallsFrontOfField", group = "Autonomous")
 public class StatesSixBallsFrontOfField extends LinearOpMode {
 
     DcMotor frontLeftMotor = null;

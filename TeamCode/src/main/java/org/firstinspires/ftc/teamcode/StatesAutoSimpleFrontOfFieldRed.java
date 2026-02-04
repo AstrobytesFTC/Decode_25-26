@@ -23,7 +23,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Config
-@Autonomous(name = "StatesAutoSimpleFrontOfFieldRed ", group = "Autonomous")
+@Autonomous(name = "StatesAutoSimpleFrontOfFieldRed", group = "Autonomous")
 public class StatesAutoSimpleFrontOfFieldRed extends LinearOpMode {
 
 
