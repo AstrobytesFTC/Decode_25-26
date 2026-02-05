@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 @Autonomous(name = "StatesSixBallsFrontOfField", group = "Autonomous")
-public class StatesSixBallsFrontOfField extends LinearOpMode {
+public class StatesSixBallsFrontOfFieldRed extends LinearOpMode {
 
     DcMotor frontLeftMotor = null;
     DcMotor backLeftMotor = null;
@@ -34,8 +34,8 @@ public class StatesSixBallsFrontOfField extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1680;
-    double velocityPowerNear = 1411;
+    double velocityPowerFar = 1850;
+    double velocityPowerNear = 1390;
     // lift class
     private boolean initialized = false;
 
@@ -252,7 +252,23 @@ public class StatesSixBallsFrontOfField extends LinearOpMode {
 
                 //Lines up to shoot
                 // .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(140))
+                .stopAndAdd(new smartFeedFar())
+
+                //delay time for the loading zone balls
+                .waitSeconds(5)
+
+                //intakes balls coming in the loading zone
+                .stopAndAdd(new smartIntake())
+                .strafeToLinearHeading(new Vector2d(50, 58), Math.toRadians(0))
+
+                //intakes
+                .strafeTo(new Vector2d(65, 60))
+                .strafeTo(new Vector2d(50,58))
+                .stopAndAdd(new stopSmartIntake())
+
+                // lines up for shot
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(145))
                 .stopAndAdd(new smartFeedFar())
 
 

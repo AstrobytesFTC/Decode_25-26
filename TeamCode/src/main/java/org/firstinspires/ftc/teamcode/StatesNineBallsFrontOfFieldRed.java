@@ -42,8 +42,8 @@ public class StatesNineBallsFrontOfFieldRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1680;
-    double velocityPowerNear = 1411;
+    double velocityPowerFar = 1850;
+    double velocityPowerNear = 1390;
     // lift class
     private boolean initialized = false;
 
@@ -254,26 +254,27 @@ public class StatesNineBallsFrontOfFieldRed extends LinearOpMode {
 
                 // Goes to intake third row of balls
                 //.strafeTo(new Vector2d(14,12 ))
-                .strafeToLinearHeading(new Vector2d(36, 14), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(40, 35), Math.toRadians(80))
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(35,35))
+                .strafeTo(new Vector2d(40,52))
                 .stopAndAdd(new stopSmartIntake())
 
 
                 // Lines up for shot
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56,16), Math.toRadians(155))
+                .strafeToLinearHeading(new Vector2d(56,16), Math.toRadians(140))
                 .stopAndAdd(new smartFeedFar())
 
                 // Goes to intake the second row of balls
-                .strafeToLinearHeading(new Vector2d(12,14), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(18,35), Math.toRadians(80))
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(10,45))
+                .strafeTo(new Vector2d(18,56))
+                .strafeTo(new Vector2d(18, 35))
                 .stopAndAdd(new stopSmartIntake())
 
 
                 //Lines up to shoot
-                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(155))
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(150))
                 .stopAndAdd(new smartFeedFar())
                 //.stop
 

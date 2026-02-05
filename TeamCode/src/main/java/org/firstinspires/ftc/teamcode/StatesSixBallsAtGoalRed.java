@@ -245,14 +245,14 @@ public class StatesSixBallsAtGoalRed extends LinearOpMode {
                 .stopAndAdd(new smartFeedNear())
 
                 //Intakes Balls First Row
-                .strafeToLinearHeading(new Vector2d(-16, 26), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-13, 26), Math.toRadians(90))
                 .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(-16,43))
                 .stopAndAdd(new stopSmartIntake())
 
                 //Lines up to shoot
                 // .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-24, 14), Math.toRadians(135))
+                .strafeToLinearHeading(new Vector2d(-20, 14), Math.toRadians(130))
                 .stopAndAdd(new smartFeedNear())
 
 

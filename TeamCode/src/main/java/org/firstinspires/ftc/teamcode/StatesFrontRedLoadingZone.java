@@ -275,7 +275,8 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
                 .stopAndAdd(new smartFeedFar())
 
                 //leave points
-                .strafeTo(new Vector2d(20, 16))
+                .turnTo(Math.toRadians(90))
+                .strafeTo(new Vector2d(63,26))
                 .build();
 
 
