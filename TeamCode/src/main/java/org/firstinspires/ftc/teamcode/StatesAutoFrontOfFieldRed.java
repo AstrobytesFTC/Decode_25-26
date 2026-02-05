@@ -42,8 +42,8 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
-    double velocityPowerNear = 1390;
+    double velocityPowerFar = 1690;
+    double velocityPowerNear = 1350;
 
 
     // lift class
@@ -244,7 +244,7 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(149))
                 .stopAndAdd(new smartFeedFar())
 
                 //goes to intake position
@@ -257,7 +257,7 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
 
                 //goes to shooting position
                // .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(140))
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(137))
                 .stopAndAdd(new smartFeedFar())
                 .stopAndAdd(new reduceShooterSpeed())
 
@@ -273,7 +273,7 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
 
                 //goes to shooting position
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(115))
+                .strafeToLinearHeading(new Vector2d(-31, 25), Math.toRadians(112))
                 .stopAndAdd(new smartFeedNear())
 
                 //goes to intake
@@ -286,7 +286,7 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
 
                 //goes to shooting position
                 //.stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(-31, 27), Math.toRadians(110))
+                .strafeToLinearHeading(new Vector2d(-31, 27), Math.toRadians(107))
                 .stopAndAdd(new smartFeedNear())
                 .stopAndAdd(new blockerDown())
 

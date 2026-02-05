@@ -42,8 +42,8 @@ public class StatesAutoFrontOfFieldBlue extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
-    double velocityPowerNear = 1390;
+    double velocityPowerFar = 1680;
+    double velocityPowerNear = 1350;
 
 
     // lift class
@@ -244,7 +244,7 @@ public class StatesAutoFrontOfFieldBlue extends LinearOpMode {
 
 //intakes artifacts
                 .stopAndAdd(new smartIntake())
-                .strafeTo(new Vector2d(23,-62))
+                .strafeTo(new Vector2d(23,-64))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position
                 .strafeToLinearHeading(new Vector2d(45,-18),Math.toRadians(-155))
@@ -258,7 +258,7 @@ public class StatesAutoFrontOfFieldBlue extends LinearOpMode {
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position front of field
                 //this used to be -130 btw for heading and same for the next shooting
-                .strafeToLinearHeading(new Vector2d(-23,-19), Math.toRadians(-130))
+                .strafeToLinearHeading(new Vector2d(-26,-17), Math.toRadians(-134))
                 .stopAndAdd(new smartFeedNear())
 
                 //goes to intake row 3 of artifacts
@@ -268,7 +268,7 @@ public class StatesAutoFrontOfFieldBlue extends LinearOpMode {
                 .strafeTo(new Vector2d(-27,-62))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position near goal
-                .strafeToLinearHeading(new Vector2d(-50,-20), Math.toRadians(-125))
+                .strafeToLinearHeading(new Vector2d(-50,-20), Math.toRadians(-126))
                 .stopAndAdd(new smartFeedNear())
                 .stopAndAdd(new blockerDown())
 

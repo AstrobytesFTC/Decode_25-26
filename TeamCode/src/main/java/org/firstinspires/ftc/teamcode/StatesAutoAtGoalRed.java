@@ -42,8 +42,8 @@ public class StatesAutoAtGoalRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
-    double velocityPowerNear = 1390;
+    double velocityPowerFar = 1690;
+    double velocityPowerNear = 1340;
     // lift class
     private boolean initialized = false;
 
@@ -248,7 +248,7 @@ public class StatesAutoAtGoalRed extends LinearOpMode {
 
                 // First Shooting
                 .stopAndAdd(new runShooter())
-                .strafeTo(new Vector2d(-20,14))
+                .strafeToLinearHeading(new Vector2d(-20,17), Math.toRadians(-229))
                 .stopAndAdd(new smartFeedNear())
 
 
