@@ -40,8 +40,8 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
     DcMotorEx shooterLeft = null;
     Servo blocker = null;
 
-    double velocityPowerFar = 1800;
-    double velocityPowerNear = 1411;
+    double velocityPowerFar = 1850;
+    double velocityPowerNear = 1390;
     // lift class
     private boolean initialized = false;
 
@@ -249,11 +249,11 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(-23,-27), Math.toRadians(-135))
                 .stopAndAdd(new smartFeedNear())
                 //goes to intake artifacts row 1
-                .strafeToLinearHeading(new Vector2d(-15,-40), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(-15,-40), Math.toRadians(-88))
                 .stopAndAdd(new smartIntake())
 //intakes artifacts
 
-                .strafeTo(new Vector2d(-15,-66))
+                .strafeTo(new Vector2d(-15,-69))
                 .stopAndAdd(new stopSmartIntake())
 
 //goes to shooting position
@@ -266,7 +266,7 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
                 .stopAndAdd(new smartIntake())
 
 //intakes artifacts row 2
-                .strafeTo(new Vector2d(10,-62))
+                .strafeTo(new Vector2d(10,-66))
                 .stopAndAdd(new stopSmartIntake())
 
 //goes to shooting position
@@ -276,7 +276,7 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
                 .stopAndAdd(new increaseShooterSpeed())
 
                 //goes to intake third row of artifacts
-                .strafeToLinearHeading(new Vector2d(35,-52), Math.toRadians(-90))
+                .strafeToLinearHeading(new Vector2d(35,-51), Math.toRadians(-90))
                 .stopAndAdd(new smartIntake())
                 //intakes artifacts
                 .strafeTo(new Vector2d(35,-65))
@@ -284,10 +284,11 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
 
 //goes to shooting position
 
-                .strafeToLinearHeading(new Vector2d(62,-33),Math.toRadians(-160))
+                .strafeToLinearHeading(new Vector2d(57,-35),Math.toRadians(-155))
                 .stopAndAdd(new smartFeedFar())
-                //shoots
-                .strafeTo(new Vector2d(38,-25))
+                //leave points
+                .strafeTo(new Vector2d(52,-40))
+                .stopAndAdd(new blockerDown())
 
 
 
