@@ -48,8 +48,8 @@
         double targetVelocity = 0;
         double closeA = 1450;
         double closeB = 1550;
-        double farY = 1850;
-        double farX = 1900;
+        double farY = 1875;
+        double farX = 1925;
 
         // ---------- Blink vars ----------
         long lastBlink = 0;
