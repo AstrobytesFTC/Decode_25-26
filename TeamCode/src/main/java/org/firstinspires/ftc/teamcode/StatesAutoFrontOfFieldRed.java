@@ -288,6 +288,7 @@ public class StatesAutoFrontOfFieldRed extends LinearOpMode {
                 //.stopAndAdd(new runShooter())
                 .strafeToLinearHeading(new Vector2d(-31, 27), Math.toRadians(110))
                 .stopAndAdd(new smartFeedNear())
+                .stopAndAdd(new blockerDown())
 
                 //leave points
                 //.strafeTo(new Vector2d(20, 16))

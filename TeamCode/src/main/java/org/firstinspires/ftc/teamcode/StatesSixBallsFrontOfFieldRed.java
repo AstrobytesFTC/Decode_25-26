@@ -275,6 +275,7 @@ public class StatesSixBallsFrontOfFieldRed extends LinearOpMode {
                 //Leave points
                 .turnTo(Math.toRadians(90))
                 .strafeTo(new Vector2d(63,26))
+                .stopAndAdd(new blockerDown())
                 .build();
 
 

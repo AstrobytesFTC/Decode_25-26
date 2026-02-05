@@ -271,6 +271,7 @@ public class StatesFrontBlueLoadingZone extends LinearOpMode {
 
                 //leave points
                 .strafeTo(new Vector2d(20, -16))
+                .stopAndAdd(new blockerDown())
 
                 .build();
 

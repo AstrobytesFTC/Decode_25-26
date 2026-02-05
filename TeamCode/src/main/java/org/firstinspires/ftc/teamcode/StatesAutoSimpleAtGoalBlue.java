@@ -251,6 +251,7 @@ public class StatesAutoSimpleAtGoalBlue extends LinearOpMode {
                 //goes to intake artifacts row 1
 
                 .strafeTo(new Vector2d(-50,-27))
+                .stopAndAdd(new blockerDown())
                 .build();
 
 

@@ -280,6 +280,7 @@ public class StatesNineBallsFrontOfFieldBlue extends LinearOpMode {
                 //Leave points
 
                 .strafeTo(new Vector2d(25,-15))
+                .stopAndAdd(new blockerDown())
                 .build();
 
 

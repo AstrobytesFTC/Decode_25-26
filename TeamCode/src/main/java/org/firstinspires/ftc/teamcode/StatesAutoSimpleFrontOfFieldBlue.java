@@ -240,6 +240,7 @@ public class StatesAutoSimpleFrontOfFieldBlue extends LinearOpMode {
                 .stopAndAdd(new smartFeedFar())
 //leave points
                 .strafeTo(new Vector2d(52,-35))
+                .stopAndAdd(new blockerDown())
 
 
                 .build();

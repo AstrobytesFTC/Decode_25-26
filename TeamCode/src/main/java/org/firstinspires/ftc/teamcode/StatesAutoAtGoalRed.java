@@ -293,6 +293,7 @@ public class StatesAutoAtGoalRed extends LinearOpMode {
 
                 //Leave points
                 .strafeTo(new Vector2d(38, 20))
+                .stopAndAdd(new blockerDown())
                 .build();
 
 

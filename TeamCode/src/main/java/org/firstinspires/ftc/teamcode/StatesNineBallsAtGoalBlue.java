@@ -279,6 +279,7 @@ public class StatesNineBallsAtGoalBlue extends LinearOpMode {
 
                 //Leave points
                 .strafeTo(new Vector2d(-50,-25))
+                .stopAndAdd(new blockerDown())
 
                 .build();
 
