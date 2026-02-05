@@ -40,7 +40,7 @@ public class StatesAutoAtGoalBlue extends LinearOpMode {
     DcMotorEx shooterLeft = null;
     Servo blocker = null;
 
-    double velocityPowerFar = 1850;
+    double velocityPowerFar = 1700;
     double velocityPowerNear = 1390;
     // lift class
     private boolean initialized = false;
