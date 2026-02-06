@@ -3,20 +3,16 @@ package org.firstinspires.ftc.teamcode;
 
 // RR-specific imports
 
-import static java.lang.Thread.sleep;
-
 import com.acmerobotics.dashboard.config.Config;
-
-// Non-RR imports
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantFunction;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -240,21 +236,18 @@ public class StatesFrontBlueLoadingZone extends LinearOpMode {
         waitForStart();
 
         Action Scrimmage2Auto = drive.actionBuilder(beginPose)
-                //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(53,-15),Math.toRadians(-165))
+                .strafeToLinearHeading(new Vector2d(51,-15),Math.toRadians(-165))
                 .stopAndAdd(new smartFeedFar())
-
-                //goes to intake position
-                .stopAndAdd(new smartIntake())
+//go to intake artifacts row 1
                 .strafeToLinearHeading(new Vector2d(21,-28), Math.toRadians(-90))
 
-                //intakes
-                .strafeTo(new Vector2d(23,-62))
+//intakes artifacts
+                .stopAndAdd(new smartIntake())
+                .strafeTo(new Vector2d(23,-64))
                 .stopAndAdd(new stopSmartIntake())
-
-                //goes to shooting position
-                .strafeToLinearHeading(new Vector2d(53,-15),Math.toRadians(-165))
+//goes to shooting position
+                .strafeToLinearHeading(new Vector2d(45,-18),Math.toRadians(-155))
                 .stopAndAdd(new smartFeedFar())
 
                 //goes to intake balls in loading zone
