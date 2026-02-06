@@ -237,7 +237,7 @@ public class StatesAutoFrontOfFieldBlue extends LinearOpMode {
                 .stopAndAdd(new runShooter())
                 //.stopAndAdd(new blockerDown())
                 //.waitSeconds(.5)
-                .strafeToLinearHeading(new Vector2d(51,-15),Math.toRadians(-165))
+                .strafeToLinearHeading(new Vector2d(49,-15),Math.toRadians(-165))
                 .stopAndAdd(new smartFeedFar())
 //go to intake artifacts row 1
                 .strafeToLinearHeading(new Vector2d(21,-28), Math.toRadians(-90))
@@ -247,7 +247,7 @@ public class StatesAutoFrontOfFieldBlue extends LinearOpMode {
                 .strafeTo(new Vector2d(23,-64))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position
-                .strafeToLinearHeading(new Vector2d(45,-18),Math.toRadians(-155))
+                .strafeToLinearHeading(new Vector2d(43,-18),Math.toRadians(-155))
                 .stopAndAdd(new smartFeedFar())
                 .stopAndAdd (new reduceShooterSpeed())
 //goes to intake second rack

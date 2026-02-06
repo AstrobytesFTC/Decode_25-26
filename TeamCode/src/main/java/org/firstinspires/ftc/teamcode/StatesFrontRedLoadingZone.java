@@ -245,7 +245,7 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(146))
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(146))
                 .stopAndAdd(new smartFeedFar())
 
 
@@ -301,8 +301,8 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
 
 
                 //leave points
-                .turnTo(Math.toRadians(90))
-                .strafeTo(new Vector2d(63,26))
+                .turnTo(Math.toRadians(-90))
+                .strafeTo(new Vector2d(52,-40))
                 .stopAndAdd(new blockerDown())
                 .build();
 
