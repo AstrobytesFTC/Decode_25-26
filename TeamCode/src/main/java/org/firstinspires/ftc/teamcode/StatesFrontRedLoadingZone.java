@@ -3,20 +3,16 @@ package org.firstinspires.ftc.teamcode;
 
 // RR-specific imports
 
-import static java.lang.Thread.sleep;
-
 import com.acmerobotics.dashboard.config.Config;
-
-// Non-RR imports
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantFunction;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -42,8 +38,8 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
-    double velocityPowerNear = 1500;
+    double velocityPowerFar = 1690;
+    double velocityPowerNear = 1450;
 
 
     // lift class
@@ -243,22 +239,20 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(150))
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(149))
                 .stopAndAdd(new smartFeedFar())
 
-
                 //goes to intake position
-                .stopAndAdd(new smartIntake())
                 .strafeToLinearHeading(new Vector2d(40, 35), Math.toRadians(80))
 
-                //intakes
+                //intakes row 1
+                .stopAndAdd(new smartIntake())
                 .strafeTo(new Vector2d(40, 52))
-                .strafeTo(new Vector2d(40, 28))
                 .stopAndAdd(new stopSmartIntake())
 
-
                 //goes to shooting position
-                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(145))
+                // .stopAndAdd(new runShooter())
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(137))
                 .stopAndAdd(new smartFeedFar())
 
                 //goes to intake balls in loading zone
@@ -271,7 +265,7 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
                 .stopAndAdd(new stopSmartIntake())
 
                 //goes to shooting position
-                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(145))
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(137))
                 .stopAndAdd(new smartFeedFar())
 
                 //leave points
