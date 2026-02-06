@@ -42,7 +42,7 @@ public class StatesAutoSimpleFrontOfFieldRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
+    double velocityPowerFar = 1690;
     double velocityPowerNear = 1500;
 
 
@@ -243,7 +243,7 @@ public class StatesAutoSimpleFrontOfFieldRed extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(149))
                 .stopAndAdd(new smartFeedFar())
 
 
