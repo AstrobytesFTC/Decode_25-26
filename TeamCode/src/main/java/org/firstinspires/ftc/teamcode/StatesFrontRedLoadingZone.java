@@ -21,6 +21,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.Vector;
+
 
 @Config
 @Autonomous(name = "StatesFrontRedLoadingZone", group = "Autonomous")
@@ -243,7 +245,7 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(150))
+                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(146))
                 .stopAndAdd(new smartFeedFar())
 
 
@@ -252,27 +254,50 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(40, 35), Math.toRadians(80))
 
                 //intakes
-                .strafeTo(new Vector2d(40, 52))
+                .strafeTo(new Vector2d(40, 54))
                 .strafeTo(new Vector2d(40, 28))
                 .stopAndAdd(new stopSmartIntake())
 
 
                 //goes to shooting position
-                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(145))
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(143))
                 .stopAndAdd(new smartFeedFar())
 
                 //goes to intake balls in loading zone
                 .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(50, 58), Math.toRadians(0))
+                .turnTo(Math.toRadians(80))
+                /*.strafeTo(new Vector2d(59,49))
+                .strafeTo(new Vector2d(59,55))
+               // .strafeToLinearHeading(new Vector2d(50, 58), Math.toRadians(0))
 
                 //intakes
-                .strafeTo(new Vector2d(65, 60))
-                .strafeTo(new Vector2d(50,58))
-                .stopAndAdd(new stopSmartIntake())
+                .strafeTo(new Vector2d(59,49))
+                .strafeTo(new Vector2d(63,49))
 
+                //intakes again
+                .strafeTo(new Vector2d(63,55))
+                .strafeTo(new Vector2d(63,49))
+                .strafeTo(new Vector2d(67,49))*/
+
+                //intakes again
+                .strafeTo(new Vector2d(67,55))
+                .strafeTo(new Vector2d(67,49))
+                .strafeTo(new Vector2d(70,49))
+
+                //intakes again
+                .strafeTo(new Vector2d(70,55))
+                .strafeTo(new Vector2d(70,49))
+                .strafeTo(new Vector2d(74,49))
+
+                //intakes again
+                .strafeTo(new Vector2d(74,55))
+                .strafeTo(new Vector2d(74,49))
+                .stopAndAdd(new stopSmartIntake())
                 //goes to shooting position
                 .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(145))
                 .stopAndAdd(new smartFeedFar())
+
+
 
                 //leave points
                 .turnTo(Math.toRadians(90))
