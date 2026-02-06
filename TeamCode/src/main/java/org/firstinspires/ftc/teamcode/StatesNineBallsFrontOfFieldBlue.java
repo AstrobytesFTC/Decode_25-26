@@ -42,8 +42,8 @@ public class StatesNineBallsFrontOfFieldBlue extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
-    double velocityPowerNear = 1411;
+    double velocityPowerFar = 1690;
+    double velocityPowerNear = 1350;
     // lift class
     private boolean initialized = false;
 

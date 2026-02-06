@@ -42,8 +42,8 @@ public class StatesNineBallsAtGoalRed extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
-    double velocityPowerNear = 1390;
+    double velocityPowerFar = 1690;
+    double velocityPowerNear = 1350;
     // lift class
     private boolean initialized = false;
 
