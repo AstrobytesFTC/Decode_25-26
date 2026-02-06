@@ -42,8 +42,8 @@ public class StatesFrontBlueLoadingZone extends LinearOpMode {
     Servo blocker = null;
     //    double velocityPower = 1880;
 
-    double velocityPowerFar = 1700;
-    double velocityPowerNear = 1500;
+    double velocityPowerFar = 1690;
+    double velocityPowerNear = 1340;
 
 
     // lift class
