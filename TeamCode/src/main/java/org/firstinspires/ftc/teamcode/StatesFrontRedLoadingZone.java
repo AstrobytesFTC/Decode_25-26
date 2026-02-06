@@ -45,7 +45,7 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
     //    double velocityPower = 1880;
 
     double velocityPowerFar = 1690;
-    double velocityPowerNear = 1340;
+    double velocityPowerNear = 1329;
 
 
     // lift class
@@ -260,7 +260,7 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
 
 
                 //goes to shooting position
-                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(143))
+                .strafeToLinearHeading(new Vector2d(56, 16), Math.toRadians(139))
                 .stopAndAdd(new smartFeedFar())
 
                 //goes to intake balls in loading zone
@@ -283,6 +283,7 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
                 .strafeTo(new Vector2d(67,55))
                 .strafeTo(new Vector2d(67,49))
                 .strafeTo(new Vector2d(70,49))
+
 
                 //intakes again
                 .strafeTo(new Vector2d(70,55))
