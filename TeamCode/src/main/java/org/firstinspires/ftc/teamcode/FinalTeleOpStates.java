@@ -46,10 +46,10 @@
         double redFarFar = -22.6;
         double finalPos;
         double targetVelocity = 0;
-        double closeA = 1450;
-        double closeB = 1550;
-        double farY = 1800;
-        double farX = 1850;
+        double closeA = 1420;
+        double closeB = 1520;
+        double farY = 1775;
+        double farX = 1825;
 
         // ---------- Blink vars ----------
         long lastBlink = 0;

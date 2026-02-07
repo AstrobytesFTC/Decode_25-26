@@ -247,25 +247,51 @@ public class StatesFrontBlueLoadingZone extends LinearOpMode {
                 .strafeTo(new Vector2d(23,-64))
                 .stopAndAdd(new stopSmartIntake())
 //goes to shooting position
-                .strafeToLinearHeading(new Vector2d(45,-18),Math.toRadians(-155))
+                .strafeToLinearHeading(new Vector2d(43,-18),Math.toRadians(-155))
                 .stopAndAdd(new smartFeedFar())
 
                 //goes to intake balls in loading zone
                 .stopAndAdd(new smartIntake())
-                .strafeToLinearHeading(new Vector2d(40, -58), Math.toRadians(0))
+                .turnTo(Math.toRadians(-80))//idk
+                /*.strafeTo(new Vector2d(59,49))
+                .strafeTo(new Vector2d(59,55))
+               // .strafeToLinearHeading(new Vector2d(50, 58), Math.toRadians(0))
 
                 //intakes
-                .strafeTo(new Vector2d(63, -58))
-                .stopAndAdd(new stopSmartIntake())
+                .strafeTo(new Vector2d(59,49))
+                .strafeTo(new Vector2d(63,49))*/
 
+                //intakes again
+                .strafeTo(new Vector2d(35,-73))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(45,-78))
+                .strafeTo(new Vector2d(45,-73))
+
+                //intakes again
+                .strafeTo(new Vector2d(49,-78))
+                .strafeTo(new Vector2d(49,-73))
+                .strafeTo(new Vector2d(49,-74))
+
+                //intakes again
+                /*.strafeTo(new Vector2d(46,-69))
+                .strafeTo(new Vector2d(46,-64))
+                .strafeTo(new Vector2d(50,-64))*/
+
+                //intakes again
+                /*.strafeTo(new Vector2d(50,-65))
+                .strafeTo(new Vector2d(50,-59))*/
+                .stopAndAdd(new stopSmartIntake())
                 //goes to shooting position
-                .strafeToLinearHeading(new Vector2d(53,-15),Math.toRadians(-165))
+                .strafeTo(new Vector2d(25,-75))
+                .strafeToLinearHeading(new Vector2d(45, -15), Math.toRadians(-155))
                 .stopAndAdd(new smartFeedFar())
 
-                //leave points
-                .strafeTo(new Vector2d(20, -16))
-                .stopAndAdd(new blockerDown())
 
+
+                //leave points
+                .turnTo(Math.toRadians(-90))
+                .strafeTo(new Vector2d(45,-49))
+                .stopAndAdd(new blockerDown())
                 .build();
 
 
