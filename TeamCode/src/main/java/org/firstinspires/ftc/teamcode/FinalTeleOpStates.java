@@ -239,8 +239,8 @@
                 shooterRight.setVelocity(targetVelocity);
 
                 // ---------- Intake / Transfer ----------
-                intake.setPower(gamepad1.left_trigger*0.9);
-                transfer.setPower(gamepad1.left_trigger*0.9);
+                intake.setPower(gamepad1.left_trigger);//Change to 90% if not working
+                transfer.setPower(gamepad1.left_trigger);//Change to 90% if not working
 
                 intake.setPower(-gamepad1.right_trigger);
                 transfer.setPower(-gamepad1.right_trigger);

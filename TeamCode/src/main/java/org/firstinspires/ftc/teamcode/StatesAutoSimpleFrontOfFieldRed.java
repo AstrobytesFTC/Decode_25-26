@@ -43,7 +43,7 @@ public class StatesAutoSimpleFrontOfFieldRed extends LinearOpMode {
     //    double velocityPower = 1880;
 
     double velocityPowerFar = 1690;
-    double velocityPowerNear = 1500;
+    double velocityPowerNear = 1350;
 
 
     // lift class

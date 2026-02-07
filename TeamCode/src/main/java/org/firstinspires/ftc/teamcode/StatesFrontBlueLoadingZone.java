@@ -39,7 +39,7 @@ public class StatesFrontBlueLoadingZone extends LinearOpMode {
     //    double velocityPower = 1880;
 
     double velocityPowerFar = 1690;
-    double velocityPowerNear = 1340;
+    double velocityPowerNear = 1350;
 
 
     // lift class
@@ -252,7 +252,7 @@ public class StatesFrontBlueLoadingZone extends LinearOpMode {
 
                 //goes to intake balls in loading zone
                 .stopAndAdd(new smartIntake())
-                .turnTo(Math.toRadians(-80))//idk
+                .turnTo(Math.toRadians(-90))//idk
                 /*.strafeTo(new Vector2d(59,49))
                 .strafeTo(new Vector2d(59,55))
                // .strafeToLinearHeading(new Vector2d(50, 58), Math.toRadians(0))
@@ -262,21 +262,20 @@ public class StatesFrontBlueLoadingZone extends LinearOpMode {
                 .strafeTo(new Vector2d(63,49))*/
 
                 //intakes again
-                .strafeTo(new Vector2d(35,-73))
-                .waitSeconds(1)
+               // .strafeTo(new Vector2d(35,-73))// test and uncomment if needed
                 .strafeTo(new Vector2d(45,-78))
                 .strafeTo(new Vector2d(45,-73))
 
                 //intakes again
                 .strafeTo(new Vector2d(49,-78))
                 .strafeTo(new Vector2d(49,-73))
-                .strafeTo(new Vector2d(49,-74))
+                .strafeTo(new Vector2d(49,-77))
+                .strafeTo(new Vector2d(49, -73))
 
                 //intakes again
                 /*.strafeTo(new Vector2d(46,-69))
                 .strafeTo(new Vector2d(46,-64))
                 .strafeTo(new Vector2d(50,-64))*/
-
                 //intakes again
                 /*.strafeTo(new Vector2d(50,-65))
                 .strafeTo(new Vector2d(50,-59))*/
