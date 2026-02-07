@@ -134,7 +134,7 @@ public class StatesAutoFrontOfFieldBlue extends LinearOpMode {
            // telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
              //   telemetry.addLine("SHOT");
-                transfer.setPower(0.8);
+                transfer.setPower(0.7);
                 intake.setPower(0.8);
 
                 sleepSeconds(.7);
@@ -156,7 +156,7 @@ public class StatesAutoFrontOfFieldBlue extends LinearOpMode {
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
                 telemetry.addLine("SHOT");
-                transfer.setPower(0.8);
+                transfer.setPower(0.7);
                 intake.setPower(0.8);
 
                 sleepSeconds(0.7);

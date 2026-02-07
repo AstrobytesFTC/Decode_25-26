@@ -143,7 +143,7 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
             //telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerNear,3000)){
                 //  telemetry.addLine("SHOT");
-                transfer.setPower(0.8);
+                transfer.setPower(0.7);
                 intake.setPower(0.8);
 
                 sleepSeconds(.7);
@@ -165,7 +165,7 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
             //  telemetry.addLine("NOT DONE");
             if(waitForShooter(shooterLeft, velocityPowerFar,3000)){
                 //    telemetry.addLine("SHOT");
-                transfer.setPower(0.8);
+                transfer.setPower(0.7);
                 intake.setPower(0.8);
 
                 sleepSeconds(.7);
@@ -245,7 +245,7 @@ public class StatesFrontRedLoadingZone extends LinearOpMode {
 
                 //shooting position
                 .stopAndAdd(new runShooter())
-                .strafeToLinearHeading(new Vector2d(56, 14), Math.toRadians(150))
+                .strafeToLinearHeading(new Vector2d(53, 14), Math.toRadians(150))
                 .stopAndAdd(new smartFeedFar())
 
 
